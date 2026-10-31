@@ -2523,9 +2523,10 @@
     document.addEventListener("click", (e) => {
       if (calm() || e.target.closest("a, button, input, .pcard, .feat-card, .cgrid-card, .profile-card, .role-card, .exp-list, .overlay, .qol-overlay, .modal, .term")) return;
       const s = scenes.find((x) => x.live && (() => { const r = x.sec.getBoundingClientRect(); return e.clientY >= r.top && e.clientY <= r.bottom; })()); if (!s) return;
-      const r = s.bg.getBoundingClientRect();
-      const ring = document.createElement("i"); ring.className = "sb-ping"; ring.style.left = (e.clientX - r.left) + "px"; ring.style.top = (e.clientY - r.top) + "px";
-      s.bg.appendChild(ring); setTimeout(() => ring.remove(), 1200);
+      // the ring lives in a fixed layer over the page, so a tap near a section edge never gets clipped
+      const ring = document.createElement("i"); ring.className = "sb-ping fixed"; ring.style.left = e.clientX + "px"; ring.style.top = e.clientY + "px";
+      ring.style.setProperty("--sec", getComputedStyle(s.sec).getPropertyValue("--sec") || "#7fa6ff");
+      document.body.appendChild(ring); setTimeout(() => ring.remove(), 1200);
       $$(".sb-p.s, .cst-dot, .sb-far i", s.bg).map((el) => [el, el.getBoundingClientRect()]).forEach(([el, b]) => {
         const dd = Math.hypot(b.left + b.width / 2 - e.clientX, b.top + b.height / 2 - e.clientY);
         if (dd < 240) { el.style.setProperty("--pd", (dd * 1.6).toFixed(0) + "ms"); el.classList.remove("pulse"); requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add("pulse"))); setTimeout(() => el.classList.remove("pulse"), 1400); }

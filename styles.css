@@ -3311,3 +3311,29 @@ html:not(.dark) .menu-bar { color: #1a2150 !important; }
   background: linear-gradient(90deg, rgba(var(--orb), .55), rgba(var(--orb), 0)) !important; opacity: .6; transition: opacity .3s, right .35s ease; }
 .menu-bar:hover::after, .menu-bar.is-focus::after { opacity: 1; right: 6%; }
 @media (max-width: 640px) { .menu-bar { height: 54px !important; font-size: 1rem !important; } }
+
+/* ---- mobile fixes ---- */
+/* no sideways panning on phones: nothing may widen the page */
+html, body { overflow-x: clip !important; max-width: 100%; overscroll-behavior-x: none; }
+@supports not (overflow: clip) { html, body { overflow-x: hidden !important; } }
+.hero, .art-wrap { overflow-x: clip; }
+/* tap rings float above everything instead of being clipped by a section */
+.sb-ping.fixed { position: fixed; z-index: 60; }
+/* the phone menu: dark in dark mode, readable text */
+@media (max-width: 900px) {
+  html.dark .nav-links { background: rgba(8, 11, 30, .97) !important; border-bottom: 1px solid rgba(127, 166, 255, .25) !important; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+  html.dark .nav.open { background: rgba(8, 11, 30, .97) !important; }
+  html.dark .nav-links a { color: #e6ebff !important; border-bottom-color: rgba(255, 255, 255, .06) !important; }
+  html:not(.dark) .nav-links a { color: #141a3d !important; }
+  .nav-links a { padding: 15px 22px !important; }
+}
+
+/* ---- top navigation highlight: style 02, a short glowing line under the current section ---- */
+.nav-links a, .nav-links a:hover, .nav-links a.is-current, .nav-links a[aria-current="true"], html:not(.dark) .nav-links a.is-current { background: none !important; text-shadow: none !important; }
+.nav-links a { position: relative; }
+.nav-links a::after { content: "" !important; display: block !important; position: absolute !important; left: 28% !important; right: 28% !important; bottom: 3px !important; top: auto !important; height: 2px !important; width: auto !important;
+  border-radius: 2px; background: rgb(var(--orb)) !important; box-shadow: 0 0 8px rgba(var(--orb), .8), 0 0 16px rgba(var(--orb), .4); transform: scaleX(0) !important; transition: transform .3s ease !important; }
+.nav-links a.is-current::after, .nav-links a[aria-current="true"]::after { transform: scaleX(1) !important; }
+.nav-links a:hover::after { transform: scaleX(.6) !important; }
+html.dark .nav-links a.is-current { color: #fff !important; } html:not(.dark) .nav-links a.is-current { color: #141a3d !important; }
+@media (max-width: 900px) { .nav-links a::after { left: 22px !important; right: auto !important; width: 26px !important; bottom: 8px !important; transform-origin: left; } }

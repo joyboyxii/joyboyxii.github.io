@@ -11,4 +11,11 @@
     l.href = "assets/images/brandon-art-" + (document.documentElement.classList.contains("dark") ? "dark" : "light") + ".webp";
     document.head.appendChild(l);
   } catch (e) {}
+  /* clickjacking guard: GitHub Pages can't send frame headers, so the live site refuses to sit inside another site's frame */
+  try {
+    if (window.top !== window.self && /(^|\.)github\.io$/.test(location.hostname)) {
+      document.documentElement.style.display = "none";
+      window.top.location = window.self.location.href;
+    }
+  } catch (e) { document.documentElement.style.display = "none"; }
 })();

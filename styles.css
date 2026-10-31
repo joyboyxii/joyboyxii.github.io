@@ -3337,3 +3337,11 @@ html, body { overflow-x: clip !important; max-width: 100%; overscroll-behavior-x
 .nav-links a:hover::after { transform: scaleX(.6) !important; }
 html.dark .nav-links a.is-current { color: #fff !important; } html:not(.dark) .nav-links a.is-current { color: #141a3d !important; }
 @media (max-width: 900px) { .nav-links a::after { left: 22px !important; right: auto !important; width: 26px !important; bottom: 8px !important; transform-origin: left; } }
+
+/* security window: scrolls on phones, readable intro in dark mode */
+#secnote { align-items: center; }
+.sec-window { display: flex !important; flex-direction: column; max-height: calc(100dvh - 32px) !important; overflow: hidden !important; }
+.sec-window .window-head { flex: none; }
+.sec-window .sec-body { flex: 1; min-height: 0; overflow-y: auto !important; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; touch-action: pan-y; }
+html.dark .sec-body p, html.dark .sec-body ul { color: #c9d3f5 !important; }
+.sec-checks .sc-foot { list-style: none; margin-top: 4px; padding: 6px 2px 2px; font-size: .8rem; color: var(--c-muted, #8e97bf); text-align: center; }

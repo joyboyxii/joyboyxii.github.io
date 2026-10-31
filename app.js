@@ -1816,7 +1816,8 @@
       const hsts = hdr && hdr.get("strict-transport-security");
       add(hsts ? "pass" : "info", "HSTS", hsts ? `Browsers must always use HTTPS here (${hsts.split(";")[0]}).` : "Enabled by the host's response headers on the live site.");
       const xfo = hdr && (hdr.get("x-frame-options") || (hCsp || "").includes("frame-ancestors"));
-      add(xfo ? "pass" : "info", "Clickjacking protection", xfo ? "Other sites can't embed this page in a frame." : "Enabled by the host's response headers on the live site.");
+      const framed = (() => { try { return window.top !== window.self; } catch (e) { return true; } })();
+      add(xfo || !framed ? "pass" : "info", "Clickjacking protection", xfo ? "The host forbids other sites from framing this page." : !framed ? "Not framed. A frame-buster stops other sites from embedding this page in a hidden frame." : "This copy is shown inside a preview frame; the live site breaks out of frames.");
       const scripts = $$("script[src]").filter((s) => new URL(s.src, location.href).origin !== location.origin);
       add(scripts.length ? "warn" : "pass", "No third-party JavaScript", scripts.length ? `${scripts.length} external script(s) found.` : `All ${$$("script[src]").length} scripts are served from this site.`);
       const origins = [...new Set(performance.getEntriesByType("resource").map((r) => { try { return new URL(r.name).origin; } catch (e) { return ""; } }).filter((o) => o && o !== location.origin && o !== "null"))];
@@ -1832,6 +1833,7 @@
       checks.innerHTML = out.map((c, k) => `<li class="sc ${c.ok}" style="--d:${k * 60}ms"><span class="sc-ico" aria-hidden="true">${c.ok === "pass" ? "✓" : c.ok === "warn" ? "!" : "i"}</span><div><b>${esc(c.title)}</b><span>${esc(c.detail)}</span></div></li>`).join("");
       const passed = out.filter((c) => c.ok === "pass").length;
       checks.insertAdjacentHTML("afterbegin", `<li class="sc-score"><b>${passed}/${out.length}</b> checks passing in this browser</li>`);
+      checks.insertAdjacentHTML("beforeend", `<li class="sc-foot">Hosted on GitHub Pages · last reviewed ${new Date(document.lastModified).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}</li>`);
     };
     $("#sec-link")?.addEventListener("click", () => { checks.innerHTML = '<li class="sc-loading"><span class="spin"></span>Running checks…</li>'; setTimeout(runChecks, 250); });
 

@@ -3345,3 +3345,13 @@ html.dark .nav-links a.is-current { color: #fff !important; } html:not(.dark) .n
 .sec-window .sec-body { flex: 1; min-height: 0; overflow-y: auto !important; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; touch-action: pan-y; }
 html.dark .sec-body p, html.dark .sec-body ul { color: #c9d3f5 !important; }
 .sec-checks .sc-foot { list-style: none; margin-top: 4px; padding: 6px 2px 2px; font-size: .8rem; color: var(--c-muted, #8e97bf); text-align: center; }
+
+/* radar cover labels never overlap: they wrap within their corner, shrink on narrow covers, and only two show when space is tight */
+.hud-cover { container-type: inline-size; }
+.hud-cover .hc-tag { max-width: 40%; white-space: normal !important; line-height: 1.25; text-align: center; }
+@container (max-width: 520px) {
+  .hud-cover .hc-tag { font-size: .5rem !important; letter-spacing: .05em; padding: 2px 6px; max-width: 38%; }
+  .hud-cover .hc-t0, .hud-cover .hc-t2 { left: 4%; } .hud-cover .hc-t1, .hud-cover .hc-t3 { right: 4%; }
+}
+@container (max-width: 380px) { .hud-cover .hc-t2, .hud-cover .hc-t3 { display: none; } .hud-cover .hc-tag { max-width: 42%; } }
+html .hud-cover > svg.hc-lines { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; max-width: none !important; aspect-ratio: auto !important; filter: none !important; transform: none !important; }

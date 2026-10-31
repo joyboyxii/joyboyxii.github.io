@@ -1,6 +1,6 @@
 /* Offline support: pages are network-first (always fresh when online),
    static files are cache-first (instant repeat visits). Same-origin only. */
-const VERSION = "br-v38";
+const VERSION = "br-v39";
 const CORE = ["./", "index.html", "styles.css", "app.js", "starmap.js", "rain.js", "data.js", "assets/images/img-opt.js",
   "assets/images/favicon.svg", "assets/images/brandon-art-base.webp", "assets/images/brandon-art-dark.webp", "assets/images/brandon-art-light.webp", "assets/images/brandon-art-glow-dark.webp", "assets/images/brandon-art-glow-light.webp", "assets/images/headshot.webp", "manifest.webmanifest"];
 self.addEventListener("install", (e) => { e.waitUntil(caches.open(VERSION).then((c) => c.addAll(CORE)).then(() => self.skipWaiting())); });

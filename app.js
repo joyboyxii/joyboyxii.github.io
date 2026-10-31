@@ -128,6 +128,9 @@
   const firstGesture = () => { if (Sound.on) Music.start(); removeEventListener("pointerdown", firstGesture); removeEventListener("keydown", firstGesture); };
   addEventListener("pointerdown", firstGesture); addEventListener("keydown", firstGesture);
 
+  /* replay the intro: forget that it was seen, go to the top and reload */
+  window.__replayIntro = () => { try { localStorage.removeItem("chron.intro"); } catch { /* ignore */ } history.replaceState(null, "", location.pathname + location.search); scrollTo(0, 0); location.reload(); };
+  document.addEventListener("click", (e) => { if (e.target.closest && e.target.closest("#intro-btn")) { e.preventDefault(); window.__replayIntro(); } });
   /* ---------- intro: the sentinel terminal analyses Brandon, then the portfolio decrypts ---------- */
   (() => {
     const intro = $("#intro"); if (!intro) return;
@@ -1848,7 +1851,7 @@
     $("#term-link")?.addEventListener("click", openTerm);
     const roles = (DATA2.experience || []).slice().reverse();
     const CMDS = {
-      help: () => ["Commands:", "  ctf           🏴 find the 3 hidden flags", "  whoami        who I am", "  about         short bio", "  experience    roles, newest first", "  projects      list projects  ·  open <n>", "  certs         certifications", "  contact       how to reach me", "  resume        open my résumé", "  linkedin      open LinkedIn", "  theme <dark|light>", "  ls · cd <section> · clear · exit"].forEach((l) => line(l)),
+      help: () => ["Commands:", "  ctf           🏴 find the 3 hidden flags", "  whoami        who I am", "  about         short bio", "  experience    roles, newest first", "  projects      list projects  ·  open <n>", "  certs         certifications", "  contact       how to reach me", "  resume        open my résumé", "  linkedin      open LinkedIn", "  theme <dark|light>", "  intro         replay the intro", "  ls · cd <section> · clear · exit"].forEach((l) => line(l)),
       whoami: () => line(`${profile.name} · ${profile.className} · ${profile.location || ""}`),
       about: () => { line(profile.about || ""); if (profile.personal) line(profile.personal, "tl-dim"); },
       experience: () => roles.forEach((r) => line(`• ${r.role}${r.company ? " @ " + r.company : ""}  (${r.from ? r.from + " → " + (r.to || "present") : r.dateLabel || ""})`)),
@@ -1862,6 +1865,7 @@
       contact: () => { const em = ((profile.cta || {}).url || "").replace("mailto:", ""); line(`email: ${em}`); linkLine("→ open contact card", () => { closeTerm(); $("#cta")?.click(); }); },
       resume: () => { line("opening résumé…", "tl-ok"); setTimeout(() => { closeTerm(); $("#resume-btn")?.click(); }, 300); },
       linkedin: () => { const u = profile.links && profile.links.linkedin; if (u) { line("opening LinkedIn in a new tab…", "tl-ok"); window.open(u, "_blank", "noopener"); } else line("not set", "tl-err"); },
+      intro: () => { line("rebooting sentinel…", "tl-ok"); setTimeout(() => window.__replayIntro(), 500); },
       theme: (arg) => { const d = arg === "dark" ? true : arg === "light" ? false : !root.classList.contains("dark"); setTheme(d, true); line(`theme: ${d ? "dark (twilight)" : "light"}`, "tl-ok"); },
       ls: (arg) => line((/-\w*a/.test(arg || "") ? ".  ..  .vault  " : "") + "experience/  projects/  certifications/  resume.pdf"),
       cd: (arg) => { const id = { experience: "experience", projects: "projects", certifications: "certifications", certs: "certifications", "~": "top", "..": "top" }[(arg || "").replace(/\/$/, "")]; if (!id) return line(`cd: no such section: ${arg || ""}`, "tl-err"); closeTerm(); setTimeout(() => id === "top" ? $("#to-top").click() : warpTo(id, null), 200); },
@@ -2630,7 +2634,7 @@
     const tog = document.createElement("button"); tog.className = "more-item more-settings"; tog.setAttribute("aria-expanded", "false"); tog.setAttribute("aria-controls", "more-sub");
     tog.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Settings</span><em class="chev" aria-hidden="true">›</em>';
     const sub = document.createElement("div"); sub.className = "more-sub"; sub.id = "more-sub"; sub.hidden = true;
-    ["#quick-btn", "#github-btn", "#sound-btn", "#fairy-toggle", "#theme-toggle", "#term-btn", "#keys-btn"].forEach((s) => { const el = $(s, panel); if (el) sub.appendChild(el); });
+    ["#quick-btn", "#github-btn", "#sound-btn", "#fairy-toggle", "#theme-toggle", "#term-btn", "#keys-btn", "#intro-btn"].forEach((s) => { const el = $(s, panel); if (el) sub.appendChild(el); });
     if (sep) sep.after(tog); else panel.appendChild(tog);
     tog.after(sub);
     tog.addEventListener("click", (e) => { e.stopPropagation(); const open = sub.hidden; sub.hidden = !open; tog.setAttribute("aria-expanded", String(open)); });

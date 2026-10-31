@@ -1,10 +1,10 @@
-/* Runs in <head> before paint so Twilight mode never flashes light first. */
+/* Runs in <head> before paint: the site starts in dark (Twilight) mode unless the visitor switched to light. */
 (function () {
   try {
     var t = localStorage.getItem("chron.theme");
-    var dark = t ? JSON.parse(t) === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    var dark = t ? JSON.parse(t) !== "light" : true;   // dark by default; light only if the visitor chose it
     if (dark) document.documentElement.classList.add("dark");
-  } catch (e) {}
+  } catch (e) { document.documentElement.classList.add("dark"); }
   /* start fetching the title-screen art for this theme right away (rim light + colour grade are baked into each version) */
   try {
     var l = document.createElement("link"); l.rel = "preload"; l.as = "image"; l.setAttribute("fetchpriority", "high");

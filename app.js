@@ -1646,7 +1646,7 @@
       setTimeout(() => root.classList.remove("theme-anim"), 450);
     };
     $("#theme-toggle")?.addEventListener("click", () => { setTheme(!root.classList.contains("dark"), true); Sound.play("select"); });
-    sysDark.addEventListener?.("change", (e) => { if (store.get("theme", null) === null) setTheme(e.matches, false); });
+    // (always starts dark; the system light/dark setting no longer overrides it)
     themeState();
 
     /* ---------- section dots + sky shift + experience charge (one scroll loop) ---------- */

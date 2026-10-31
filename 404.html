@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#02040f">
+  <title>404 · Page not found · Brandon Restrepo</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html { background: #02040f; }
+    html, body { margin: 0; min-height: 100%; }
+    body { min-height: 100svh; display: flex; flex-direction: column; background: transparent; color: #c9d3f5;
+      font: 400 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; overflow-x: hidden; }
+    #coderain { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; display: block; }
+    a { color: inherit; }
+
+    .top { display: flex; align-items: center; gap: 10px; padding: 18px clamp(16px, 4vw, 40px); text-decoration: none; width: fit-content;
+      font: 400 .78rem Michroma, sans-serif; letter-spacing: .12em; color: #e8edff; }
+    .top img { width: 30px; height: 30px; border-radius: 7px; box-shadow: 0 0 14px rgba(46, 91, 255, .5); }
+    .top:hover { color: #fff; }
+    .top:focus-visible, .btn:focus-visible, .links a:focus-visible { outline: 3px solid #ffcf5c; outline-offset: 3px; border-radius: 8px; }
+
+    main { flex: 1; display: grid; place-items: center; padding: 8px 16px 56px; text-align: center; }
+    .wrap { max-width: 640px; animation: rise .7s cubic-bezier(.2, .8, .2, 1) both; }
+    .wrap { position: relative; isolation: isolate; }
+    .wrap::before { content: ""; position: absolute; inset: -70px -110px; z-index: -1; background: radial-gradient(closest-side, rgba(2, 4, 15, .82), rgba(2, 4, 15, .5) 60%, transparent); pointer-events: none; }
+    @keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+
+    .code { position: relative; margin: 0; font: 400 clamp(6rem, 24vw, 12.5rem)/1 Michroma, "Arial Black", sans-serif; letter-spacing: .02em;
+      color: #f4f8ff; background: linear-gradient(180deg, #ffffff 0%, #e6efff 45%, #9fc0ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 2px #2e5bff) drop-shadow(0 0 18px rgba(46, 91, 255, .75)) drop-shadow(0 0 48px rgba(46, 91, 255, .35)); user-select: none; }
+    /* a quick RGB glitch every few seconds */
+    .code::before, .code::after { content: attr(data-text); position: absolute; inset: 0; -webkit-text-fill-color: currentColor; opacity: 0; pointer-events: none; }
+    .code::before { color: #ff3d6e; animation: glitchA 4.5s steps(1) infinite; }
+    .code::after { color: #3df0ff; animation: glitchB 4.5s steps(1) infinite; }
+    @keyframes glitchA { 0%, 90%, 100% { opacity: 0; transform: none; } 91% { opacity: .7; transform: translate(-4px, 1px); clip-path: inset(10% 0 55% 0); } 93% { opacity: .7; transform: translate(3px, -1px); clip-path: inset(60% 0 8% 0); } 95% { opacity: 0; } }
+    @keyframes glitchB { 0%, 90%, 100% { opacity: 0; transform: none; } 91% { opacity: .7; transform: translate(4px, -1px); clip-path: inset(40% 0 30% 0); } 93% { opacity: .7; transform: translate(-3px, 1px); clip-path: inset(5% 0 70% 0); } 95% { opacity: 0; } }
+
+    .kicker { margin: 18px 0 6px; font: 400 .8rem Michroma, sans-serif; letter-spacing: .32em; text-transform: uppercase; color: #7fa6ff; }
+    h1 { margin: 0 0 12px; font: 600 clamp(1.5rem, 4.5vw, 2.1rem)/1.25 Inter, sans-serif; color: #fff; }
+    p { margin: 0 auto; max-width: 480px; color: #a9b5dc; }
+    .path { display: inline-block; margin-top: 14px; padding: 4px 10px; border-radius: 6px; background: rgba(91, 140, 255, .1); border: 1px solid rgba(91, 140, 255, .25);
+      font: 500 .82rem ui-monospace, Menlo, Consolas, monospace; color: #9db6ff; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: bottom; }
+
+    .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 10px; text-decoration: none;
+      font: 600 .95rem Inter, sans-serif; color: #fff; background: #2e5bff; box-shadow: 0 0 24px rgba(46, 91, 255, .55); transition: transform .2s, box-shadow .2s, background .2s; }
+    .btn:hover { transform: translateY(-1px); background: #3b67ff; box-shadow: 0 0 32px rgba(46, 91, 255, .85); }
+    .btn.ghost { background: rgba(255, 255, 255, .04); border: 1px solid rgba(157, 182, 255, .35); box-shadow: none; color: #dfe6ff; }
+    .btn.ghost:hover { background: rgba(157, 182, 255, .12); }
+
+    .links { margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(157, 182, 255, .15); font-size: .9rem; color: #8592bd; }
+    .links nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; margin-top: 8px; }
+    .links nav a { text-decoration: none; color: #c9d6ff; font: 400 .72rem Michroma, sans-serif; letter-spacing: .14em; text-transform: uppercase; padding: 4px 2px; }
+    .links nav a:hover { color: #fff; text-shadow: 0 0 10px rgba(127, 166, 255, .9); }
+
+    footer { padding: 0 16px 22px; text-align: center; font-size: .8rem; color: #5f6a93; }
+    @media (prefers-reduced-motion: reduce) { .wrap { animation: none; } .code::before, .code::after { animation: none; } }
+  </style>
+</head>
+<body>
+  <a class="top" href="/" aria-label="Brandon Restrepo, home"><img src="/assets/images/icon-192.png" alt="">Brandon Restrepo</a>
+
+  <main>
+    <div class="wrap">
+      <div class="code" data-text="404" aria-hidden="true">404</div>
+      <div class="kicker">Page not found</div>
+      <h1>This page doesn't exist.</h1>
+      <p>The link may be broken, or the page may have moved. Thanks for stopping by, though. Let's get you back to the good stuff.</p>
+      <code class="path" id="path" title="Requested address">/</code>
+      <div class="actions">
+        <a class="btn" href="/">← Back to home</a>
+        <a class="btn ghost" href="/#projects">See my projects</a>
+      </div>
+      <div class="links">
+        Or jump straight to
+        <nav aria-label="Sections"><a href="/#experience">Experience</a><a href="/#projects">Projects</a><a href="/#certifications">Certifications</a></nav>
+      </div>
+    </div>
+  </main>
+
+  <footer>Error 404 · Brandon Restrepo, Security Analyst</footer>
+  <script src="/404.js"></script>
+  <script src="/rain.js"></script>
+</body>
+</html>

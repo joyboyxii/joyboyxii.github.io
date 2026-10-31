@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# recon note for humans: robots get told where NOT to look, and anyone can read this file.
+# 🏴 flag 2/3 is below, base64-encoded. decode it, then submit it in the terminal (press ~).
+# RkxBR3tyMGIwdHNfa24wd190aDNfbTRwfQ==

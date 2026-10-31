@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- security: this site practices what it preaches -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self'; frame-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Brandon Restrepo · Security Analyst</title>
+  <meta name="description" content="Brandon Restrepo, Security Analyst in Orlando, FL: security governance, endpoint threat response, CrowdStrike, SIEM, network security and homelab projects.">
+  <!-- share preview (LinkedIn, Slack, iMessage…). Once the site is online, change these image paths to the full https:// address. -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Brandon Restrepo · Security Analyst">
+  <meta property="og:description" content="Security Analyst building governance, controls and resilient networks. Experience, homelab projects and certifications.">
+  <meta property="og:site_name" content="Brandon Restrepo">
+  <meta property="og:image:alt" content="Brandon Restrepo, Security Analyst">
+  <meta name="twitter:description" content="Security Analyst building governance, controls and resilient networks.">
+  <meta property="og:image" content="assets/images/share-card.jpg">
+  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Brandon Restrepo · Security Analyst">
+  <meta name="twitter:image" content="assets/images/share-card.jpg">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d1330" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <meta name="author" content="Brandon Restrepo">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/images/icon-192.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"Brandon Restrepo","jobTitle":"Security Analyst",
+   "worksFor":{"@type":"Organization","name":"Addition Financial Credit Union"},
+   "address":{"@type":"PostalAddress","addressLocality":"Orlando","addressRegion":"FL","addressCountry":"US"},
+   "sameAs":["https://www.linkedin.com/in/brandon-restrepo-b107a32b8"],
+   "knowsAbout":["Security governance","Endpoint threat response","CrowdStrike Falcon","SIEM","Vulnerability management","Network security","Identity and access management","Microsoft Azure"]}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;800;900&family=Cormorant+Garamond:wght@500;600;700&family=Michroma&family=Inter:wght@400;500;600;700&family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
+  <script src="theme.js?v=1793316575"></script>
+  <link rel="stylesheet" href="styles.css?v=1793414478">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg?v=2">
+</head>
+<body class="intro-active">
+  <!--
+    ┌──────────────────────────────────────────────────────────┐
+    │  🏴 flag 1/3 · you read the source. good instinct.       │
+    │  FLAG{v13w_s0urc3_1s_r3c0n}                              │
+    │  press ~ (or ⋯ → Terminal) and type: submit <flag>       │
+    └──────────────────────────────────────────────────────────┘
+  -->
+  <a class="skip-link" href="#experience">Skip to content</a>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"><i></i></div>
+  <div class="sky-shift" aria-hidden="true"></div>
+  <canvas class="code-rain left" id="rain-l" aria-hidden="true"></canvas>
+  <canvas class="code-rain right" id="rain-r" aria-hidden="true"></canvas>
+  <nav class="sec-dots" id="sec-dots" aria-label="Page sections">
+    <a href="#top" data-sec="top"><i></i><span>Home</span></a>
+    <a href="#experience" data-sec="experience"><i></i><span>Experience</span></a>
+    <a href="#projects" data-sec="projects"><i></i><span>Projects</span></a>
+    <a href="#certifications" data-sec="certifications"><i></i><span>Certifications</span></a>
+  </nav>
+  <!-- ===== Shared SVG art (all original) ===== -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fff2c2"/><stop offset=".5" stop-color="#e2b955"/><stop offset="1" stop-color="#9c7425"/>
+      </linearGradient>
+      <symbol id="crystal" viewBox="0 0 64 80">
+        <polygon points="32,3 58,24 32,77 6,24" fill="currentColor"/>
+        <polygon points="32,3 58,24 32,30 6,24" fill="#fff" opacity=".55"/>
+        <polygon points="32,30 58,24 32,77" fill="#000" opacity=".18"/>
+        <polyline points="6,24 32,30 58,24" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="1.5"/>
+        <polygon points="32,3 58,24 32,77 6,24" fill="none" stroke="#141833" stroke-width="2.5" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="crest" viewBox="0 0 60 28">
+        <path d="M4 26 L8 8 L18 18 L30 2 L42 18 L52 8 L56 26 Z" fill="url(#goldGrad)" stroke="#5a3f0e" stroke-width="1"/>
+        <circle cx="30" cy="4" r="2.6" fill="#fff6d6"/><circle cx="8" cy="8" r="2" fill="#fff6d6"/><circle cx="52" cy="8" r="2" fill="#fff6d6"/>
+      </symbol>
+      <!-- drifting shard (flame/feather shape) -->
+      <symbol id="shard-a" viewBox="0 0 24 24">
+        <polygon points="6,2 18,2 23,9 12,23 1,9" fill="#fff"/>
+        <polygon points="6,2 9,9 1,9" fill="#dcf3ff"/><polygon points="18,2 15,9 23,9" fill="#e8deff"/>
+        <polygon points="9,9 15,9 12,23" fill="#cdeeff"/><polygon points="15,9 23,9 12,23" fill="#cbd6ff"/>
+        <polyline points="6,2 9,9 12,2 15,9 18,2" fill="none" stroke="#a9dcff" stroke-width=".8"/>
+        <polygon points="6,2 18,2 23,9 12,23 1,9" fill="none" stroke="#8fc8f5" stroke-width=".9" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="shard-b" viewBox="0 0 16 40">
+        <polygon points="8,0 14,12 8,40 2,12" fill="#fff"/>
+        <polygon points="8,0 14,12 8,16" fill="#dcf3ff"/><polygon points="8,16 14,12 8,40" fill="#cfd9ff"/>
+        <polygon points="8,0 14,12 8,40 2,12" fill="none" stroke="#8fc8f5" stroke-width=".9" stroke-linejoin="round"/>
+      </symbol>
+      <linearGradient id="nl-sheen" x1="0" y1="0" x2="0" y2="1"><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#c9d6ea" stop-opacity=".6"/></linearGradient>
+      <!-- twinkling star -->
+      <radialGradient id="halo-blue"><stop offset="0" stop-color="#7fa6ff" stop-opacity=".55"/><stop offset=".45" stop-color="#9dbbff" stop-opacity=".22"/><stop offset="1" stop-color="#b9d0ff" stop-opacity="0"/></radialGradient>
+      <radialGradient id="halo-ice"><stop offset="0" stop-color="#a8c8ff" stop-opacity=".4"/><stop offset="1" stop-color="#cfe2ff" stop-opacity="0"/></radialGradient>
+      <symbol id="glass-1" viewBox="-4 -4 28 28">
+        <circle cx="10" cy="10" r="12" fill="url(#halo-ice)"/>
+        <polygon points="3,2 17,6 8,18" fill="rgba(214,232,255,.8)" stroke="#6f9fe8" stroke-width=".9" stroke-linejoin="round"/>
+        <polygon points="3,2 17,6 10,8" fill="rgba(255,255,255,.95)"/><path d="M5 4 L9 14" stroke="#fff" stroke-width="1" stroke-linecap="round" opacity=".9"/>
+      </symbol>
+      <symbol id="glass-2" viewBox="-4 -4 28 28">
+        <circle cx="10" cy="10" r="12" fill="url(#halo-ice)"/>
+        <polygon points="9,1 16,9 12,19 4,12" fill="rgba(210,226,255,.8)" stroke="#7a92ec" stroke-width=".9" stroke-linejoin="round"/>
+        <polygon points="9,1 16,9 9,10" fill="rgba(255,255,255,.95)"/><polygon points="4,12 9,10 12,19" fill="rgba(200,215,255,.55)"/>
+      </symbol>
+      <symbol id="glass-3" viewBox="-4 -4 28 28">
+        <circle cx="10" cy="10" r="12" fill="url(#halo-ice)"/>
+        <polygon points="2,9 14,2 18,14" fill="rgba(216,236,255,.8)" stroke="#79aee8" stroke-width=".9" stroke-linejoin="round"/>
+        <path d="M5 9 L14 4" stroke="#fff" stroke-width="1.1" stroke-linecap="round"/>
+      </symbol>
+      <radialGradient id="halo-ember"><stop offset="0" stop-color="#ffad74" stop-opacity=".55"/><stop offset=".45" stop-color="#ffad74" stop-opacity=".2"/><stop offset="1" stop-color="#ffad74" stop-opacity="0"/></radialGradient>
+      <symbol id="star-ember" viewBox="-6 -6 32 32">
+        <circle cx="10" cy="10" r="13" fill="url(#halo-ember)"/>
+        <path d="M10 0 Q11.8 8.2 20 10 Q11.8 11.8 10 20 Q8.2 11.8 0 10 Q8.2 8.2 10 0 Z" fill="#ffc79e"/>
+        <path d="M10 3 Q11.2 8.8 17 10 Q11.2 11.2 10 17 Q8.8 11.2 3 10 Q8.8 8.8 10 3 Z" fill="#fff"/>
+      </symbol>
+      <radialGradient id="halo-violet"><stop offset="0" stop-color="#a99bff" stop-opacity=".55"/><stop offset=".45" stop-color="#a99bff" stop-opacity=".2"/><stop offset="1" stop-color="#a99bff" stop-opacity="0"/></radialGradient>
+      <symbol id="star-violet" viewBox="-6 -6 32 32">
+        <circle cx="10" cy="10" r="13" fill="url(#halo-violet)"/>
+        <path d="M10 0 Q11.8 8.2 20 10 Q11.8 11.8 10 20 Q8.2 11.8 0 10 Q8.2 8.2 10 0 Z" fill="#c7bdff"/>
+        <path d="M10 3 Q11.2 8.8 17 10 Q11.2 11.2 10 17 Q8.8 11.2 3 10 Q8.8 8.8 10 3 Z" fill="#fff"/>
+      </symbol>
+      <radialGradient id="halo-gold"><stop offset="0" stop-color="#f5cf5c" stop-opacity=".55"/><stop offset=".45" stop-color="#f5cf5c" stop-opacity=".2"/><stop offset="1" stop-color="#f5cf5c" stop-opacity="0"/></radialGradient>
+      <symbol id="star-gold" viewBox="-6 -6 32 32">
+        <circle cx="10" cy="10" r="13" fill="url(#halo-gold)"/>
+        <path d="M10 0 Q11.8 8.2 20 10 Q11.8 11.8 10 20 Q8.2 11.8 0 10 Q8.2 8.2 10 0 Z" fill="#ffe08f"/>
+        <path d="M10 3 Q11.2 8.8 17 10 Q11.2 11.2 10 17 Q8.8 11.2 3 10 Q8.8 8.8 10 3 Z" fill="#fff"/>
+      </symbol>
+      <symbol id="star-soft" viewBox="-6 -6 32 32">
+        <circle cx="10" cy="10" r="13" fill="url(#halo-blue)"/>
+        <path d="M10 0 Q11.8 8.2 20 10 Q11.8 11.8 10 20 Q8.2 11.8 0 10 Q8.2 8.2 10 0 Z" fill="#a9c4ff"/>
+        <path d="M10 3 Q11.2 8.8 17 10 Q11.2 11.2 10 17 Q8.8 11.2 3 10 Q8.8 8.8 10 3 Z" fill="#fff"/>
+      </symbol>
+      <symbol id="shard-c" viewBox="0 0 20 20">
+        <path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z" fill="#fff"/>
+      </symbol>
+      <!-- pixel-art flags -->
+      <symbol id="flag-us" viewBox="0 0 19 13">
+        <rect width="19" height="13" fill="#fff"/>
+        <g fill="#b22234"><rect y="0" width="19" height="1"/><rect y="2" width="19" height="1"/><rect y="4" width="19" height="1"/><rect y="6" width="19" height="1"/><rect y="8" width="19" height="1"/><rect y="10" width="19" height="1"/><rect y="12" width="19" height="1"/></g>
+        <rect width="8" height="7" fill="#3c3b6e"/>
+        <g fill="#fff"><rect x="1" y="1" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="3" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/></g>
+      </symbol>
+      <symbol id="flag-co" viewBox="0 0 19 13">
+        <rect width="19" height="7" fill="#fcd116"/>
+        <rect y="7" width="19" height="3" fill="#003893"/>
+        <rect y="10" width="19" height="3" fill="#ce1126"/>
+      </symbol>
+      <!-- ink-drawn security emblems -->
+      <symbol id="i-shield" viewBox="0 0 64 64"><g fill="none" stroke="#141833" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M32 5 L54 13 V30 C54 44 44 54 32 59 C20 54 10 44 10 30 V13 Z" fill="#fff"/>
+        <path d="M32 11 L48 17 V30 C48 40 41 48 32 52" stroke-width="2" opacity=".35"/>
+        <path d="M32 22a5 5 0 0 1 3 9v8h-6v-8a5 5 0 0 1 3-9z" fill="#141833"/></g></symbol>
+      <symbol id="i-lock" viewBox="0 0 64 64"><g fill="none" stroke="#141833" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 28V20a12 12 0 0 1 24 0v8"/>
+        <rect x="11" y="28" width="42" height="29" rx="4" fill="#fff"/>
+        <circle cx="32" cy="40" r="4.5" fill="#141833"/><path d="M32 44v6"/></g></symbol>
+      <symbol id="i-key" viewBox="0 0 64 64"><g fill="none" stroke="#141833" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="18" cy="20" r="11" fill="#fff"/><circle cx="18" cy="20" r="4"/>
+        <path d="M26 28 L54 56"/><path d="M45 47 L51 41 M39 41 L44 36 M49 51 L55 45"/></g></symbol>
+      <symbol id="i-terminal" viewBox="0 0 64 64"><g fill="none" stroke="#141833" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="6" y="11" width="52" height="42" rx="4" fill="#fff"/><path d="M6 20h52"/>
+        <path d="M15 30l8 6-8 6"/><path d="M29 44h15"/></g></symbol>
+      <symbol id="i-network" viewBox="0 0 64 64"><g fill="none" stroke="#141833" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 16 L32 32 L50 16 M32 32 V52 M14 16 V46 L32 52 L50 46 V16"/>
+        <circle cx="14" cy="16" r="5.5" fill="#fff"/><circle cx="50" cy="16" r="5.5" fill="#fff"/><circle cx="32" cy="32" r="6.5" fill="#141833"/>
+        <circle cx="14" cy="46" r="5.5" fill="#fff"/><circle cx="50" cy="46" r="5.5" fill="#fff"/><circle cx="32" cy="52" r="5.5" fill="#fff"/></g></symbol>
+      <symbol id="i-cloud" viewBox="0 0 64 64"><g fill="none" stroke="#141833" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 48h30a10 10 0 0 0 0-20 14 14 0 0 0-27-3 11.5 11.5 0 0 0-3 23z" fill="#fff"/>
+        <path d="M32 28 L40 31 V36 C40 40 36 43 32 44 C28 43 24 40 24 36 V31 Z" fill="#141833"/></g></symbol>
+      <symbol id="i-eye" viewBox="0 0 64 64"><g fill="none" stroke="#141833" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 32C14 17 50 17 60 32C50 47 14 47 4 32Z" fill="#fff"/>
+        <circle cx="32" cy="32" r="10" fill="#141833"/><circle cx="35.5" cy="28.5" r="3" fill="#fff" stroke="none"/></g></symbol>
+      <symbol id="i-bug" viewBox="0 0 64 64"><g fill="none" stroke="#141833" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 30H8M20 40H8M44 30h12M44 40h12M24 19l-6-8M40 19l6-8M21 50l-8 6M43 50l8 6"/>
+        <ellipse cx="32" cy="37" rx="13" ry="17" fill="#fff"/><path d="M32 22v31"/><circle cx="32" cy="22" r="7" fill="#141833"/></g></symbol>
+    </defs>
+  </svg>
+
+  <!-- page-wide sky behind every section -->
+  <div class="page-sky" aria-hidden="true">
+    <div class="world w-dawn"></div><div class="world w-twilight"></div><div class="world w-night"><div class="world-stars" id="world-stars"></div></div>
+    <div class="beams"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="page-shards" id="page-shards"></div>
+  </div>
+  <!-- world map (side navigation) -->
+  <nav class="worldmap" id="worldmap" aria-label="Worlds">
+    <button data-to="top"><i></i><span>Home</span></button>
+    <button data-to="experience"><i></i><span>Experience</span></button>
+    <button data-to="projects"><i></i><span>Projects</span></button>
+    <button data-to="certifications"><i></i><span>Certifications</span></button>
+  </nav>
+  <!-- menu transition -->
+  <div class="warp" id="warp" aria-hidden="true"><div class="warp-flash"></div></div>
+
+  <!-- ============ NAV ============ -->
+  <!-- ============ INTRO ============ -->
+  <div class="intro" id="intro" role="dialog" aria-label="Welcome to my portfolio" tabindex="-1">
+    <canvas class="intro-bits" id="intro-bits" aria-hidden="true"></canvas>
+    <div class="intro-edge bottom" aria-hidden="true"></div>
+    <div class="intro-center">
+      <div class="it-term" aria-hidden="true">
+        <div class="it-bar"><i class="r"></i><i class="y"></i><i class="g"></i><span>joyboy@sentinel: ~</span></div>
+        <div class="it-body" id="term-body"></div>
+      </div>
+      <p class="intro-title" id="intro-title" aria-label="Welcome to my portfolio"></p>
+      <p class="intro-hint"><span class="k">[</span> press <b>ENTER</b> or click to access <span class="k">]</span></p>
+    </div>
+    <div class="intro-flash" aria-hidden="true"></div>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="#top" aria-label="Back to top">
+      <span class="br-wrap" title="Open terminal"><svg class="brand-star brand-br" viewBox="-30 -30 583 626" aria-hidden="true"><defs><linearGradient id="br-ice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".45" stop-color="#eaf6ff" stop-opacity=".1"/><stop offset=".72" stop-color="#d4ecff" stop-opacity=".6"/><stop offset="1" stop-color="#a9d6fb" stop-opacity=".9"/></linearGradient></defs><g class="br-b"><g transform="translate(-77.8 -34.7)"><path d="M289.6 34.7 L106.6 47.7 L102.0 52.0 L104.8 65.6 L101.6 85.6 L107.0 89.2 L119.7 90.3 L124.7 95.9 L77.8 423.5 L81.8 429.1 L99.1 438.8 L103.0 445.4 L92.4 512.4 L104.2 531.4 L95.5 548.8 L94.7 553.8 L98.2 556.5 L142.2 515.8 L179.4 512.2 L184.7 509.8 L264.6 411.2 L297.8 232.8 L281.4 205.3 L281.2 200.4 L308.3 166.8 L323.3 71.8ZM237.6 238.1 L242.7 249.6 L224.2 366.6 L182.1 414.1 L166.3 438.9 L143.0 461.4 L135.5 464.9 L131.3 460.2 L156.8 299.2 L164.0 290.8 L212.8 257.7 L233.6 238.4ZM243.3 83.4 L247.4 89.1 L243.1 134.9 L252.1 153.0 L250.7 167.9 L244.8 174.3 L173.5 224.9 L160.2 227.8 L156.8 224.1 L177.6 93.1 L182.3 87.8 L189.5 86.3Z" class="l-blue"/><path d="M289.6 34.7 L106.6 47.7 L102.0 52.0 L104.8 65.6 L101.6 85.6 L107.0 89.2 L119.7 90.3 L124.7 95.9 L77.8 423.5 L81.8 429.1 L99.1 438.8 L103.0 445.4 L92.4 512.4 L104.2 531.4 L95.5 548.8 L94.7 553.8 L98.2 556.5 L142.2 515.8 L179.4 512.2 L184.7 509.8 L264.6 411.2 L297.8 232.8 L281.4 205.3 L281.2 200.4 L308.3 166.8 L323.3 71.8ZM237.6 238.1 L242.7 249.6 L224.2 366.6 L182.1 414.1 L166.3 438.9 L143.0 461.4 L135.5 464.9 L131.3 460.2 L156.8 299.2 L164.0 290.8 L212.8 257.7 L233.6 238.4ZM243.3 83.4 L247.4 89.1 L243.1 134.9 L252.1 153.0 L250.7 167.9 L244.8 174.3 L173.5 224.9 L160.2 227.8 L156.8 224.1 L177.6 93.1 L182.3 87.8 L189.5 86.3Z" class="l-ink"/><path d="M289.6 34.7 L106.6 47.7 L102.0 52.0 L104.8 65.6 L101.6 85.6 L107.0 89.2 L119.7 90.3 L124.7 95.9 L77.8 423.5 L81.8 429.1 L99.1 438.8 L103.0 445.4 L92.4 512.4 L104.2 531.4 L95.5 548.8 L94.7 553.8 L98.2 556.5 L142.2 515.8 L179.4 512.2 L184.7 509.8 L264.6 411.2 L297.8 232.8 L281.4 205.3 L281.2 200.4 L308.3 166.8 L323.3 71.8ZM237.6 238.1 L242.7 249.6 L224.2 366.6 L182.1 414.1 L166.3 438.9 L143.0 461.4 L135.5 464.9 L131.3 460.2 L156.8 299.2 L164.0 290.8 L212.8 257.7 L233.6 238.4ZM243.3 83.4 L247.4 89.1 L243.1 134.9 L252.1 153.0 L250.7 167.9 L244.8 174.3 L173.5 224.9 L160.2 227.8 L156.8 224.1 L177.6 93.1 L182.3 87.8 L189.5 86.3Z" class="l-fill"/><path d="M289.6 34.7 L106.6 47.7 L102.0 52.0 L104.8 65.6 L101.6 85.6 L107.0 89.2 L119.7 90.3 L124.7 95.9 L77.8 423.5 L81.8 429.1 L99.1 438.8 L103.0 445.4 L92.4 512.4 L104.2 531.4 L95.5 548.8 L94.7 553.8 L98.2 556.5 L142.2 515.8 L179.4 512.2 L184.7 509.8 L264.6 411.2 L297.8 232.8 L281.4 205.3 L281.2 200.4 L308.3 166.8 L323.3 71.8ZM237.6 238.1 L242.7 249.6 L224.2 366.6 L182.1 414.1 L166.3 438.9 L143.0 461.4 L135.5 464.9 L131.3 460.2 L156.8 299.2 L164.0 290.8 L212.8 257.7 L233.6 238.4ZM243.3 83.4 L247.4 89.1 L243.1 134.9 L252.1 153.0 L250.7 167.9 L244.8 174.3 L173.5 224.9 L160.2 227.8 L156.8 224.1 L177.6 93.1 L182.3 87.8 L189.5 86.3Z" class="l-ice"/></g></g><g class="br-r"><g transform="translate(3.8 -544.8)"><path d="M240.6 606.8 L238.0 610.9 L243.8 624.4 L240.1 628.6 L227.8 631.4 L218.6 639.9 L216.6 646.0 L237.7 650.6 L243.4 658.1 L192.6 1003.8 L208.7 1033.4 L210.6 1046.2 L218.5 1065.5 L219.3 1085.2 L216.8 1107.1 L219.2 1110.9 L224.5 1108.6 L270.6 817.6 L275.4 812.3 L279.4 812.1 L282.7 815.8 L332.3 996.6 L372.4 1024.6 L377.7 1047.1 L391.2 1067.9 L397.8 1070.5 L402.4 1066.2 L402.7 1058.3 L351.8 823.1 L351.1 809.3 L357.5 781.2 L404.2 704.9 L427.2 659.8 L422.9 643.3 L422.9 624.5 L401.4 610.1 L395.2 599.6 L389.6 597.0ZM375.3 643.5 L378.7 647.2 L376.6 654.3 L287.8 783.8 L283.2 788.1 L279.2 788.3 L275.8 784.6 L296.7 652.6 L302.3 648.3Z" class="l-blue"/><path d="M240.6 606.8 L238.0 610.9 L243.8 624.4 L240.1 628.6 L227.8 631.4 L218.6 639.9 L216.6 646.0 L237.7 650.6 L243.4 658.1 L192.6 1003.8 L208.7 1033.4 L210.6 1046.2 L218.5 1065.5 L219.3 1085.2 L216.8 1107.1 L219.2 1110.9 L224.5 1108.6 L270.6 817.6 L275.4 812.3 L279.4 812.1 L282.7 815.8 L332.3 996.6 L372.4 1024.6 L377.7 1047.1 L391.2 1067.9 L397.8 1070.5 L402.4 1066.2 L402.7 1058.3 L351.8 823.1 L351.1 809.3 L357.5 781.2 L404.2 704.9 L427.2 659.8 L422.9 643.3 L422.9 624.5 L401.4 610.1 L395.2 599.6 L389.6 597.0ZM375.3 643.5 L378.7 647.2 L376.6 654.3 L287.8 783.8 L283.2 788.1 L279.2 788.3 L275.8 784.6 L296.7 652.6 L302.3 648.3Z" class="l-ink"/><path d="M240.6 606.8 L238.0 610.9 L243.8 624.4 L240.1 628.6 L227.8 631.4 L218.6 639.9 L216.6 646.0 L237.7 650.6 L243.4 658.1 L192.6 1003.8 L208.7 1033.4 L210.6 1046.2 L218.5 1065.5 L219.3 1085.2 L216.8 1107.1 L219.2 1110.9 L224.5 1108.6 L270.6 817.6 L275.4 812.3 L279.4 812.1 L282.7 815.8 L332.3 996.6 L372.4 1024.6 L377.7 1047.1 L391.2 1067.9 L397.8 1070.5 L402.4 1066.2 L402.7 1058.3 L351.8 823.1 L351.1 809.3 L357.5 781.2 L404.2 704.9 L427.2 659.8 L422.9 643.3 L422.9 624.5 L401.4 610.1 L395.2 599.6 L389.6 597.0ZM375.3 643.5 L378.7 647.2 L376.6 654.3 L287.8 783.8 L283.2 788.1 L279.2 788.3 L275.8 784.6 L296.7 652.6 L302.3 648.3Z" class="l-fill"/><path d="M240.6 606.8 L238.0 610.9 L243.8 624.4 L240.1 628.6 L227.8 631.4 L218.6 639.9 L216.6 646.0 L237.7 650.6 L243.4 658.1 L192.6 1003.8 L208.7 1033.4 L210.6 1046.2 L218.5 1065.5 L219.3 1085.2 L216.8 1107.1 L219.2 1110.9 L224.5 1108.6 L270.6 817.6 L275.4 812.3 L279.4 812.1 L282.7 815.8 L332.3 996.6 L372.4 1024.6 L377.7 1047.1 L391.2 1067.9 L397.8 1070.5 L402.4 1066.2 L402.7 1058.3 L351.8 823.1 L351.1 809.3 L357.5 781.2 L404.2 704.9 L427.2 659.8 L422.9 643.3 L422.9 624.5 L401.4 610.1 L395.2 599.6 L389.6 597.0ZM375.3 643.5 L378.7 647.2 L376.6 654.3 L287.8 783.8 L283.2 788.1 L279.2 788.3 L275.8 784.6 L296.7 652.6 L302.3 648.3Z" class="l-ice"/></g></g><rect class="br-cur" x="269" y="134" width="62" height="370" rx="8"/></svg><span class="br-scr" aria-hidden="true"></span></span>
+      <span class="brand-name" id="brand-name">Brandon Restrepo</span><span class="br-path" aria-hidden="true"><span class="bp-text">~</span><i class="bp-cur"></i></span>
+    </a>
+    <nav class="nav-links" id="nav-links" aria-label="Sections">
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#certifications">Certifications</a>
+    </nav>
+    <div class="nav-right">
+      <a class="pill-btn" id="resume-btn" href="#" target="_blank" rel="noopener" title="Download résumé (PDF)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3v5h5M10 13l3 3 3-3M13 9v7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Résumé</span></a>
+      <a class="btn-cta" id="cta" href="#"><svg viewBox="0 0 64 80" aria-hidden="true"><use href="#crystal"/></svg><span id="cta-label">Contact</span></a>
+      <div class="more" id="more">
+        <button class="icon-btn more-btn" id="more-btn" aria-label="More options" aria-expanded="false" aria-controls="more-panel">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.8" fill="currentColor"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/><circle cx="19" cy="12" r="1.8" fill="currentColor"/></svg>
+        </button>
+        <div class="more-panel" id="more-panel" hidden>
+          <button class="more-item" id="mi-resume"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z M14 3v5h5 M10 13h6 M10 17h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Résumé</span><em class="state">PDF</em></button>
+          <button class="more-item" id="mi-contact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Contact me</span></button>
+          <div class="more-sep" role="separator"></div>
+      <button class="more-item" id="quick-btn" title="Recruiter quick view"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 10h10M4 15h16M4 20h8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Quick view</span></button>
+      <a class="more-item" id="linkedin-btn" href="#" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.3 8.6h3v10h-3zM6.8 4.2a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6zM10.2 8.6H13v1.4h.1c.4-.8 1.4-1.6 2.9-1.6 3.1 0 3.7 2 3.7 4.7v5.5h-3v-4.9c0-1.2 0-2.7-1.6-2.7s-1.9 1.3-1.9 2.6v5h-3z"/></svg><span>LinkedIn</span></a>
+      <a class="more-item" id="github-btn" href="#" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5a9.7 9.7 0 0 0-3.1 18.9c.5.1.7-.2.7-.5v-1.7c-2.7.6-3.3-1.2-3.3-1.2-.4-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.2-4.4-1.1-4.4-4.8 0-1.1.4-1.9 1-2.6-.1-.2-.4-1.2.1-2.6 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.6.6.7 1 1.5 1 2.6 0 3.7-2.3 4.6-4.4 4.8.3.3.6.9.6 1.8v2.6c0 .3.2.6.7.5A9.7 9.7 0 0 0 12 2.5z"/></svg><span>GitHub</span></a>
+      <button class="more-item" id="sound-btn" aria-label="Toggle sound" title="Toggle sound">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path class="wave" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><path class="mute" d="M16 9l6 6M22 9l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Sound</span><em class="state" id="sound-state">Off</em>
+      </button>
+          <button class="more-item" id="fairy-toggle"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Fairy cursor</span><em class="state" id="fairy-state">Off</em></button>
+          <button class="more-item" id="theme-toggle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Twilight mode</span><em class="state" id="theme-state">Off</em></button>
+          <button class="more-item" id="term-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7 9l3 3-3 3M12 15h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Terminal</span><em class="state">~</em></button>
+          <button class="more-item" id="keys-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7 10h1M11 10h1M15 10h2M8 14h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Shortcuts</span><em class="state">?</em></button>
+        </div>
+      </div>
+      <button class="icon-btn menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ HERO / TITLE SCREEN ============ -->
+  <section class="hero" id="top">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="prism"></div>
+      <svg class="hero-net" id="hero-net" aria-hidden="true" preserveAspectRatio="none"></svg>
+      <div class="sky-tint" aria-hidden="true"></div>
+      <div class="night-stars" aria-hidden="true"></div>
+      <div class="beams" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      <svg class="clouds" viewBox="0 0 1440 260" preserveAspectRatio="none" aria-hidden="true">
+        <defs><filter id="cloud-blur" x="-10%" y="-30%" width="120%" height="160%"><feGaussianBlur stdDeviation="14"/></filter></defs>
+        <g filter="url(#cloud-blur)">
+          <g class="cloud-far" fill="#e6e9f6"><ellipse cx="120" cy="200" rx="230" ry="70"/><ellipse cx="420" cy="215" rx="260" ry="62"/><ellipse cx="760" cy="205" rx="250" ry="70"/><ellipse cx="1100" cy="212" rx="270" ry="66"/><ellipse cx="1390" cy="200" rx="220" ry="72"/></g>
+          <g class="cloud-near" fill="#f1f3fa"><ellipse cx="260" cy="250" rx="300" ry="60"/><ellipse cx="640" cy="258" rx="320" ry="55"/><ellipse cx="1000" cy="252" rx="300" ry="60"/><ellipse cx="1340" cy="256" rx="260" ry="56"/></g>
+        </g>
+      </svg>
+      <div class="shards" id="shards"><div class="layer far" data-depth="6"></div><div class="layer mid" data-depth="14"></div><div class="layer near" data-depth="28"></div></div>
+    </div>
+
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="lockup">
+          <div class="logo-wrap">
+            <h1 class="logo" id="logo"><svg class="name-logo" viewBox="8 -149 2217 1330" role="img" aria-label="Brandon Restrepo">
+  <defs>
+    <linearGradient id="nl-ice" gradientUnits="userSpaceOnUse" x1="0" y1="-149" x2="0" y2="1181">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/><stop offset=".35" stop-color="#eaf6ff" stop-opacity=".0"/>
+      <stop offset=".62" stop-color="#d4ecff" stop-opacity=".55"/><stop offset="1" stop-color="#a9d6fb" stop-opacity=".85"/>
+    </linearGradient>
+    <filter id="nl-frost-f" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="6"/><feColorMatrix values="0 0 0 0 .62  0 0 0 0 .8  0 0 0 0 1  0 0 0 1.6 -.75"/></filter>
+    <linearGradient id="nl-shine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity="1"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <clipPath id="nl-clip"><path d="M289.6 34.7 L106.6 47.7 L102.0 52.0 L104.8 65.6 L101.6 85.6 L107.0 89.2 L119.7 90.3 L124.7 95.9 L77.8 423.5 L81.8 429.1 L99.1 438.8 L103.0 445.4 L92.4 512.4 L104.2 531.4 L95.5 548.8 L94.7 553.8 L98.2 556.5 L142.2 515.8 L179.4 512.2 L184.7 509.8 L264.6 411.2 L297.8 232.8 L281.4 205.3 L281.2 200.4 L308.3 166.8 L323.3 71.8ZM237.6 238.1 L242.7 249.6 L224.2 366.6 L182.1 414.1 L166.3 438.9 L143.0 461.4 L135.5 464.9 L131.3 460.2 L156.8 299.2 L164.0 290.8 L212.8 257.7 L233.6 238.4ZM243.3 83.4 L247.4 89.1 L243.1 134.9 L252.1 153.0 L250.7 167.9 L244.8 174.3 L173.5 224.9 L160.2 227.8 L156.8 224.1 L177.6 93.1 L182.3 87.8 L189.5 86.3Z M381.6 28.1 L379.0 32.2 L384.8 45.7 L381.1 49.9 L368.8 52.7 L359.6 61.3 L357.6 67.4 L378.7 71.8 L384.4 79.3 L333.6 425.0 L349.7 454.5 L351.6 467.3 L359.5 486.5 L360.3 506.2 L357.8 528.1 L360.2 531.9 L365.5 529.5 L411.6 238.5 L416.4 233.3 L420.4 233.0 L423.7 236.7 L473.3 417.1 L513.4 444.8 L518.7 467.2 L532.2 488.0 L538.8 490.5 L543.4 486.2 L543.7 478.3 L492.8 243.6 L492.1 229.8 L498.5 201.7 L545.2 125.2 L568.2 80.1 L563.9 63.6 L563.9 44.8 L542.4 30.5 L536.2 20.1 L530.6 17.5ZM516.3 64.0 L519.7 67.7 L517.6 74.8 L428.8 204.7 L424.2 209.0 L420.2 209.3 L416.8 205.5 L437.7 73.5 L443.3 69.2Z M684.6 6.5 L678.8 11.9 L689.8 29.9 L693.9 60.2 L669.9 124.2 L645.6 203.1 L639.5 210.4 L623.2 213.6 L619.7 216.8 L627.8 271.6 L608.4 325.4 L601.2 364.4 L610.8 385.5 L606.2 414.5 L613.3 431.8 L607.7 479.6 L610.8 485.4 L614.8 485.1 L624.1 469.6 L676.9 292.8 L689.5 263.2 L697.2 257.7 L767.2 252.7 L773.5 257.2 L776.0 265.9 L774.0 297.7 L778.0 416.1 L806.4 442.7 L811.0 463.2 L821.1 474.3 L827.0 474.9 L830.5 471.7 L832.8 456.7 L832.5 258.9 L839.0 242.7 L854.4 220.8 L860.2 202.6 L857.0 197.9 L840.6 195.1 L835.9 187.5 L837.9 168.6 L835.6 114.4 L837.2 23.3 L834.8 0.7 L828.6 -3.8ZM761.8 24.7 L768.2 28.2 L770.5 38.9 L768.1 110.3 L771.8 199.0 L767.3 202.3 L706.3 206.6 L703.0 202.9 L748.0 62.3 L756.0 30.1Z M943.6 -12.0 L939.7 -5.8 L949.8 5.4 L951.7 31.0 L956.8 42.5 L900.5 397.5 L922.7 438.4 L925.2 472.8 L929.9 480.4 L937.8 480.8 L982.9 201.8 L988.9 195.4 L991.9 195.2 L996.3 198.8 L1023.8 362.0 L1042.9 385.3 L1046.4 406.8 L1060.2 419.7 L1064.7 447.1 L1070.3 461.5 L1079.9 463.8 L1085.7 458.4 L1152.8 28.5 L1168.6 3.6 L1174.0 -24.4 L1169.6 -28.1 L1087.6 -22.2 L1084.3 -20.0 L1083.4 -14.0 L1093.1 -0.9 L1063.3 194.0 L1056.5 199.5 L1051.3 194.9 L1045.8 179.5 L1023.4 15.0 L1016.8 -12.2 L1010.6 -16.8Z M1367.6 -42.2 L1211.6 -31.1 L1208.3 -28.9 L1210.4 -17.2 L1208.9 -1.2 L1221.4 19.6 L1177.1 324.3 L1181.0 331.0 L1193.7 338.0 L1199.1 347.5 L1188.2 410.6 L1197.4 433.6 L1189.8 450.0 L1190.9 455.9 L1200.2 453.2 L1221.0 433.9 L1225.3 425.7 L1233.6 417.2 L1266.7 413.9 L1273.4 409.4 L1349.2 305.2 L1397.4 7.1 L1374.0 -38.7ZM1329.5 5.0 L1335.4 11.5 L1331.1 57.3 L1339.6 72.5 L1341.2 81.3 L1311.9 266.3 L1307.7 273.5 L1274.0 311.5 L1254.1 343.6 L1233.1 363.9 L1226.0 365.4 L1222.8 360.6 L1277.6 14.6 L1284.5 8.2Z M1588.6 -58.0 L1464.6 -49.1 L1458.0 -44.7 L1433.8 -10.3 L1378.3 339.7 L1379.5 344.5 L1397.1 365.0 L1400.1 389.5 L1405.9 402.9 L1418.5 398.1 L1451.4 365.1 L1466.5 357.1 L1498.2 332.1 L1572.6 261.5 L1616.2 -13.5 L1593.0 -54.3ZM1542.5 -10.2 L1560.1 -2.5 L1562.4 1.2 L1520.9 232.6 L1501.1 263.7 L1459.3 309.2 L1449.5 314.8 L1444.1 305.3 L1496.4 0.0 L1504.5 -7.5Z M1660.6 -63.1 L1656.7 -56.9 L1666.8 -45.7 L1668.7 -20.2 L1673.8 -8.7 L1617.5 346.3 L1639.7 387.3 L1642.2 421.7 L1646.9 429.3 L1654.8 429.7 L1699.9 150.6 L1705.9 144.3 L1708.9 144.0 L1713.3 147.7 L1740.8 310.8 L1759.9 334.2 L1763.4 355.7 L1777.2 368.6 L1781.7 395.9 L1787.3 410.3 L1796.9 412.6 L1802.7 407.3 L1869.8 -22.6 L1885.6 -47.5 L1891.0 -75.6 L1886.6 -79.2 L1804.6 -73.4 L1801.3 -71.2 L1800.4 -65.2 L1810.1 -52.0 L1780.3 142.9 L1773.5 148.3 L1768.3 143.8 L1762.8 128.3 L1740.4 -36.2 L1733.8 -63.4 L1727.6 -67.9Z M240.6 606.8 L238.0 610.9 L243.8 624.4 L240.1 628.6 L227.8 631.4 L218.6 639.9 L216.6 646.0 L237.7 650.6 L243.4 658.1 L192.6 1003.8 L208.7 1033.4 L210.6 1046.2 L218.5 1065.5 L219.3 1085.2 L216.8 1107.1 L219.2 1110.9 L224.5 1108.6 L270.6 817.6 L275.4 812.3 L279.4 812.1 L282.7 815.8 L332.3 996.6 L372.4 1024.6 L377.7 1047.1 L391.2 1067.9 L397.8 1070.5 L402.4 1066.2 L402.7 1058.3 L351.8 823.1 L351.1 809.3 L357.5 781.2 L404.2 704.9 L427.2 659.8 L422.9 643.3 L422.9 624.5 L401.4 610.1 L395.2 599.6 L389.6 597.0ZM375.3 643.5 L378.7 647.2 L376.6 654.3 L287.8 783.8 L283.2 788.1 L279.2 788.3 L275.8 784.6 L296.7 652.6 L302.3 648.3Z M675.6 578.2 L514.6 588.8 L511.2 592.0 L511.2 597.9 L548.8 641.9 L525.6 787.9 L518.5 795.3 L504.2 798.3 L501.1 805.4 L505.2 817.0 L503.8 826.0 L515.8 849.9 L478.3 1086.9 L484.4 1104.3 L487.4 1104.1 L518.4 1077.4 L525.5 1075.9 L539.4 1081.9 L544.6 1080.6 L576.6 1053.7 L595.9 1050.5 L611.4 1033.6 L608.4 1027.9 L604.5 1027.2 L563.4 1030.9 L558.2 1026.3 L585.2 849.3 L593.3 841.9 L625.2 833.8 L657.6 792.1 L654.4 787.4 L594.4 791.3 L591.2 786.6 L614.8 637.6 L620.9 630.3 L647.0 627.6 L675.8 601.9 L685.2 586.4 L680.3 579.8Z M949.6 560.1 L856.5 567.2 L843.8 584.9 L704.9 711.8 L700.6 732.9 L702.0 736.7 L723.3 752.2 L733.1 771.3 L756.8 771.7 L815.9 817.3 L827.8 829.4 L827.2 833.4 L787.7 876.6 L763.5 910.8 L759.2 937.8 L732.6 968.3 L720.9 985.9 L655.0 1064.4 L649.1 1076.7 L651.0 1083.5 L658.0 1083.0 L683.3 1073.4 L693.5 1064.8 L697.8 1056.6 L708.4 1046.1 L733.8 1035.5 L750.0 1020.6 L802.2 953.8 L891.3 847.0 L892.9 837.0 L882.6 814.9 L880.2 786.4 L798.7 719.5 L796.8 712.7 L885.7 626.7 L890.5 627.3 L898.9 636.7 L902.8 662.2 L908.5 663.8 L912.0 660.6 L952.4 567.9 L953.2 562.9Z M990.5 558.4 L986.8 562.6 L987.2 566.6 L1027.8 610.4 L1031.1 627.0 L1042.4 630.2 L1045.8 633.9 L1000.0 954.6 L1023.8 991.6 L1022.1 1014.5 L1024.1 1027.2 L1035.7 1041.3 L1040.7 1041.0 L1044.5 1035.8 L1115.0 609.6 L1123.1 602.1 L1132.4 605.5 L1136.6 604.2 L1148.0 588.6 L1175.3 566.0 L1179.8 549.9 L1175.6 545.2Z M1232.6 541.5 L1230.0 545.6 L1235.8 559.1 L1232.1 563.3 L1219.8 566.1 L1210.6 574.6 L1208.6 580.7 L1229.7 585.2 L1235.4 592.8 L1184.6 938.5 L1200.7 968.1 L1202.6 980.9 L1210.5 1000.1 L1211.3 1019.9 L1208.8 1041.8 L1211.2 1045.6 L1216.5 1043.3 L1262.6 752.3 L1267.4 747.0 L1271.4 746.7 L1274.7 750.5 L1324.3 931.3 L1364.4 959.3 L1369.7 981.7 L1383.2 1002.6 L1389.8 1005.1 L1394.4 1000.9 L1394.7 992.9 L1343.8 757.8 L1343.1 744.0 L1349.5 715.9 L1396.2 639.6 L1419.2 594.5 L1414.9 578.0 L1414.9 559.2 L1393.4 544.8 L1387.2 534.3 L1381.6 531.7ZM1367.3 578.1 L1370.7 581.9 L1368.6 588.9 L1279.8 718.5 L1275.2 722.7 L1271.2 723.0 L1267.8 719.3 L1288.7 587.3 L1294.3 582.9Z M1667.6 512.8 L1506.6 523.4 L1503.2 526.6 L1503.2 532.6 L1540.8 576.6 L1517.6 722.6 L1510.5 730.0 L1496.2 732.9 L1493.1 740.1 L1497.2 751.7 L1495.8 760.7 L1507.8 784.6 L1470.3 1021.6 L1476.4 1039.0 L1479.4 1038.8 L1510.4 1012.0 L1517.5 1010.6 L1531.4 1016.6 L1536.6 1015.3 L1568.6 988.4 L1587.9 985.2 L1603.4 968.3 L1600.4 962.6 L1596.5 961.8 L1555.4 965.5 L1550.2 960.9 L1577.2 784.0 L1585.3 776.5 L1617.2 768.5 L1649.6 726.8 L1646.4 722.0 L1586.4 726.0 L1583.2 721.3 L1606.8 572.3 L1612.9 564.9 L1639.0 562.2 L1667.8 536.6 L1677.2 521.1 L1672.3 514.5Z M1904.6 497.2 L1721.6 509.3 L1717.2 512.5 L1719.6 528.2 L1716.6 547.2 L1719.1 550.0 L1733.7 552.0 L1739.7 557.6 L1678.7 942.6 L1674.8 948.8 L1674.0 953.8 L1676.7 955.6 L1706.7 934.8 L1719.9 895.3 L1735.6 877.5 L1738.5 871.3 L1759.8 768.0 L1827.8 720.0 L1847.6 700.9 L1854.6 700.4 L1861.5 706.9 L1867.7 705.5 L1917.0 662.7 L1938.3 534.6ZM1879.3 544.4 L1883.4 550.1 L1869.7 630.2 L1866.1 634.3 L1844.5 645.7 L1785.2 689.2 L1777.7 692.6 L1773.9 691.9 L1770.6 687.1 L1797.9 552.7 L1804.5 548.4Z M2127.6 482.5 L2003.6 490.7 L1997.0 495.1 L1972.8 529.4 L1917.3 879.4 L1918.5 884.2 L1936.1 904.8 L1939.1 929.4 L1944.9 942.9 L1957.5 938.1 L1990.4 905.2 L2005.5 897.3 L2037.2 872.5 L2111.6 802.2 L2155.2 527.2 L2132.0 486.2ZM2081.5 530.1 L2099.1 537.9 L2101.4 541.7 L2059.9 773.0 L2040.1 804.0 L1998.3 849.3 L1988.5 854.9 L1983.1 845.3 L2035.4 540.1 L2043.5 532.6Z" clip-rule="evenodd"/></clipPath>
+  </defs>
+  <g class="letters"><g class="ltr" style="--i:0"><path d="M289.6 34.7 L106.6 47.7 L102.0 52.0 L104.8 65.6 L101.6 85.6 L107.0 89.2 L119.7 90.3 L124.7 95.9 L77.8 423.5 L81.8 429.1 L99.1 438.8 L103.0 445.4 L92.4 512.4 L104.2 531.4 L95.5 548.8 L94.7 553.8 L98.2 556.5 L142.2 515.8 L179.4 512.2 L184.7 509.8 L264.6 411.2 L297.8 232.8 L281.4 205.3 L281.2 200.4 L308.3 166.8 L323.3 71.8ZM237.6 238.1 L242.7 249.6 L224.2 366.6 L182.1 414.1 L166.3 438.9 L143.0 461.4 L135.5 464.9 L131.3 460.2 L156.8 299.2 L164.0 290.8 L212.8 257.7 L233.6 238.4ZM243.3 83.4 L247.4 89.1 L243.1 134.9 L252.1 153.0 L250.7 167.9 L244.8 174.3 L173.5 224.9 L160.2 227.8 L156.8 224.1 L177.6 93.1 L182.3 87.8 L189.5 86.3Z" class="l-blue"/><path d="M289.6 34.7 L106.6 47.7 L102.0 52.0 L104.8 65.6 L101.6 85.6 L107.0 89.2 L119.7 90.3 L124.7 95.9 L77.8 423.5 L81.8 429.1 L99.1 438.8 L103.0 445.4 L92.4 512.4 L104.2 531.4 L95.5 548.8 L94.7 553.8 L98.2 556.5 L142.2 515.8 L179.4 512.2 L184.7 509.8 L264.6 411.2 L297.8 232.8 L281.4 205.3 L281.2 200.4 L308.3 166.8 L323.3 71.8ZM237.6 238.1 L242.7 249.6 L224.2 366.6 L182.1 414.1 L166.3 438.9 L143.0 461.4 L135.5 464.9 L131.3 460.2 L156.8 299.2 L164.0 290.8 L212.8 257.7 L233.6 238.4ZM243.3 83.4 L247.4 89.1 L243.1 134.9 L252.1 153.0 L250.7 167.9 L244.8 174.3 L173.5 224.9 L160.2 227.8 L156.8 224.1 L177.6 93.1 L182.3 87.8 L189.5 86.3Z" class="l-ink"/><path d="M289.6 34.7 L106.6 47.7 L102.0 52.0 L104.8 65.6 L101.6 85.6 L107.0 89.2 L119.7 90.3 L124.7 95.9 L77.8 423.5 L81.8 429.1 L99.1 438.8 L103.0 445.4 L92.4 512.4 L104.2 531.4 L95.5 548.8 L94.7 553.8 L98.2 556.5 L142.2 515.8 L179.4 512.2 L184.7 509.8 L264.6 411.2 L297.8 232.8 L281.4 205.3 L281.2 200.4 L308.3 166.8 L323.3 71.8ZM237.6 238.1 L242.7 249.6 L224.2 366.6 L182.1 414.1 L166.3 438.9 L143.0 461.4 L135.5 464.9 L131.3 460.2 L156.8 299.2 L164.0 290.8 L212.8 257.7 L233.6 238.4ZM243.3 83.4 L247.4 89.1 L243.1 134.9 L252.1 153.0 L250.7 167.9 L244.8 174.3 L173.5 224.9 L160.2 227.8 L156.8 224.1 L177.6 93.1 L182.3 87.8 L189.5 86.3Z" class="l-fill"/><path d="M289.6 34.7 L106.6 47.7 L102.0 52.0 L104.8 65.6 L101.6 85.6 L107.0 89.2 L119.7 90.3 L124.7 95.9 L77.8 423.5 L81.8 429.1 L99.1 438.8 L103.0 445.4 L92.4 512.4 L104.2 531.4 L95.5 548.8 L94.7 553.8 L98.2 556.5 L142.2 515.8 L179.4 512.2 L184.7 509.8 L264.6 411.2 L297.8 232.8 L281.4 205.3 L281.2 200.4 L308.3 166.8 L323.3 71.8ZM237.6 238.1 L242.7 249.6 L224.2 366.6 L182.1 414.1 L166.3 438.9 L143.0 461.4 L135.5 464.9 L131.3 460.2 L156.8 299.2 L164.0 290.8 L212.8 257.7 L233.6 238.4ZM243.3 83.4 L247.4 89.1 L243.1 134.9 L252.1 153.0 L250.7 167.9 L244.8 174.3 L173.5 224.9 L160.2 227.8 L156.8 224.1 L177.6 93.1 L182.3 87.8 L189.5 86.3Z" class="l-ice"/></g><g class="ltr" style="--i:1"><path d="M381.6 28.1 L379.0 32.2 L384.8 45.7 L381.1 49.9 L368.8 52.7 L359.6 61.3 L357.6 67.4 L378.7 71.8 L384.4 79.3 L333.6 425.0 L349.7 454.5 L351.6 467.3 L359.5 486.5 L360.3 506.2 L357.8 528.1 L360.2 531.9 L365.5 529.5 L411.6 238.5 L416.4 233.3 L420.4 233.0 L423.7 236.7 L473.3 417.1 L513.4 444.8 L518.7 467.2 L532.2 488.0 L538.8 490.5 L543.4 486.2 L543.7 478.3 L492.8 243.6 L492.1 229.8 L498.5 201.7 L545.2 125.2 L568.2 80.1 L563.9 63.6 L563.9 44.8 L542.4 30.5 L536.2 20.1 L530.6 17.5ZM516.3 64.0 L519.7 67.7 L517.6 74.8 L428.8 204.7 L424.2 209.0 L420.2 209.3 L416.8 205.5 L437.7 73.5 L443.3 69.2Z" class="l-blue"/><path d="M381.6 28.1 L379.0 32.2 L384.8 45.7 L381.1 49.9 L368.8 52.7 L359.6 61.3 L357.6 67.4 L378.7 71.8 L384.4 79.3 L333.6 425.0 L349.7 454.5 L351.6 467.3 L359.5 486.5 L360.3 506.2 L357.8 528.1 L360.2 531.9 L365.5 529.5 L411.6 238.5 L416.4 233.3 L420.4 233.0 L423.7 236.7 L473.3 417.1 L513.4 444.8 L518.7 467.2 L532.2 488.0 L538.8 490.5 L543.4 486.2 L543.7 478.3 L492.8 243.6 L492.1 229.8 L498.5 201.7 L545.2 125.2 L568.2 80.1 L563.9 63.6 L563.9 44.8 L542.4 30.5 L536.2 20.1 L530.6 17.5ZM516.3 64.0 L519.7 67.7 L517.6 74.8 L428.8 204.7 L424.2 209.0 L420.2 209.3 L416.8 205.5 L437.7 73.5 L443.3 69.2Z" class="l-ink"/><path d="M381.6 28.1 L379.0 32.2 L384.8 45.7 L381.1 49.9 L368.8 52.7 L359.6 61.3 L357.6 67.4 L378.7 71.8 L384.4 79.3 L333.6 425.0 L349.7 454.5 L351.6 467.3 L359.5 486.5 L360.3 506.2 L357.8 528.1 L360.2 531.9 L365.5 529.5 L411.6 238.5 L416.4 233.3 L420.4 233.0 L423.7 236.7 L473.3 417.1 L513.4 444.8 L518.7 467.2 L532.2 488.0 L538.8 490.5 L543.4 486.2 L543.7 478.3 L492.8 243.6 L492.1 229.8 L498.5 201.7 L545.2 125.2 L568.2 80.1 L563.9 63.6 L563.9 44.8 L542.4 30.5 L536.2 20.1 L530.6 17.5ZM516.3 64.0 L519.7 67.7 L517.6 74.8 L428.8 204.7 L424.2 209.0 L420.2 209.3 L416.8 205.5 L437.7 73.5 L443.3 69.2Z" class="l-fill"/><path d="M381.6 28.1 L379.0 32.2 L384.8 45.7 L381.1 49.9 L368.8 52.7 L359.6 61.3 L357.6 67.4 L378.7 71.8 L384.4 79.3 L333.6 425.0 L349.7 454.5 L351.6 467.3 L359.5 486.5 L360.3 506.2 L357.8 528.1 L360.2 531.9 L365.5 529.5 L411.6 238.5 L416.4 233.3 L420.4 233.0 L423.7 236.7 L473.3 417.1 L513.4 444.8 L518.7 467.2 L532.2 488.0 L538.8 490.5 L543.4 486.2 L543.7 478.3 L492.8 243.6 L492.1 229.8 L498.5 201.7 L545.2 125.2 L568.2 80.1 L563.9 63.6 L563.9 44.8 L542.4 30.5 L536.2 20.1 L530.6 17.5ZM516.3 64.0 L519.7 67.7 L517.6 74.8 L428.8 204.7 L424.2 209.0 L420.2 209.3 L416.8 205.5 L437.7 73.5 L443.3 69.2Z" class="l-ice"/></g><g class="ltr" style="--i:2"><path d="M684.6 6.5 L678.8 11.9 L689.8 29.9 L693.9 60.2 L669.9 124.2 L645.6 203.1 L639.5 210.4 L623.2 213.6 L619.7 216.8 L627.8 271.6 L608.4 325.4 L601.2 364.4 L610.8 385.5 L606.2 414.5 L613.3 431.8 L607.7 479.6 L610.8 485.4 L614.8 485.1 L624.1 469.6 L676.9 292.8 L689.5 263.2 L697.2 257.7 L767.2 252.7 L773.5 257.2 L776.0 265.9 L774.0 297.7 L778.0 416.1 L806.4 442.7 L811.0 463.2 L821.1 474.3 L827.0 474.9 L830.5 471.7 L832.8 456.7 L832.5 258.9 L839.0 242.7 L854.4 220.8 L860.2 202.6 L857.0 197.9 L840.6 195.1 L835.9 187.5 L837.9 168.6 L835.6 114.4 L837.2 23.3 L834.8 0.7 L828.6 -3.8ZM761.8 24.7 L768.2 28.2 L770.5 38.9 L768.1 110.3 L771.8 199.0 L767.3 202.3 L706.3 206.6 L703.0 202.9 L748.0 62.3 L756.0 30.1Z" class="l-blue"/><path d="M684.6 6.5 L678.8 11.9 L689.8 29.9 L693.9 60.2 L669.9 124.2 L645.6 203.1 L639.5 210.4 L623.2 213.6 L619.7 216.8 L627.8 271.6 L608.4 325.4 L601.2 364.4 L610.8 385.5 L606.2 414.5 L613.3 431.8 L607.7 479.6 L610.8 485.4 L614.8 485.1 L624.1 469.6 L676.9 292.8 L689.5 263.2 L697.2 257.7 L767.2 252.7 L773.5 257.2 L776.0 265.9 L774.0 297.7 L778.0 416.1 L806.4 442.7 L811.0 463.2 L821.1 474.3 L827.0 474.9 L830.5 471.7 L832.8 456.7 L832.5 258.9 L839.0 242.7 L854.4 220.8 L860.2 202.6 L857.0 197.9 L840.6 195.1 L835.9 187.5 L837.9 168.6 L835.6 114.4 L837.2 23.3 L834.8 0.7 L828.6 -3.8ZM761.8 24.7 L768.2 28.2 L770.5 38.9 L768.1 110.3 L771.8 199.0 L767.3 202.3 L706.3 206.6 L703.0 202.9 L748.0 62.3 L756.0 30.1Z" class="l-ink"/><path d="M684.6 6.5 L678.8 11.9 L689.8 29.9 L693.9 60.2 L669.9 124.2 L645.6 203.1 L639.5 210.4 L623.2 213.6 L619.7 216.8 L627.8 271.6 L608.4 325.4 L601.2 364.4 L610.8 385.5 L606.2 414.5 L613.3 431.8 L607.7 479.6 L610.8 485.4 L614.8 485.1 L624.1 469.6 L676.9 292.8 L689.5 263.2 L697.2 257.7 L767.2 252.7 L773.5 257.2 L776.0 265.9 L774.0 297.7 L778.0 416.1 L806.4 442.7 L811.0 463.2 L821.1 474.3 L827.0 474.9 L830.5 471.7 L832.8 456.7 L832.5 258.9 L839.0 242.7 L854.4 220.8 L860.2 202.6 L857.0 197.9 L840.6 195.1 L835.9 187.5 L837.9 168.6 L835.6 114.4 L837.2 23.3 L834.8 0.7 L828.6 -3.8ZM761.8 24.7 L768.2 28.2 L770.5 38.9 L768.1 110.3 L771.8 199.0 L767.3 202.3 L706.3 206.6 L703.0 202.9 L748.0 62.3 L756.0 30.1Z" class="l-fill"/><path d="M684.6 6.5 L678.8 11.9 L689.8 29.9 L693.9 60.2 L669.9 124.2 L645.6 203.1 L639.5 210.4 L623.2 213.6 L619.7 216.8 L627.8 271.6 L608.4 325.4 L601.2 364.4 L610.8 385.5 L606.2 414.5 L613.3 431.8 L607.7 479.6 L610.8 485.4 L614.8 485.1 L624.1 469.6 L676.9 292.8 L689.5 263.2 L697.2 257.7 L767.2 252.7 L773.5 257.2 L776.0 265.9 L774.0 297.7 L778.0 416.1 L806.4 442.7 L811.0 463.2 L821.1 474.3 L827.0 474.9 L830.5 471.7 L832.8 456.7 L832.5 258.9 L839.0 242.7 L854.4 220.8 L860.2 202.6 L857.0 197.9 L840.6 195.1 L835.9 187.5 L837.9 168.6 L835.6 114.4 L837.2 23.3 L834.8 0.7 L828.6 -3.8ZM761.8 24.7 L768.2 28.2 L770.5 38.9 L768.1 110.3 L771.8 199.0 L767.3 202.3 L706.3 206.6 L703.0 202.9 L748.0 62.3 L756.0 30.1Z" class="l-ice"/></g><g class="ltr" style="--i:3"><path d="M943.6 -12.0 L939.7 -5.8 L949.8 5.4 L951.7 31.0 L956.8 42.5 L900.5 397.5 L922.7 438.4 L925.2 472.8 L929.9 480.4 L937.8 480.8 L982.9 201.8 L988.9 195.4 L991.9 195.2 L996.3 198.8 L1023.8 362.0 L1042.9 385.3 L1046.4 406.8 L1060.2 419.7 L1064.7 447.1 L1070.3 461.5 L1079.9 463.8 L1085.7 458.4 L1152.8 28.5 L1168.6 3.6 L1174.0 -24.4 L1169.6 -28.1 L1087.6 -22.2 L1084.3 -20.0 L1083.4 -14.0 L1093.1 -0.9 L1063.3 194.0 L1056.5 199.5 L1051.3 194.9 L1045.8 179.5 L1023.4 15.0 L1016.8 -12.2 L1010.6 -16.8Z" class="l-blue"/><path d="M943.6 -12.0 L939.7 -5.8 L949.8 5.4 L951.7 31.0 L956.8 42.5 L900.5 397.5 L922.7 438.4 L925.2 472.8 L929.9 480.4 L937.8 480.8 L982.9 201.8 L988.9 195.4 L991.9 195.2 L996.3 198.8 L1023.8 362.0 L1042.9 385.3 L1046.4 406.8 L1060.2 419.7 L1064.7 447.1 L1070.3 461.5 L1079.9 463.8 L1085.7 458.4 L1152.8 28.5 L1168.6 3.6 L1174.0 -24.4 L1169.6 -28.1 L1087.6 -22.2 L1084.3 -20.0 L1083.4 -14.0 L1093.1 -0.9 L1063.3 194.0 L1056.5 199.5 L1051.3 194.9 L1045.8 179.5 L1023.4 15.0 L1016.8 -12.2 L1010.6 -16.8Z" class="l-ink"/><path d="M943.6 -12.0 L939.7 -5.8 L949.8 5.4 L951.7 31.0 L956.8 42.5 L900.5 397.5 L922.7 438.4 L925.2 472.8 L929.9 480.4 L937.8 480.8 L982.9 201.8 L988.9 195.4 L991.9 195.2 L996.3 198.8 L1023.8 362.0 L1042.9 385.3 L1046.4 406.8 L1060.2 419.7 L1064.7 447.1 L1070.3 461.5 L1079.9 463.8 L1085.7 458.4 L1152.8 28.5 L1168.6 3.6 L1174.0 -24.4 L1169.6 -28.1 L1087.6 -22.2 L1084.3 -20.0 L1083.4 -14.0 L1093.1 -0.9 L1063.3 194.0 L1056.5 199.5 L1051.3 194.9 L1045.8 179.5 L1023.4 15.0 L1016.8 -12.2 L1010.6 -16.8Z" class="l-fill"/><path d="M943.6 -12.0 L939.7 -5.8 L949.8 5.4 L951.7 31.0 L956.8 42.5 L900.5 397.5 L922.7 438.4 L925.2 472.8 L929.9 480.4 L937.8 480.8 L982.9 201.8 L988.9 195.4 L991.9 195.2 L996.3 198.8 L1023.8 362.0 L1042.9 385.3 L1046.4 406.8 L1060.2 419.7 L1064.7 447.1 L1070.3 461.5 L1079.9 463.8 L1085.7 458.4 L1152.8 28.5 L1168.6 3.6 L1174.0 -24.4 L1169.6 -28.1 L1087.6 -22.2 L1084.3 -20.0 L1083.4 -14.0 L1093.1 -0.9 L1063.3 194.0 L1056.5 199.5 L1051.3 194.9 L1045.8 179.5 L1023.4 15.0 L1016.8 -12.2 L1010.6 -16.8Z" class="l-ice"/></g><g class="ltr" style="--i:4"><path d="M1367.6 -42.2 L1211.6 -31.1 L1208.3 -28.9 L1210.4 -17.2 L1208.9 -1.2 L1221.4 19.6 L1177.1 324.3 L1181.0 331.0 L1193.7 338.0 L1199.1 347.5 L1188.2 410.6 L1197.4 433.6 L1189.8 450.0 L1190.9 455.9 L1200.2 453.2 L1221.0 433.9 L1225.3 425.7 L1233.6 417.2 L1266.7 413.9 L1273.4 409.4 L1349.2 305.2 L1397.4 7.1 L1374.0 -38.7ZM1329.5 5.0 L1335.4 11.5 L1331.1 57.3 L1339.6 72.5 L1341.2 81.3 L1311.9 266.3 L1307.7 273.5 L1274.0 311.5 L1254.1 343.6 L1233.1 363.9 L1226.0 365.4 L1222.8 360.6 L1277.6 14.6 L1284.5 8.2Z" class="l-blue"/><path d="M1367.6 -42.2 L1211.6 -31.1 L1208.3 -28.9 L1210.4 -17.2 L1208.9 -1.2 L1221.4 19.6 L1177.1 324.3 L1181.0 331.0 L1193.7 338.0 L1199.1 347.5 L1188.2 410.6 L1197.4 433.6 L1189.8 450.0 L1190.9 455.9 L1200.2 453.2 L1221.0 433.9 L1225.3 425.7 L1233.6 417.2 L1266.7 413.9 L1273.4 409.4 L1349.2 305.2 L1397.4 7.1 L1374.0 -38.7ZM1329.5 5.0 L1335.4 11.5 L1331.1 57.3 L1339.6 72.5 L1341.2 81.3 L1311.9 266.3 L1307.7 273.5 L1274.0 311.5 L1254.1 343.6 L1233.1 363.9 L1226.0 365.4 L1222.8 360.6 L1277.6 14.6 L1284.5 8.2Z" class="l-ink"/><path d="M1367.6 -42.2 L1211.6 -31.1 L1208.3 -28.9 L1210.4 -17.2 L1208.9 -1.2 L1221.4 19.6 L1177.1 324.3 L1181.0 331.0 L1193.7 338.0 L1199.1 347.5 L1188.2 410.6 L1197.4 433.6 L1189.8 450.0 L1190.9 455.9 L1200.2 453.2 L1221.0 433.9 L1225.3 425.7 L1233.6 417.2 L1266.7 413.9 L1273.4 409.4 L1349.2 305.2 L1397.4 7.1 L1374.0 -38.7ZM1329.5 5.0 L1335.4 11.5 L1331.1 57.3 L1339.6 72.5 L1341.2 81.3 L1311.9 266.3 L1307.7 273.5 L1274.0 311.5 L1254.1 343.6 L1233.1 363.9 L1226.0 365.4 L1222.8 360.6 L1277.6 14.6 L1284.5 8.2Z" class="l-fill"/><path d="M1367.6 -42.2 L1211.6 -31.1 L1208.3 -28.9 L1210.4 -17.2 L1208.9 -1.2 L1221.4 19.6 L1177.1 324.3 L1181.0 331.0 L1193.7 338.0 L1199.1 347.5 L1188.2 410.6 L1197.4 433.6 L1189.8 450.0 L1190.9 455.9 L1200.2 453.2 L1221.0 433.9 L1225.3 425.7 L1233.6 417.2 L1266.7 413.9 L1273.4 409.4 L1349.2 305.2 L1397.4 7.1 L1374.0 -38.7ZM1329.5 5.0 L1335.4 11.5 L1331.1 57.3 L1339.6 72.5 L1341.2 81.3 L1311.9 266.3 L1307.7 273.5 L1274.0 311.5 L1254.1 343.6 L1233.1 363.9 L1226.0 365.4 L1222.8 360.6 L1277.6 14.6 L1284.5 8.2Z" class="l-ice"/></g><g class="ltr" style="--i:5"><path d="M1588.6 -58.0 L1464.6 -49.1 L1458.0 -44.7 L1433.8 -10.3 L1378.3 339.7 L1379.5 344.5 L1397.1 365.0 L1400.1 389.5 L1405.9 402.9 L1418.5 398.1 L1451.4 365.1 L1466.5 357.1 L1498.2 332.1 L1572.6 261.5 L1616.2 -13.5 L1593.0 -54.3ZM1542.5 -10.2 L1560.1 -2.5 L1562.4 1.2 L1520.9 232.6 L1501.1 263.7 L1459.3 309.2 L1449.5 314.8 L1444.1 305.3 L1496.4 0.0 L1504.5 -7.5Z" class="l-blue"/><path d="M1588.6 -58.0 L1464.6 -49.1 L1458.0 -44.7 L1433.8 -10.3 L1378.3 339.7 L1379.5 344.5 L1397.1 365.0 L1400.1 389.5 L1405.9 402.9 L1418.5 398.1 L1451.4 365.1 L1466.5 357.1 L1498.2 332.1 L1572.6 261.5 L1616.2 -13.5 L1593.0 -54.3ZM1542.5 -10.2 L1560.1 -2.5 L1562.4 1.2 L1520.9 232.6 L1501.1 263.7 L1459.3 309.2 L1449.5 314.8 L1444.1 305.3 L1496.4 0.0 L1504.5 -7.5Z" class="l-ink"/><path d="M1588.6 -58.0 L1464.6 -49.1 L1458.0 -44.7 L1433.8 -10.3 L1378.3 339.7 L1379.5 344.5 L1397.1 365.0 L1400.1 389.5 L1405.9 402.9 L1418.5 398.1 L1451.4 365.1 L1466.5 357.1 L1498.2 332.1 L1572.6 261.5 L1616.2 -13.5 L1593.0 -54.3ZM1542.5 -10.2 L1560.1 -2.5 L1562.4 1.2 L1520.9 232.6 L1501.1 263.7 L1459.3 309.2 L1449.5 314.8 L1444.1 305.3 L1496.4 0.0 L1504.5 -7.5Z" class="l-fill"/><path d="M1588.6 -58.0 L1464.6 -49.1 L1458.0 -44.7 L1433.8 -10.3 L1378.3 339.7 L1379.5 344.5 L1397.1 365.0 L1400.1 389.5 L1405.9 402.9 L1418.5 398.1 L1451.4 365.1 L1466.5 357.1 L1498.2 332.1 L1572.6 261.5 L1616.2 -13.5 L1593.0 -54.3ZM1542.5 -10.2 L1560.1 -2.5 L1562.4 1.2 L1520.9 232.6 L1501.1 263.7 L1459.3 309.2 L1449.5 314.8 L1444.1 305.3 L1496.4 0.0 L1504.5 -7.5Z" class="l-ice"/></g><g class="ltr" style="--i:6"><path d="M1660.6 -63.1 L1656.7 -56.9 L1666.8 -45.7 L1668.7 -20.2 L1673.8 -8.7 L1617.5 346.3 L1639.7 387.3 L1642.2 421.7 L1646.9 429.3 L1654.8 429.7 L1699.9 150.6 L1705.9 144.3 L1708.9 144.0 L1713.3 147.7 L1740.8 310.8 L1759.9 334.2 L1763.4 355.7 L1777.2 368.6 L1781.7 395.9 L1787.3 410.3 L1796.9 412.6 L1802.7 407.3 L1869.8 -22.6 L1885.6 -47.5 L1891.0 -75.6 L1886.6 -79.2 L1804.6 -73.4 L1801.3 -71.2 L1800.4 -65.2 L1810.1 -52.0 L1780.3 142.9 L1773.5 148.3 L1768.3 143.8 L1762.8 128.3 L1740.4 -36.2 L1733.8 -63.4 L1727.6 -67.9Z" class="l-blue"/><path d="M1660.6 -63.1 L1656.7 -56.9 L1666.8 -45.7 L1668.7 -20.2 L1673.8 -8.7 L1617.5 346.3 L1639.7 387.3 L1642.2 421.7 L1646.9 429.3 L1654.8 429.7 L1699.9 150.6 L1705.9 144.3 L1708.9 144.0 L1713.3 147.7 L1740.8 310.8 L1759.9 334.2 L1763.4 355.7 L1777.2 368.6 L1781.7 395.9 L1787.3 410.3 L1796.9 412.6 L1802.7 407.3 L1869.8 -22.6 L1885.6 -47.5 L1891.0 -75.6 L1886.6 -79.2 L1804.6 -73.4 L1801.3 -71.2 L1800.4 -65.2 L1810.1 -52.0 L1780.3 142.9 L1773.5 148.3 L1768.3 143.8 L1762.8 128.3 L1740.4 -36.2 L1733.8 -63.4 L1727.6 -67.9Z" class="l-ink"/><path d="M1660.6 -63.1 L1656.7 -56.9 L1666.8 -45.7 L1668.7 -20.2 L1673.8 -8.7 L1617.5 346.3 L1639.7 387.3 L1642.2 421.7 L1646.9 429.3 L1654.8 429.7 L1699.9 150.6 L1705.9 144.3 L1708.9 144.0 L1713.3 147.7 L1740.8 310.8 L1759.9 334.2 L1763.4 355.7 L1777.2 368.6 L1781.7 395.9 L1787.3 410.3 L1796.9 412.6 L1802.7 407.3 L1869.8 -22.6 L1885.6 -47.5 L1891.0 -75.6 L1886.6 -79.2 L1804.6 -73.4 L1801.3 -71.2 L1800.4 -65.2 L1810.1 -52.0 L1780.3 142.9 L1773.5 148.3 L1768.3 143.8 L1762.8 128.3 L1740.4 -36.2 L1733.8 -63.4 L1727.6 -67.9Z" class="l-fill"/><path d="M1660.6 -63.1 L1656.7 -56.9 L1666.8 -45.7 L1668.7 -20.2 L1673.8 -8.7 L1617.5 346.3 L1639.7 387.3 L1642.2 421.7 L1646.9 429.3 L1654.8 429.7 L1699.9 150.6 L1705.9 144.3 L1708.9 144.0 L1713.3 147.7 L1740.8 310.8 L1759.9 334.2 L1763.4 355.7 L1777.2 368.6 L1781.7 395.9 L1787.3 410.3 L1796.9 412.6 L1802.7 407.3 L1869.8 -22.6 L1885.6 -47.5 L1891.0 -75.6 L1886.6 -79.2 L1804.6 -73.4 L1801.3 -71.2 L1800.4 -65.2 L1810.1 -52.0 L1780.3 142.9 L1773.5 148.3 L1768.3 143.8 L1762.8 128.3 L1740.4 -36.2 L1733.8 -63.4 L1727.6 -67.9Z" class="l-ice"/></g><g class="ltr" style="--i:7"><path d="M240.6 606.8 L238.0 610.9 L243.8 624.4 L240.1 628.6 L227.8 631.4 L218.6 639.9 L216.6 646.0 L237.7 650.6 L243.4 658.1 L192.6 1003.8 L208.7 1033.4 L210.6 1046.2 L218.5 1065.5 L219.3 1085.2 L216.8 1107.1 L219.2 1110.9 L224.5 1108.6 L270.6 817.6 L275.4 812.3 L279.4 812.1 L282.7 815.8 L332.3 996.6 L372.4 1024.6 L377.7 1047.1 L391.2 1067.9 L397.8 1070.5 L402.4 1066.2 L402.7 1058.3 L351.8 823.1 L351.1 809.3 L357.5 781.2 L404.2 704.9 L427.2 659.8 L422.9 643.3 L422.9 624.5 L401.4 610.1 L395.2 599.6 L389.6 597.0ZM375.3 643.5 L378.7 647.2 L376.6 654.3 L287.8 783.8 L283.2 788.1 L279.2 788.3 L275.8 784.6 L296.7 652.6 L302.3 648.3Z" class="l-blue"/><path d="M240.6 606.8 L238.0 610.9 L243.8 624.4 L240.1 628.6 L227.8 631.4 L218.6 639.9 L216.6 646.0 L237.7 650.6 L243.4 658.1 L192.6 1003.8 L208.7 1033.4 L210.6 1046.2 L218.5 1065.5 L219.3 1085.2 L216.8 1107.1 L219.2 1110.9 L224.5 1108.6 L270.6 817.6 L275.4 812.3 L279.4 812.1 L282.7 815.8 L332.3 996.6 L372.4 1024.6 L377.7 1047.1 L391.2 1067.9 L397.8 1070.5 L402.4 1066.2 L402.7 1058.3 L351.8 823.1 L351.1 809.3 L357.5 781.2 L404.2 704.9 L427.2 659.8 L422.9 643.3 L422.9 624.5 L401.4 610.1 L395.2 599.6 L389.6 597.0ZM375.3 643.5 L378.7 647.2 L376.6 654.3 L287.8 783.8 L283.2 788.1 L279.2 788.3 L275.8 784.6 L296.7 652.6 L302.3 648.3Z" class="l-ink"/><path d="M240.6 606.8 L238.0 610.9 L243.8 624.4 L240.1 628.6 L227.8 631.4 L218.6 639.9 L216.6 646.0 L237.7 650.6 L243.4 658.1 L192.6 1003.8 L208.7 1033.4 L210.6 1046.2 L218.5 1065.5 L219.3 1085.2 L216.8 1107.1 L219.2 1110.9 L224.5 1108.6 L270.6 817.6 L275.4 812.3 L279.4 812.1 L282.7 815.8 L332.3 996.6 L372.4 1024.6 L377.7 1047.1 L391.2 1067.9 L397.8 1070.5 L402.4 1066.2 L402.7 1058.3 L351.8 823.1 L351.1 809.3 L357.5 781.2 L404.2 704.9 L427.2 659.8 L422.9 643.3 L422.9 624.5 L401.4 610.1 L395.2 599.6 L389.6 597.0ZM375.3 643.5 L378.7 647.2 L376.6 654.3 L287.8 783.8 L283.2 788.1 L279.2 788.3 L275.8 784.6 L296.7 652.6 L302.3 648.3Z" class="l-fill"/><path d="M240.6 606.8 L238.0 610.9 L243.8 624.4 L240.1 628.6 L227.8 631.4 L218.6 639.9 L216.6 646.0 L237.7 650.6 L243.4 658.1 L192.6 1003.8 L208.7 1033.4 L210.6 1046.2 L218.5 1065.5 L219.3 1085.2 L216.8 1107.1 L219.2 1110.9 L224.5 1108.6 L270.6 817.6 L275.4 812.3 L279.4 812.1 L282.7 815.8 L332.3 996.6 L372.4 1024.6 L377.7 1047.1 L391.2 1067.9 L397.8 1070.5 L402.4 1066.2 L402.7 1058.3 L351.8 823.1 L351.1 809.3 L357.5 781.2 L404.2 704.9 L427.2 659.8 L422.9 643.3 L422.9 624.5 L401.4 610.1 L395.2 599.6 L389.6 597.0ZM375.3 643.5 L378.7 647.2 L376.6 654.3 L287.8 783.8 L283.2 788.1 L279.2 788.3 L275.8 784.6 L296.7 652.6 L302.3 648.3Z" class="l-ice"/></g><g class="ltr" style="--i:8"><path d="M675.6 578.2 L514.6 588.8 L511.2 592.0 L511.2 597.9 L548.8 641.9 L525.6 787.9 L518.5 795.3 L504.2 798.3 L501.1 805.4 L505.2 817.0 L503.8 826.0 L515.8 849.9 L478.3 1086.9 L484.4 1104.3 L487.4 1104.1 L518.4 1077.4 L525.5 1075.9 L539.4 1081.9 L544.6 1080.6 L576.6 1053.7 L595.9 1050.5 L611.4 1033.6 L608.4 1027.9 L604.5 1027.2 L563.4 1030.9 L558.2 1026.3 L585.2 849.3 L593.3 841.9 L625.2 833.8 L657.6 792.1 L654.4 787.4 L594.4 791.3 L591.2 786.6 L614.8 637.6 L620.9 630.3 L647.0 627.6 L675.8 601.9 L685.2 586.4 L680.3 579.8Z" class="l-blue"/><path d="M675.6 578.2 L514.6 588.8 L511.2 592.0 L511.2 597.9 L548.8 641.9 L525.6 787.9 L518.5 795.3 L504.2 798.3 L501.1 805.4 L505.2 817.0 L503.8 826.0 L515.8 849.9 L478.3 1086.9 L484.4 1104.3 L487.4 1104.1 L518.4 1077.4 L525.5 1075.9 L539.4 1081.9 L544.6 1080.6 L576.6 1053.7 L595.9 1050.5 L611.4 1033.6 L608.4 1027.9 L604.5 1027.2 L563.4 1030.9 L558.2 1026.3 L585.2 849.3 L593.3 841.9 L625.2 833.8 L657.6 792.1 L654.4 787.4 L594.4 791.3 L591.2 786.6 L614.8 637.6 L620.9 630.3 L647.0 627.6 L675.8 601.9 L685.2 586.4 L680.3 579.8Z" class="l-ink"/><path d="M675.6 578.2 L514.6 588.8 L511.2 592.0 L511.2 597.9 L548.8 641.9 L525.6 787.9 L518.5 795.3 L504.2 798.3 L501.1 805.4 L505.2 817.0 L503.8 826.0 L515.8 849.9 L478.3 1086.9 L484.4 1104.3 L487.4 1104.1 L518.4 1077.4 L525.5 1075.9 L539.4 1081.9 L544.6 1080.6 L576.6 1053.7 L595.9 1050.5 L611.4 1033.6 L608.4 1027.9 L604.5 1027.2 L563.4 1030.9 L558.2 1026.3 L585.2 849.3 L593.3 841.9 L625.2 833.8 L657.6 792.1 L654.4 787.4 L594.4 791.3 L591.2 786.6 L614.8 637.6 L620.9 630.3 L647.0 627.6 L675.8 601.9 L685.2 586.4 L680.3 579.8Z" class="l-fill"/><path d="M675.6 578.2 L514.6 588.8 L511.2 592.0 L511.2 597.9 L548.8 641.9 L525.6 787.9 L518.5 795.3 L504.2 798.3 L501.1 805.4 L505.2 817.0 L503.8 826.0 L515.8 849.9 L478.3 1086.9 L484.4 1104.3 L487.4 1104.1 L518.4 1077.4 L525.5 1075.9 L539.4 1081.9 L544.6 1080.6 L576.6 1053.7 L595.9 1050.5 L611.4 1033.6 L608.4 1027.9 L604.5 1027.2 L563.4 1030.9 L558.2 1026.3 L585.2 849.3 L593.3 841.9 L625.2 833.8 L657.6 792.1 L654.4 787.4 L594.4 791.3 L591.2 786.6 L614.8 637.6 L620.9 630.3 L647.0 627.6 L675.8 601.9 L685.2 586.4 L680.3 579.8Z" class="l-ice"/></g><g class="ltr" style="--i:9"><path d="M949.6 560.1 L856.5 567.2 L843.8 584.9 L704.9 711.8 L700.6 732.9 L702.0 736.7 L723.3 752.2 L733.1 771.3 L756.8 771.7 L815.9 817.3 L827.8 829.4 L827.2 833.4 L787.7 876.6 L763.5 910.8 L759.2 937.8 L732.6 968.3 L720.9 985.9 L655.0 1064.4 L649.1 1076.7 L651.0 1083.5 L658.0 1083.0 L683.3 1073.4 L693.5 1064.8 L697.8 1056.6 L708.4 1046.1 L733.8 1035.5 L750.0 1020.6 L802.2 953.8 L891.3 847.0 L892.9 837.0 L882.6 814.9 L880.2 786.4 L798.7 719.5 L796.8 712.7 L885.7 626.7 L890.5 627.3 L898.9 636.7 L902.8 662.2 L908.5 663.8 L912.0 660.6 L952.4 567.9 L953.2 562.9Z" class="l-blue"/><path d="M949.6 560.1 L856.5 567.2 L843.8 584.9 L704.9 711.8 L700.6 732.9 L702.0 736.7 L723.3 752.2 L733.1 771.3 L756.8 771.7 L815.9 817.3 L827.8 829.4 L827.2 833.4 L787.7 876.6 L763.5 910.8 L759.2 937.8 L732.6 968.3 L720.9 985.9 L655.0 1064.4 L649.1 1076.7 L651.0 1083.5 L658.0 1083.0 L683.3 1073.4 L693.5 1064.8 L697.8 1056.6 L708.4 1046.1 L733.8 1035.5 L750.0 1020.6 L802.2 953.8 L891.3 847.0 L892.9 837.0 L882.6 814.9 L880.2 786.4 L798.7 719.5 L796.8 712.7 L885.7 626.7 L890.5 627.3 L898.9 636.7 L902.8 662.2 L908.5 663.8 L912.0 660.6 L952.4 567.9 L953.2 562.9Z" class="l-ink"/><path d="M949.6 560.1 L856.5 567.2 L843.8 584.9 L704.9 711.8 L700.6 732.9 L702.0 736.7 L723.3 752.2 L733.1 771.3 L756.8 771.7 L815.9 817.3 L827.8 829.4 L827.2 833.4 L787.7 876.6 L763.5 910.8 L759.2 937.8 L732.6 968.3 L720.9 985.9 L655.0 1064.4 L649.1 1076.7 L651.0 1083.5 L658.0 1083.0 L683.3 1073.4 L693.5 1064.8 L697.8 1056.6 L708.4 1046.1 L733.8 1035.5 L750.0 1020.6 L802.2 953.8 L891.3 847.0 L892.9 837.0 L882.6 814.9 L880.2 786.4 L798.7 719.5 L796.8 712.7 L885.7 626.7 L890.5 627.3 L898.9 636.7 L902.8 662.2 L908.5 663.8 L912.0 660.6 L952.4 567.9 L953.2 562.9Z" class="l-fill"/><path d="M949.6 560.1 L856.5 567.2 L843.8 584.9 L704.9 711.8 L700.6 732.9 L702.0 736.7 L723.3 752.2 L733.1 771.3 L756.8 771.7 L815.9 817.3 L827.8 829.4 L827.2 833.4 L787.7 876.6 L763.5 910.8 L759.2 937.8 L732.6 968.3 L720.9 985.9 L655.0 1064.4 L649.1 1076.7 L651.0 1083.5 L658.0 1083.0 L683.3 1073.4 L693.5 1064.8 L697.8 1056.6 L708.4 1046.1 L733.8 1035.5 L750.0 1020.6 L802.2 953.8 L891.3 847.0 L892.9 837.0 L882.6 814.9 L880.2 786.4 L798.7 719.5 L796.8 712.7 L885.7 626.7 L890.5 627.3 L898.9 636.7 L902.8 662.2 L908.5 663.8 L912.0 660.6 L952.4 567.9 L953.2 562.9Z" class="l-ice"/></g><g class="ltr" style="--i:10"><path d="M990.5 558.4 L986.8 562.6 L987.2 566.6 L1027.8 610.4 L1031.1 627.0 L1042.4 630.2 L1045.8 633.9 L1000.0 954.6 L1023.8 991.6 L1022.1 1014.5 L1024.1 1027.2 L1035.7 1041.3 L1040.7 1041.0 L1044.5 1035.8 L1115.0 609.6 L1123.1 602.1 L1132.4 605.5 L1136.6 604.2 L1148.0 588.6 L1175.3 566.0 L1179.8 549.9 L1175.6 545.2Z" class="l-blue"/><path d="M990.5 558.4 L986.8 562.6 L987.2 566.6 L1027.8 610.4 L1031.1 627.0 L1042.4 630.2 L1045.8 633.9 L1000.0 954.6 L1023.8 991.6 L1022.1 1014.5 L1024.1 1027.2 L1035.7 1041.3 L1040.7 1041.0 L1044.5 1035.8 L1115.0 609.6 L1123.1 602.1 L1132.4 605.5 L1136.6 604.2 L1148.0 588.6 L1175.3 566.0 L1179.8 549.9 L1175.6 545.2Z" class="l-ink"/><path d="M990.5 558.4 L986.8 562.6 L987.2 566.6 L1027.8 610.4 L1031.1 627.0 L1042.4 630.2 L1045.8 633.9 L1000.0 954.6 L1023.8 991.6 L1022.1 1014.5 L1024.1 1027.2 L1035.7 1041.3 L1040.7 1041.0 L1044.5 1035.8 L1115.0 609.6 L1123.1 602.1 L1132.4 605.5 L1136.6 604.2 L1148.0 588.6 L1175.3 566.0 L1179.8 549.9 L1175.6 545.2Z" class="l-fill"/><path d="M990.5 558.4 L986.8 562.6 L987.2 566.6 L1027.8 610.4 L1031.1 627.0 L1042.4 630.2 L1045.8 633.9 L1000.0 954.6 L1023.8 991.6 L1022.1 1014.5 L1024.1 1027.2 L1035.7 1041.3 L1040.7 1041.0 L1044.5 1035.8 L1115.0 609.6 L1123.1 602.1 L1132.4 605.5 L1136.6 604.2 L1148.0 588.6 L1175.3 566.0 L1179.8 549.9 L1175.6 545.2Z" class="l-ice"/></g><g class="ltr" style="--i:11"><path d="M1232.6 541.5 L1230.0 545.6 L1235.8 559.1 L1232.1 563.3 L1219.8 566.1 L1210.6 574.6 L1208.6 580.7 L1229.7 585.2 L1235.4 592.8 L1184.6 938.5 L1200.7 968.1 L1202.6 980.9 L1210.5 1000.1 L1211.3 1019.9 L1208.8 1041.8 L1211.2 1045.6 L1216.5 1043.3 L1262.6 752.3 L1267.4 747.0 L1271.4 746.7 L1274.7 750.5 L1324.3 931.3 L1364.4 959.3 L1369.7 981.7 L1383.2 1002.6 L1389.8 1005.1 L1394.4 1000.9 L1394.7 992.9 L1343.8 757.8 L1343.1 744.0 L1349.5 715.9 L1396.2 639.6 L1419.2 594.5 L1414.9 578.0 L1414.9 559.2 L1393.4 544.8 L1387.2 534.3 L1381.6 531.7ZM1367.3 578.1 L1370.7 581.9 L1368.6 588.9 L1279.8 718.5 L1275.2 722.7 L1271.2 723.0 L1267.8 719.3 L1288.7 587.3 L1294.3 582.9Z" class="l-blue"/><path d="M1232.6 541.5 L1230.0 545.6 L1235.8 559.1 L1232.1 563.3 L1219.8 566.1 L1210.6 574.6 L1208.6 580.7 L1229.7 585.2 L1235.4 592.8 L1184.6 938.5 L1200.7 968.1 L1202.6 980.9 L1210.5 1000.1 L1211.3 1019.9 L1208.8 1041.8 L1211.2 1045.6 L1216.5 1043.3 L1262.6 752.3 L1267.4 747.0 L1271.4 746.7 L1274.7 750.5 L1324.3 931.3 L1364.4 959.3 L1369.7 981.7 L1383.2 1002.6 L1389.8 1005.1 L1394.4 1000.9 L1394.7 992.9 L1343.8 757.8 L1343.1 744.0 L1349.5 715.9 L1396.2 639.6 L1419.2 594.5 L1414.9 578.0 L1414.9 559.2 L1393.4 544.8 L1387.2 534.3 L1381.6 531.7ZM1367.3 578.1 L1370.7 581.9 L1368.6 588.9 L1279.8 718.5 L1275.2 722.7 L1271.2 723.0 L1267.8 719.3 L1288.7 587.3 L1294.3 582.9Z" class="l-ink"/><path d="M1232.6 541.5 L1230.0 545.6 L1235.8 559.1 L1232.1 563.3 L1219.8 566.1 L1210.6 574.6 L1208.6 580.7 L1229.7 585.2 L1235.4 592.8 L1184.6 938.5 L1200.7 968.1 L1202.6 980.9 L1210.5 1000.1 L1211.3 1019.9 L1208.8 1041.8 L1211.2 1045.6 L1216.5 1043.3 L1262.6 752.3 L1267.4 747.0 L1271.4 746.7 L1274.7 750.5 L1324.3 931.3 L1364.4 959.3 L1369.7 981.7 L1383.2 1002.6 L1389.8 1005.1 L1394.4 1000.9 L1394.7 992.9 L1343.8 757.8 L1343.1 744.0 L1349.5 715.9 L1396.2 639.6 L1419.2 594.5 L1414.9 578.0 L1414.9 559.2 L1393.4 544.8 L1387.2 534.3 L1381.6 531.7ZM1367.3 578.1 L1370.7 581.9 L1368.6 588.9 L1279.8 718.5 L1275.2 722.7 L1271.2 723.0 L1267.8 719.3 L1288.7 587.3 L1294.3 582.9Z" class="l-fill"/><path d="M1232.6 541.5 L1230.0 545.6 L1235.8 559.1 L1232.1 563.3 L1219.8 566.1 L1210.6 574.6 L1208.6 580.7 L1229.7 585.2 L1235.4 592.8 L1184.6 938.5 L1200.7 968.1 L1202.6 980.9 L1210.5 1000.1 L1211.3 1019.9 L1208.8 1041.8 L1211.2 1045.6 L1216.5 1043.3 L1262.6 752.3 L1267.4 747.0 L1271.4 746.7 L1274.7 750.5 L1324.3 931.3 L1364.4 959.3 L1369.7 981.7 L1383.2 1002.6 L1389.8 1005.1 L1394.4 1000.9 L1394.7 992.9 L1343.8 757.8 L1343.1 744.0 L1349.5 715.9 L1396.2 639.6 L1419.2 594.5 L1414.9 578.0 L1414.9 559.2 L1393.4 544.8 L1387.2 534.3 L1381.6 531.7ZM1367.3 578.1 L1370.7 581.9 L1368.6 588.9 L1279.8 718.5 L1275.2 722.7 L1271.2 723.0 L1267.8 719.3 L1288.7 587.3 L1294.3 582.9Z" class="l-ice"/></g><g class="ltr" style="--i:12"><path d="M1667.6 512.8 L1506.6 523.4 L1503.2 526.6 L1503.2 532.6 L1540.8 576.6 L1517.6 722.6 L1510.5 730.0 L1496.2 732.9 L1493.1 740.1 L1497.2 751.7 L1495.8 760.7 L1507.8 784.6 L1470.3 1021.6 L1476.4 1039.0 L1479.4 1038.8 L1510.4 1012.0 L1517.5 1010.6 L1531.4 1016.6 L1536.6 1015.3 L1568.6 988.4 L1587.9 985.2 L1603.4 968.3 L1600.4 962.6 L1596.5 961.8 L1555.4 965.5 L1550.2 960.9 L1577.2 784.0 L1585.3 776.5 L1617.2 768.5 L1649.6 726.8 L1646.4 722.0 L1586.4 726.0 L1583.2 721.3 L1606.8 572.3 L1612.9 564.9 L1639.0 562.2 L1667.8 536.6 L1677.2 521.1 L1672.3 514.5Z" class="l-blue"/><path d="M1667.6 512.8 L1506.6 523.4 L1503.2 526.6 L1503.2 532.6 L1540.8 576.6 L1517.6 722.6 L1510.5 730.0 L1496.2 732.9 L1493.1 740.1 L1497.2 751.7 L1495.8 760.7 L1507.8 784.6 L1470.3 1021.6 L1476.4 1039.0 L1479.4 1038.8 L1510.4 1012.0 L1517.5 1010.6 L1531.4 1016.6 L1536.6 1015.3 L1568.6 988.4 L1587.9 985.2 L1603.4 968.3 L1600.4 962.6 L1596.5 961.8 L1555.4 965.5 L1550.2 960.9 L1577.2 784.0 L1585.3 776.5 L1617.2 768.5 L1649.6 726.8 L1646.4 722.0 L1586.4 726.0 L1583.2 721.3 L1606.8 572.3 L1612.9 564.9 L1639.0 562.2 L1667.8 536.6 L1677.2 521.1 L1672.3 514.5Z" class="l-ink"/><path d="M1667.6 512.8 L1506.6 523.4 L1503.2 526.6 L1503.2 532.6 L1540.8 576.6 L1517.6 722.6 L1510.5 730.0 L1496.2 732.9 L1493.1 740.1 L1497.2 751.7 L1495.8 760.7 L1507.8 784.6 L1470.3 1021.6 L1476.4 1039.0 L1479.4 1038.8 L1510.4 1012.0 L1517.5 1010.6 L1531.4 1016.6 L1536.6 1015.3 L1568.6 988.4 L1587.9 985.2 L1603.4 968.3 L1600.4 962.6 L1596.5 961.8 L1555.4 965.5 L1550.2 960.9 L1577.2 784.0 L1585.3 776.5 L1617.2 768.5 L1649.6 726.8 L1646.4 722.0 L1586.4 726.0 L1583.2 721.3 L1606.8 572.3 L1612.9 564.9 L1639.0 562.2 L1667.8 536.6 L1677.2 521.1 L1672.3 514.5Z" class="l-fill"/><path d="M1667.6 512.8 L1506.6 523.4 L1503.2 526.6 L1503.2 532.6 L1540.8 576.6 L1517.6 722.6 L1510.5 730.0 L1496.2 732.9 L1493.1 740.1 L1497.2 751.7 L1495.8 760.7 L1507.8 784.6 L1470.3 1021.6 L1476.4 1039.0 L1479.4 1038.8 L1510.4 1012.0 L1517.5 1010.6 L1531.4 1016.6 L1536.6 1015.3 L1568.6 988.4 L1587.9 985.2 L1603.4 968.3 L1600.4 962.6 L1596.5 961.8 L1555.4 965.5 L1550.2 960.9 L1577.2 784.0 L1585.3 776.5 L1617.2 768.5 L1649.6 726.8 L1646.4 722.0 L1586.4 726.0 L1583.2 721.3 L1606.8 572.3 L1612.9 564.9 L1639.0 562.2 L1667.8 536.6 L1677.2 521.1 L1672.3 514.5Z" class="l-ice"/></g><g class="ltr" style="--i:13"><path d="M1904.6 497.2 L1721.6 509.3 L1717.2 512.5 L1719.6 528.2 L1716.6 547.2 L1719.1 550.0 L1733.7 552.0 L1739.7 557.6 L1678.7 942.6 L1674.8 948.8 L1674.0 953.8 L1676.7 955.6 L1706.7 934.8 L1719.9 895.3 L1735.6 877.5 L1738.5 871.3 L1759.8 768.0 L1827.8 720.0 L1847.6 700.9 L1854.6 700.4 L1861.5 706.9 L1867.7 705.5 L1917.0 662.7 L1938.3 534.6ZM1879.3 544.4 L1883.4 550.1 L1869.7 630.2 L1866.1 634.3 L1844.5 645.7 L1785.2 689.2 L1777.7 692.6 L1773.9 691.9 L1770.6 687.1 L1797.9 552.7 L1804.5 548.4Z" class="l-blue"/><path d="M1904.6 497.2 L1721.6 509.3 L1717.2 512.5 L1719.6 528.2 L1716.6 547.2 L1719.1 550.0 L1733.7 552.0 L1739.7 557.6 L1678.7 942.6 L1674.8 948.8 L1674.0 953.8 L1676.7 955.6 L1706.7 934.8 L1719.9 895.3 L1735.6 877.5 L1738.5 871.3 L1759.8 768.0 L1827.8 720.0 L1847.6 700.9 L1854.6 700.4 L1861.5 706.9 L1867.7 705.5 L1917.0 662.7 L1938.3 534.6ZM1879.3 544.4 L1883.4 550.1 L1869.7 630.2 L1866.1 634.3 L1844.5 645.7 L1785.2 689.2 L1777.7 692.6 L1773.9 691.9 L1770.6 687.1 L1797.9 552.7 L1804.5 548.4Z" class="l-ink"/><path d="M1904.6 497.2 L1721.6 509.3 L1717.2 512.5 L1719.6 528.2 L1716.6 547.2 L1719.1 550.0 L1733.7 552.0 L1739.7 557.6 L1678.7 942.6 L1674.8 948.8 L1674.0 953.8 L1676.7 955.6 L1706.7 934.8 L1719.9 895.3 L1735.6 877.5 L1738.5 871.3 L1759.8 768.0 L1827.8 720.0 L1847.6 700.9 L1854.6 700.4 L1861.5 706.9 L1867.7 705.5 L1917.0 662.7 L1938.3 534.6ZM1879.3 544.4 L1883.4 550.1 L1869.7 630.2 L1866.1 634.3 L1844.5 645.7 L1785.2 689.2 L1777.7 692.6 L1773.9 691.9 L1770.6 687.1 L1797.9 552.7 L1804.5 548.4Z" class="l-fill"/><path d="M1904.6 497.2 L1721.6 509.3 L1717.2 512.5 L1719.6 528.2 L1716.6 547.2 L1719.1 550.0 L1733.7 552.0 L1739.7 557.6 L1678.7 942.6 L1674.8 948.8 L1674.0 953.8 L1676.7 955.6 L1706.7 934.8 L1719.9 895.3 L1735.6 877.5 L1738.5 871.3 L1759.8 768.0 L1827.8 720.0 L1847.6 700.9 L1854.6 700.4 L1861.5 706.9 L1867.7 705.5 L1917.0 662.7 L1938.3 534.6ZM1879.3 544.4 L1883.4 550.1 L1869.7 630.2 L1866.1 634.3 L1844.5 645.7 L1785.2 689.2 L1777.7 692.6 L1773.9 691.9 L1770.6 687.1 L1797.9 552.7 L1804.5 548.4Z" class="l-ice"/></g><g class="ltr" style="--i:14"><path d="M2127.6 482.5 L2003.6 490.7 L1997.0 495.1 L1972.8 529.4 L1917.3 879.4 L1918.5 884.2 L1936.1 904.8 L1939.1 929.4 L1944.9 942.9 L1957.5 938.1 L1990.4 905.2 L2005.5 897.3 L2037.2 872.5 L2111.6 802.2 L2155.2 527.2 L2132.0 486.2ZM2081.5 530.1 L2099.1 537.9 L2101.4 541.7 L2059.9 773.0 L2040.1 804.0 L1998.3 849.3 L1988.5 854.9 L1983.1 845.3 L2035.4 540.1 L2043.5 532.6Z" class="l-blue"/><path d="M2127.6 482.5 L2003.6 490.7 L1997.0 495.1 L1972.8 529.4 L1917.3 879.4 L1918.5 884.2 L1936.1 904.8 L1939.1 929.4 L1944.9 942.9 L1957.5 938.1 L1990.4 905.2 L2005.5 897.3 L2037.2 872.5 L2111.6 802.2 L2155.2 527.2 L2132.0 486.2ZM2081.5 530.1 L2099.1 537.9 L2101.4 541.7 L2059.9 773.0 L2040.1 804.0 L1998.3 849.3 L1988.5 854.9 L1983.1 845.3 L2035.4 540.1 L2043.5 532.6Z" class="l-ink"/><path d="M2127.6 482.5 L2003.6 490.7 L1997.0 495.1 L1972.8 529.4 L1917.3 879.4 L1918.5 884.2 L1936.1 904.8 L1939.1 929.4 L1944.9 942.9 L1957.5 938.1 L1990.4 905.2 L2005.5 897.3 L2037.2 872.5 L2111.6 802.2 L2155.2 527.2 L2132.0 486.2ZM2081.5 530.1 L2099.1 537.9 L2101.4 541.7 L2059.9 773.0 L2040.1 804.0 L1998.3 849.3 L1988.5 854.9 L1983.1 845.3 L2035.4 540.1 L2043.5 532.6Z" class="l-fill"/><path d="M2127.6 482.5 L2003.6 490.7 L1997.0 495.1 L1972.8 529.4 L1917.3 879.4 L1918.5 884.2 L1936.1 904.8 L1939.1 929.4 L1944.9 942.9 L1957.5 938.1 L1990.4 905.2 L2005.5 897.3 L2037.2 872.5 L2111.6 802.2 L2155.2 527.2 L2132.0 486.2ZM2081.5 530.1 L2099.1 537.9 L2101.4 541.7 L2059.9 773.0 L2040.1 804.0 L1998.3 849.3 L1988.5 854.9 L1983.1 845.3 L2035.4 540.1 L2043.5 532.6Z" class="l-ice"/></g></g>
+  <g clip-path="url(#nl-clip)" class="nl-fx">
+    <rect x="8" y="-149" width="2217" height="1330" filter="url(#nl-frost-f)" opacity=".35"/>
+    <rect class="nl-sweep" x="-392" y="-149" width="260" height="1330" fill="url(#nl-shine)" transform="skewX(-18)"/>
+  </g>
+</svg><span class="logo-flash" aria-hidden="true"></span></h1>
+          </div>
+          <div class="lockup-pre">
+            <span class="flags" aria-label="United States and Colombia">
+              <svg class="flag" viewBox="0 0 19 13" shape-rendering="crispEdges" role="img" aria-label="United States flag"><use href="#flag-us"/></svg>
+              <svg class="flag" viewBox="0 0 19 13" shape-rendering="crispEdges" role="img" aria-label="Colombian flag"><use href="#flag-co"/></svg>
+            </span>
+            <span id="lockup-pre">Security Analyst</span>
+          </div>
+        </div>
+
+        <div class="art-wrap" id="art-wrap">
+          <div class="art-stage" id="art-stage">
+            <div class="art-glow" id="art-glow" aria-hidden="true"></div>
+            <img class="hero-art" id="hero-art" alt="Illustration of Brandon with his Pokémon" fetchpriority="high" decoding="async">
+            <div class="art-layer" id="art-layer">
+              <div class="art-sheen" aria-hidden="true"></div>
+              <img class="cutie" id="cutie" alt="" aria-hidden="true">
+              <div class="flame-glow" aria-hidden="true"></div>
+              <div class="hot" data-hot="boy"></div>
+              <div class="hot" data-hot="chimchar"></div>
+              <div class="hot" data-hot="shinx"></div>
+              <div class="hot" data-hot="cutiefly"></div>
+              <div class="hot" data-hot="girl"></div>
+              <div class="hot" data-hot="tail" data-as="chimchar"></div>
+              <div class="hot" data-hot="chimhead" data-as="chimchar"></div>
+              <div class="hot" data-hot="chimhand" data-as="chimchar"></div>
+              <img class="tail-star" id="tail-star" src="assets/images/shinx-star.webp" alt="" aria-hidden="true">
+              <div class="bubble" id="bubble" aria-hidden="true">Hey! I'm Brandon 👋</div>
+              <div class="bubble bubble-girl" id="bubble-girl" aria-hidden="true">Hire him!</div>
+              <div class="art-flash" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="memory-card" id="memory-card" role="dialog" aria-labelledby="mem-title" hidden>
+            <button class="mem-close" id="mem-close" aria-label="Close">✕</button>
+            <div class="mem-kicker"><svg class="mk-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5 C12.8 8.6 15.4 11.2 22.5 12 C15.4 12.8 12.8 15.4 12 22.5 C11.2 15.4 8.6 12.8 1.5 12 C8.6 11.2 11.2 8.6 12 1.5 Z"/></svg>Memory</div>
+            <img class="mem-photo" id="mem-photo" alt="" hidden>
+            <h3 id="mem-title"></h3>
+            <p id="mem-text"></p>
+          </div>
+          <div class="floor" aria-hidden="true"></div>
+          <div class="shockwave" aria-hidden="true"></div>
+          <img class="hero-reflect" id="hero-reflect" alt="" aria-hidden="true">
+        </div>
+
+        <nav class="menu-wrap" aria-label="Main menu">
+          <ul class="title-menu" id="title-menu">
+            <li><a class="menu-bar" href="#experience"><i aria-hidden="true"></i>Experience<span class="mb-go" aria-hidden="true">→</span></a></li>
+            <li><a class="menu-bar" href="#projects"><i aria-hidden="true"></i>Projects<span class="mb-go" aria-hidden="true">→</span></a></li>
+            <li><a class="menu-bar" href="#certifications"><i aria-hidden="true"></i>Certifications<span class="mb-go" aria-hidden="true">→</span></a></li>
+          </ul>
+          <div class="key-hint" aria-hidden="true"><kbd>↑</kbd><kbd>↓</kbd> to choose · <kbd>Enter</kbd> to select</div>
+        </nav>
+      </div>
+    </div>
+    <div class="checker" aria-hidden="true"></div>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section class="section experience" id="experience" tabindex="-1">
+    <header class="sec-head reveal"><span class="sec-kicker">01 · Where I've been</span><h2>Experience</h2><p>From help desk to security analyst.</p></header>
+    <article class="profile-card reveal" id="profile-card">
+      <div class="pc-photo"><img id="pc-img" alt="Portrait of Brandon Restrepo" loading="lazy" decoding="async"></div>
+      <div class="pc-body">
+        <div class="mem-kicker"><svg class="mk-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5 C12.8 8.6 15.4 11.2 22.5 12 C15.4 12.8 12.8 15.4 12 22.5 C11.2 15.4 8.6 12.8 1.5 12 C8.6 11.2 11.2 8.6 12 1.5 Z"/></svg>About me</div>
+        <h3 class="pc-name" id="pc-name"></h3>
+        <div class="pc-meta"><span id="pc-title"></span><span class="dot" aria-hidden="true">·</span><span id="pc-loc"></span></div>
+        <p class="pc-about" id="about-text"></p>
+        <p class="pc-about pc-personal" id="about-personal" hidden><span></span></p>
+        <div class="pc-stats" id="impact"></div>
+        <div class="pc-builds" id="pc-builds"><span>Outside work I build</span><div class="pc-chips" id="pc-chips"></div></div>
+      </div>
+    </article>
+    <div class="exp-layout reveal">
+      <nav class="exp-list" id="exp-list" aria-label="Roles"></nav>
+      <article class="role-card" id="role-card" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <!-- ============ PROJECT WORK ============ -->
+  <section class="section projects" id="projects">
+    <header class="sec-head reveal"><span class="sec-kicker">02 · What I've built</span><h2>Projects</h2><p>Hands-on security, networking and infrastructure work.</p></header>
+    <div class="section-inner">
+      <div class="section-sub" id="project-summary"></div>
+      <div class="proj-tools"><label class="proj-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="sr-only">Search projects by tool or keyword</span><input id="proj-q" type="search" placeholder="Search by tool, e.g. Azure" autocomplete="off"></label></div>
+      <p class="sr-only" id="proj-live" aria-live="polite"></p>
+      <div class="filters" id="project-filters" role="group" aria-label="Filter projects"></div>
+      <div class="featured" id="featured"></div>
+      <div class="card-grid" id="card-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CERTIFICATIONS ============ -->
+  <section class="section certs" id="certifications">
+    <header class="sec-head reveal"><span class="sec-kicker">03 · What's next</span><h2>Certifications</h2><p>Credentials I'm currently pursuing.</p></header>
+    <div class="section-inner">
+      <div class="section-sub" id="cert-summary"></div>
+      <div class="cert-stage">
+        <button class="shinx-peek" id="shinx-peek" aria-label="Shinx says hi"><img src="assets/images/shinx-peek.webp" alt="" width="150" height="93"><span class="shinx-say" id="shinx-say" role="status"></span></button>
+        <div class="cert-grid" id="cert-grid"></div>
+      </div>
+      <div class="hall reveal" id="hall">
+        <svg class="constellation" id="constellation" aria-hidden="true"></svg>
+        <div class="pedestals" id="pedestals" role="listbox" aria-label="Certifications"></div>
+      </div>
+      <div class="certs-wrap" id="certs-wrap">
+        <ul class="cert-list" id="cert-list" role="listbox" aria-label="Certifications"></ul>
+        <article class="cert-detail" id="cert-detail"></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      
+      <div class="credits reveal">
+        <p class="signoff-kicker">Thanks for stopping by.</p>
+        <div class="signature" id="credits-name" role="img" aria-label="Signature: Brando"><svg class="sig-svg" viewBox="40 14 500 158" aria-hidden="true">
+          <path class="sig-ink" pathLength="1" d="M 52 156 C 58 120, 64 70, 74 32 C 124 16, 150 42, 112 76 C 100 86, 86 88, 80 86 C 142 80, 162 120, 124 146 C 104 160, 70 160, 52 150 C 92 152, 130 128, 152 114 C 158 108, 166 108, 168 114 C 172 120, 178 118, 182 112 C 178 128, 178 142, 184 152 C 190 128, 204 112, 222 114 C 206 112, 194 128, 196 142 C 198 156, 216 154, 224 130 C 224 140, 224 150, 232 152 C 238 130, 242 118, 250 114 C 262 112, 266 122, 266 134 C 266 144, 266 150, 274 152 C 282 126, 300 112, 316 118 C 300 112, 284 132, 290 146 C 296 158, 314 150, 320 130 C 324 100, 328 60, 338 28 C 332 70, 326 120, 332 150 C 338 130, 356 112, 372 118 C 390 124, 386 152, 366 154 C 350 156, 350 134, 368 124 C 410 106, 452 96, 492 64"/>
+          <path class="sig-star" d="M505 30 C507 46 512 51 528 53 C512 55 507 60 505 76 C503 60 498 55 482 53 C498 51 503 46 505 30Z"/>
+        </svg></div>
+        <p class="signoff-line">Let's build something secure.</p>
+        <p class="credits-pitch">Security Analyst building governance, controls and resilient networks. Open to conversations about security roles.</p>
+        <div class="credits-actions">
+          <a class="btn-cta" id="credits-contact" href="#"><svg viewBox="0 0 64 80" aria-hidden="true"><use href="#crystal"/></svg><span>Contact me</span></a>
+          <a class="foot-link" id="foot-linkedin" href="#" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="foot-link" id="foot-resume" href="#" target="_blank" rel="noopener">Résumé</a>
+          <a class="foot-link" href="#top" id="credits-top">Back to top ↑</a>
+        </div>
+      </div>
+      <p class="footer-note">© <span id="year"></span> Brandon Restrepo · Original artwork and design · <span id="updated"></span><button class="sec-link" id="term-link">Press <kbd>~</kbd> for terminal</button> · <button class="sec-link" id="sec-link">This site's security</button></p>
+    </div>
+  </footer>
+
+  <!-- RECRUITER QUICK VIEW -->
+  <div class="quick" id="quick" role="dialog" aria-modal="true" aria-labelledby="qv-name" hidden>
+    <div class="qv-bar">
+      <span>Recruiter quick view</span>
+      <div class="qv-actions">
+        <button class="qv-btn" id="qv-print">Print / Save PDF</button>
+        <a class="qv-btn" id="qv-resume" href="#" target="_blank" rel="noopener">Download résumé</a>
+        <button class="qv-btn primary" id="qv-close">Back to site</button>
+      </div>
+    </div>
+    <article class="qv-page" id="qv-page"></article>
+  </div>
+
+  <!-- SITE SECURITY NOTE -->
+  <div class="overlay" id="secnote" hidden>
+    <div class="window sec-window" role="dialog" aria-modal="true" aria-labelledby="sec-title">
+      <div class="window-head"><h2 id="sec-title">This site's security</h2><button class="close-btn" id="sec-close" aria-label="Close">✕</button></div>
+      <div class="modal-body sec-body">
+        <p>As a security analyst, I hold my own site to the same standard I'd hold anything I ship. These checks run live in your browser right now.</p>
+        <ul class="sec-checks" id="sec-checks"></ul>
+        <p class="sec-foot">Found an issue? See <code>/.well-known/security.txt</code> or email me.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAIL WINDOW -->
+  <div class="overlay" id="modal" hidden>
+    <div class="window modal-window" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="window-head"><h2 id="modal-title"></h2><button class="close-btn" data-close aria-label="Close">✕</button></div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- CONTACT CARD -->
+  <div class="overlay qol-overlay" id="contact-pop" hidden>
+    <div class="qol-card" role="dialog" aria-modal="true" aria-labelledby="cp-title">
+      <button class="close-btn qol-x" data-qclose aria-label="Close">✕</button>
+      <div class="sec-kicker">Get in touch</div>
+      <h2 id="cp-title">Let's talk</h2>
+      <p class="qol-sub">Email is the best way to reach me. Copy my address or open it in your email app.</p>
+      <div class="cp-row"><span class="cp-email" id="cp-email"></span><button class="btn-cta cp-copy" id="cp-copy">Copy email</button></div>
+      <div class="cp-links"><a class="foot-link" id="cp-mail" href="#">Open in email app →</a><a class="foot-link" id="cp-li" href="#" target="_blank" rel="noopener">LinkedIn →</a></div>
+      <p class="cp-toast" id="cp-toast" role="status" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <!-- RÉSUMÉ VIEWER -->
+  <div class="overlay qol-overlay" id="resume-pop" hidden>
+    <div class="qol-card resume-card" role="dialog" aria-modal="true" aria-labelledby="rv-title">
+      <div class="rv-head"><h2 id="rv-title">Résumé</h2>
+        <div class="rv-actions"><a class="pill-btn" id="rv-open" href="#" target="_blank" rel="noopener">Open in new tab</a><a class="btn-cta" id="rv-dl" href="#" download>Download PDF</a><button class="close-btn" data-qclose aria-label="Close">✕</button></div>
+      </div>
+      <div class="rv-pages" id="rv-pages" tabindex="0" aria-label="Résumé pages"></div>
+    </div>
+  </div>
+
+  <!-- SHORTCUTS -->
+  <div class="overlay qol-overlay" id="keys-pop" hidden>
+    <div class="qol-card" role="dialog" aria-modal="true" aria-labelledby="kp-title">
+      <button class="close-btn qol-x" data-qclose aria-label="Close">✕</button>
+      <h2 id="kp-title">Keyboard shortcuts</h2>
+      <dl class="keys">
+        <dt><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></dt><dd>Jump to Experience, Projects, Certifications</dd>
+        <dt><kbd>0</kbd></dt><dd>Back to top</dd>
+        <dt><kbd>/</kbd></dt><dd>Search projects</dd>
+        <dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>Previous / next project or photo</dd>
+        <dt><kbd>Esc</kbd></dt><dd>Close any window</dd>
+        <dt><kbd>?</kbd></dt><dd>Show this list</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- TERMINAL -->
+  <div class="overlay qol-overlay term-overlay" id="term-pop" hidden>
+    <div class="term" role="dialog" aria-modal="true" aria-label="Terminal">
+      <div class="term-bar"><i></i><i></i><i></i><span>brandon@portfolio: ~</span><button class="term-x" data-qclose aria-label="Close terminal">✕</button></div>
+      <div class="term-out" id="term-out" aria-live="polite"></div>
+      <form class="term-line" id="term-form" autocomplete="off"><span class="term-ps">brandon@portfolio:~$</span><input id="term-in" spellcheck="false" autocapitalize="off" aria-label="Command"></form>
+    </div>
+  </div>
+
+  <div class="fairy" id="fairy" aria-hidden="true"><i class="w l"></i><i class="w r"></i><i class="w l l2"></i><i class="w r r2"></i><b class="core"></b></div>
+  <div class="fairy-dot" id="fairy-dot" aria-hidden="true"></div>
+  <button class="to-top" id="to-top" aria-label="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+  <!-- IMAGE VIEWER -->
+  <div class="overlay lightbox" id="lightbox" hidden>
+    <figure class="lb-figure"><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
+    <button class="lb-nav lb-prev" id="lb-prev" aria-label="Previous image">‹</button>
+    <button class="lb-nav lb-next" id="lb-next" aria-label="Next image">›</button>
+    <button class="close-btn lb-close" id="lb-close" aria-label="Close image">✕</button>
+  </div>
+
+  <!-- secret: bonus memory -->
+  <div class="bonus" id="bonus" role="dialog" aria-label="Bonus memory" hidden>
+    <div class="bonus-card">
+      <div class="mem-kicker"><svg viewBox="0 0 64 80" aria-hidden="true"><use href="#crystal"/></svg>Secret unlocked</div>
+      <h3 id="bonus-title">Bonus Memory</h3>
+      <p id="bonus-text"></p>
+      <button class="bonus-close" id="bonus-close">Continue</button>
+    </div>
+  </div>
+
+  <!-- fairy-light cursor -->
+
+  <script src="assets/images/img-opt.js?v=1793173691"></script>
+  <script src="data.js?v=1793409155"></script>
+  <script src="app.js?v=1793414478"></script>
+  <script src="starmap.js?v=1793273971"></script>
+  <script src="rain.js?v=1793410432"></script>
+</body>
+</html>

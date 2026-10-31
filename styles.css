@@ -3299,3 +3299,15 @@ html.dark .menu-bar.is-focus, html.dark .menu-bar:hover { text-shadow: 0 0 1px #
 @media (max-width: 760px) { .isle.side-big { display: none; } }
 .isle .tether path { stroke-width: 1.6; stroke: rgba(var(--tint), .8); }
 
+
+/* hero tabs: larger, longer and easier to spot at rest */
+.title-menu { gap: 12px !important; }
+.menu-bar { width: min(560px, 100%) !important; height: 60px !important; font-size: 1.18rem !important; letter-spacing: .17em !important; gap: 18px !important; }
+.menu-bar i { width: 13px !important; height: 13px !important; }
+.menu-bar .mb-go { font-size: 1.3em; opacity: .7; }
+html.dark .menu-bar { color: rgba(238, 243, 255, .9) !important; text-shadow: 0 0 12px rgba(110, 160, 255, .35), 0 1px 3px rgba(0, 0, 0, .6); }
+html:not(.dark) .menu-bar { color: #1a2150 !important; }
+.menu-bar::after { content: "" !important; display: block !important; position: absolute !important; left: 18px; right: 22%; bottom: 6px; top: auto !important; height: 1px !important; width: auto !important;
+  background: linear-gradient(90deg, rgba(var(--orb), .55), rgba(var(--orb), 0)) !important; opacity: .6; transition: opacity .3s, right .35s ease; }
+.menu-bar:hover::after, .menu-bar.is-focus::after { opacity: 1; right: 6%; }
+@media (max-width: 640px) { .menu-bar { height: 54px !important; font-size: 1rem !important; } }

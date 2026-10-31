@@ -1,0 +1,4 @@
+Contact: mailto:brandonlelouch@gmail.com
+Expires: 2027-10-24T00:00:00.000Z
+Preferred-Languages: en
+Policy: Please report security issues privately by email. I'll acknowledge reports within a few days. Thank you for helping keep this site safe.

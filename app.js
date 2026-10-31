@@ -135,7 +135,7 @@
     if (seen) { intro.remove(); document.body.classList.remove("intro-active"); return; }
     const calmNow = matchMedia("(prefers-reduced-motion: reduce)").matches || document.documentElement.classList.contains("calm");
     const body = $("#term-body"), titleEl = $("#intro-title");
-    const GLYPHS = "01ABCDEF#$%&*<>/\\=+{}[]?アイウエオカキクケコ";
+    const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&*<>/\\=+{}[]?";
     const glyph = () => GLYPHS[(Math.random() * GLYPHS.length) | 0];
     const wait = (ms) => new Promise((r) => setTimeout(r, fast ? 0 : ms));
     let fast = calmNow, done = false, ready = false, typed = false;

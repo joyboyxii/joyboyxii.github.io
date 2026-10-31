@@ -3298,3 +3298,4 @@ html.dark .menu-bar.is-focus, html.dark .menu-bar:hover { text-shadow: 0 0 1px #
 @media (max-width: 1100px) { .isle.side-big.iso-datacenter { --iw: 260px !important; } .isle.side-big.iso-stack, .isle.side-big.iso-tower { --iw: 180px !important; } }
 @media (max-width: 760px) { .isle.side-big { display: none; } }
 .isle .tether path { stroke-width: 1.6; stroke: rgba(var(--tint), .8); }
+

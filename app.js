@@ -1118,11 +1118,12 @@
     const part = (title, body) => body ? `<section class="ql-part"><h4>${title}</h4><p>${esc(body)}</p></section>` : "";
     const structured = p.problem || p.approach || p.result;
     openModal(p.title, `
-      <div class="ql-hero" style="--c1:${c1};--c2:${c2}">
-        <div class="ql-icon">${icon(p.icon)}</div>
+      <div class="tc-bar" aria-hidden="true"><i></i><i></i><i></i><span>~/projects/${esc(slug(p.title))}.md</span></div>
+      <div class="ql-hero tc-hero">
+        <div class="tc-cmd" aria-hidden="true"><span class="tc-p">$</span> cat ${esc(slug(p.title))}.md</div>
         <div class="ql-head">
-          <div class="ql-kicker">Case Study · ${esc([p.type, isActive(p) ? "In progress" : "Complete", fmtDate(p.date)].filter(Boolean).join(" · "))}</div>
-          <h3>${esc(p.title)}</h3>
+          <h3><span class="tc-hash" aria-hidden="true"># </span>${esc(p.title)}</h3>
+          <div class="tc-meta"><span><b>type:</b> ${esc((p.type || "project").toLowerCase())}</span><span><b>status:</b> <em class="${isActive(p) ? "tc-run" : "tc-ok"}">${isActive(p) ? "in progress" : "complete"}</em></span>${p.date ? `<span><b>date:</b> <i>${esc(p.date)}</i></span>` : ""}</div>
           ${p.summary ? `<p>${esc(p.summary)}</p>` : ""}
         </div>
       </div>
@@ -1141,7 +1142,7 @@
         </aside>
       </div>
     `, opener);
-    modal.classList.add("quest");
+    modal.classList.add("quest", "term-case");
     wireThumbs($("#modal-body"), imgs);
     // previous / next project
     const order = pList.map((q) => q._i), pos = order.indexOf(i);
@@ -1465,7 +1466,7 @@
   }
   function closeModalNow() {
     if (modal.hidden) return;
-    modal.hidden = true; modal.classList.remove("quest"); document.body.style.overflow = "";
+    modal.hidden = true; modal.classList.remove("quest", "term-case"); document.body.style.overflow = "";
     delete modal.dataset.proj;
     if (/^#project\//.test(location.hash)) { try { history.replaceState(null, "", "#projects"); } catch (e) {} }
     Sound.play("back"); modalOpener?.focus?.();

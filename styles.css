@@ -3355,3 +3355,41 @@ html.dark .sec-body p, html.dark .sec-body ul { color: #c9d3f5 !important; }
 }
 @container (max-width: 380px) { .hud-cover .hc-t2, .hud-cover .hc-t3 { display: none; } .hud-cover .hc-tag { max-width: 42%; } }
 html .hud-cover > svg.hc-lines { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; max-width: none !important; aspect-ratio: auto !important; filter: none !important; transform: none !important; }
+
+/* ---- case study as a terminal file (style 3) ---- */
+#modal.term-case .modal-window, html.dark #modal.term-case .modal-window { background: #070a1c !important; }
+html:not(.dark) #modal.term-case .modal-window { background: #f6f8ff !important; }
+#modal.term-case .tc-bar { position: sticky; top: 0; z-index: 6; display: flex; align-items: center; gap: 7px; padding: 12px 64px 12px 18px;
+  background: rgba(11, 15, 38, .96); border-bottom: 1px solid rgba(90, 120, 255, .3); font: 500 .8rem ui-monospace, "SF Mono", Menlo, Consolas, monospace; color: #8a94bd;
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+#modal.term-case .tc-bar i { width: 11px; height: 11px; border-radius: 50%; flex: none; }
+#modal.term-case .tc-bar i:nth-child(1) { background: #ff5f57; } #modal.term-case .tc-bar i:nth-child(2) { background: #febc2e; } #modal.term-case .tc-bar i:nth-child(3) { background: #28c840; }
+#modal.term-case .tc-bar span { margin-left: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+html:not(.dark) #modal.term-case .tc-bar { background: rgba(232, 236, 252, .96); border-bottom-color: rgba(46, 91, 255, .25); color: #4a5378; }
+#modal.term-case .ql-hero.tc-hero { display: block !important; background: none !important; padding: 22px clamp(18px, 4vw, 34px) 8px !important; border: 0 !important; min-height: 0 !important; box-shadow: none !important; }
+#modal.term-case .ql-hero.tc-hero::before, #modal.term-case .ql-hero.tc-hero::after { display: none !important; }
+#modal.term-case .tc-cmd { font: 500 .9rem ui-monospace, Menlo, Consolas, monospace; color: #c8d3ff; margin-bottom: 10px; }
+#modal.term-case .tc-p { color: #5b8cff; }
+#modal.term-case .tc-hero h3 { margin: 0 0 8px !important; font: 700 clamp(1.25rem, 3.4vw, 1.7rem)/1.25 ui-monospace, "SF Mono", Menlo, Consolas, monospace !important; color: #fff !important; letter-spacing: 0 !important; text-shadow: none !important; }
+#modal.term-case .tc-hash { color: #5b8cff; }
+#modal.term-case .tc-meta { display: flex; flex-wrap: wrap; gap: 4px 16px; font: 500 .82rem ui-monospace, Menlo, Consolas, monospace; color: #c8d3ff; margin-bottom: 12px; }
+#modal.term-case .tc-meta b { color: #5b8cff; font-weight: 500; } #modal.term-case .tc-meta i { color: #ffcf5c; font-style: normal; }
+#modal.term-case .tc-meta em { font-style: normal; } #modal.term-case .tc-ok { color: #3fe08f; } #modal.term-case .tc-run { color: #ffcf5c; }
+#modal.term-case .tc-hero p { margin: 0 !important; color: #dfe5ff !important; font: 400 1rem/1.6 var(--f-body, Inter), sans-serif !important; max-width: 62ch; }
+#modal.term-case .ql-part h4 { font: 600 .86rem ui-monospace, Menlo, Consolas, monospace !important; letter-spacing: .02em !important; text-transform: none !important; color: #7fa6ff !important; }
+#modal.term-case .ql-part h4::before { content: "## "; color: #5a6596; }
+#modal.term-case .ql-part p { color: #c9d2f2 !important; }
+#modal.term-case .abilities-head span { font-family: ui-monospace, Menlo, Consolas, monospace !important; letter-spacing: .02em !important; text-transform: none !important; }
+#modal.term-case .abilities-head span::before { content: "// "; color: #5a6596; }
+#modal.term-case .ability { font-family: ui-monospace, Menlo, Consolas, monospace !important; font-size: .78rem !important; border-radius: 6px !important; }
+html:not(.dark) #modal.term-case .tc-cmd, html:not(.dark) #modal.term-case .tc-meta { color: #2a3260; }
+html:not(.dark) #modal.term-case .tc-hero h3 { color: #10163a !important; }
+html:not(.dark) #modal.term-case .tc-hero p, html:not(.dark) #modal.term-case .ql-part p { color: #2c345e !important; }
+html:not(.dark) #modal.term-case .tc-p, html:not(.dark) #modal.term-case .tc-hash, html:not(.dark) #modal.term-case .tc-meta b, html:not(.dark) #modal.term-case .ql-part h4 { color: #2e5bff !important; }
+html:not(.dark) #modal.term-case .tc-meta i, html:not(.dark) #modal.term-case .tc-run { color: #b07a00; } html:not(.dark) #modal.term-case .tc-ok { color: #12935a; }
+#modal.term-case .ql-hero.tc-hero { padding: 26px clamp(20px, 6vw, 90px) 4px !important; }
+#modal.term-case .tc-bar { padding-left: clamp(20px, 6vw, 90px); min-height: 48px; }
+#modal.term-case .close-btn { z-index: 12 !important; top: 4px !important; width: 40px !important; height: 40px !important; }
+#modal.term-case .ql-grid { padding-top: 18px; }
+#modal.term-case .window-head { z-index: 20 !important; pointer-events: none; }
+#modal.term-case .window-head .close-btn { pointer-events: auto; }

@@ -364,7 +364,7 @@
   (() => {
     const fairy = $("#fairy"), dot = $("#fairy-dot"); if (!fairy) return;
     const canFairy = matchMedia("(pointer: fine)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let enabled = canFairy && store.get("fairy", false);
+    let enabled = canFairy && store.get("fairy", true);   // on by default; the Settings toggle remembers a visitor's choice
     const ft = $("#fairy-toggle");
     const apply = () => {
       document.documentElement.classList.toggle("fairy-on", enabled);
@@ -783,6 +783,29 @@
     Sound.play(open ? "select" : "back");
   });
   const navLinks = $$(".nav-links a");
+  /* ---------- back navigation: the phone/browser Back button closes windows and returns from jumps ---------- */
+  const layers = []; let ignorePop = 0;
+  const pushLayer = (closeFn, url) => { try { history.pushState({ layer: 1 }, "", url || location.href); layers.push(closeFn); } catch (e) {} };
+  const popLayer = (closeFn) => { const i = layers.lastIndexOf(closeFn); if (i < 0) return false; layers.splice(i, 1); ignorePop++; history.back(); return true; };
+  window.__layers = { push: pushLayer, pop: popLayer };
+  const backPill = document.createElement("button");
+  backPill.className = "back-pill"; backPill.type = "button"; backPill.hidden = true;
+  backPill.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Back</span>';
+  document.body.appendChild(backPill);
+  let backTimer = 0, backFrom = null;
+  const hideBack = () => { backPill.classList.remove("show"); clearTimeout(backTimer); backTimer = setTimeout(() => { backPill.hidden = true; }, 250); };
+  const showBack = (label) => { clearTimeout(backTimer); backPill.querySelector("span").textContent = label; backPill.hidden = false; requestAnimationFrame(() => backPill.classList.add("show")); };
+  backPill.addEventListener("click", () => { Sound.play("back"); history.back(); });
+  addEventListener("popstate", (e) => {
+    if (ignorePop) { ignorePop--; return; }
+    if (layers.length) { layers.pop()(true); return; }
+    const y = e.state && typeof e.state.y === "number" ? e.state.y : null;
+    if (y !== null) { const r = document.documentElement; r.style.scrollBehavior = "auto"; scrollTo(0, y); r.style.scrollBehavior = ""; }
+    hideBack();
+  });
+  // hide the Back pill once the visitor scrolls well away from where the jump landed
+  addEventListener("scroll", () => { if (backFrom !== null && !backPill.hidden && Math.abs(scrollY - backFrom) > innerHeight * 1.5) { backFrom = null; hideBack(); } }, { passive: true });
+
   // section jump: instant (the old animated glide felt laggy), then a quick light sweep on the section title
   const warpTo = (id) => {
     const target = document.getElementById(id); if (!target) return;
@@ -790,8 +813,12 @@
     const root = document.documentElement;
     const calm = matchMedia("(prefers-reduced-motion: reduce)").matches || root.classList.contains("calm");
     $$(".reveal", target).forEach((el) => el.classList.add("in"));
+    const fromY = scrollY, fromTop = fromY < innerHeight * .6;
+    // remember where we came from, so Back (pill, phone gesture or browser button) returns there
+    try { history.replaceState(Object.assign({}, history.state, { y: fromY }), ""); history.pushState({ jump: id }, "", "#" + id); } catch (e) {}
     root.style.scrollBehavior = "auto"; target.scrollIntoView(); root.style.scrollBehavior = "";
-    try { history.replaceState(null, "", "#" + id); } catch (e) {}
+    backFrom = scrollY;
+    if (Math.abs(scrollY - fromY) > 40) showBack(fromTop ? "Back to title" : "Back"); else hideBack();
     if (!calm) { title.classList.remove("sweep"); void title.offsetWidth; title.classList.add("sweep"); setTimeout(() => title.classList.remove("sweep"), 900); }
   };
   navLinks.forEach((a) => a.addEventListener("click", (e) => {
@@ -1050,8 +1077,10 @@
     let t; inp.addEventListener("input", () => { clearTimeout(t); t = setTimeout(() => { window.__projQ = inp.value; renderCards(); }, 120); });
   })();
 
-  function openProject(i, opener) {
+  const modalLayer = () => closeModal();
+  function openProject(i, opener, noPush) {
     const p = projects[i]; if (!p) return;
+    const fresh = modal.hidden;
     const [c1, c2] = ["#1b2a6b", "#2b55d6"];
     const imgs = normImages(p.images);
     const desc = Array.isArray(p.description) ? p.description : (p.description ? [p.description] : []);
@@ -1096,10 +1125,11 @@
     modal.dataset.proj = i; modal.dataset.prev = prevI; modal.dataset.next = nextI;
     if (!window.__qlStep && opener && opener.getBoundingClientRect) window.__growFrom && window.__growFrom(opener);
     window.__qlStep = false;
-    try { history.replaceState(null, "", "#project/" + slug(p.title)); } catch (e) {}
+    if (fresh && !noPush) pushLayer(modalLayer, "#project/" + slug(p.title));
+    else { try { history.replaceState(history.state, "", "#project/" + slug(p.title)); } catch (e) {} }
   }
   function slug(t) { return String(t).toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
-  window.__openProjectBySlug = (s) => { const k = projects.findIndex((p) => slug(p.title) === s); if (k >= 0) { openProject(k); return true; } return false; };
+  window.__openProjectBySlug = (s) => { const k = projects.findIndex((p) => slug(p.title) === s); if (k >= 0) { openProject(k, null, true); return true; } return false; };
 
   /* ---------- CERTIFICATIONS ---------- */
   const cList = certs.map((c, i) => ({ ...c, _i: i })).sort(byDateDesc);
@@ -1187,10 +1217,31 @@
     box.innerHTML = `<div class="cv-wm" aria-hidden="true">${certs.length}</div>
       <div class="cv-top"><b>${certs.length}</b><span>credentials across ${vendors} vendor${vendors === 1 ? "" : "s"}</span></div>
       ${groups.map((g, i) => { const [cls, ab, focus] = meta(g.k); return `<details class="cv-row ${cls}"><summary><span class="cv-lg">${esc(ab)}</span><span class="cv-name">${esc(g.k)}</span><span class="cv-n">×${g.list.length}</span><span class="cv-chev" aria-hidden="true">›</span></summary>
-        <div class="cv-body"><p>${esc(focus)}</p><div class="cv-pills">${g.list.map((c) => `<span class="cv-pill" title="${esc(c.description || "")}">${esc(c.title)}</span>`).join("")}</div></div></details>`; }).join("")}`;
+        <div class="cv-body"><div class="cv-in"><p>${esc(focus)}</p><div class="cv-pills">${g.list.map((c) => `<span class="cv-pill" title="${esc(c.description || "")}">${esc(c.title)}</span>`).join("")}</div></div></div></details>`; }).join("")}`;
     // one open at a time keeps the section compact
     const rows = $$(".cv-row", box);
-    rows.forEach((d) => d.addEventListener("toggle", () => { if (d.open) { rows.forEach((o) => { if (o !== d) o.open = false; }); Sound.play("select"); } }));
+    // smooth open/close: the body's height animates, and the row that closes animates at the same time (no jump, no flicker)
+    const still = () => matchMedia("(prefers-reduced-motion: reduce)").matches || document.documentElement.classList.contains("calm");
+    const slide = (d, open) => {
+      const body = $(".cv-body", d); if (d._anim) { d._anim.cancel(); d._anim = null; }
+      d.classList.toggle("is-open", open);
+      if (still()) { d.open = open; return; }
+      if (open) {
+        d.open = true; const h = body.scrollHeight;
+        d._anim = body.animate([{ height: "0px", opacity: 0 }, { height: h + "px", opacity: 1 }], { duration: 260, easing: "cubic-bezier(.3,.7,.3,1)" });
+        d._anim.onfinish = () => { d._anim = null; };
+      } else {
+        const h = body.offsetHeight;
+        d._anim = body.animate([{ height: h + "px", opacity: 1 }, { height: "0px", opacity: 0 }], { duration: 260, easing: "cubic-bezier(.3,.7,.3,1)", fill: "forwards" });
+        d._anim.onfinish = () => { d.open = false; d._anim.cancel(); d._anim = null; };
+      }
+    };
+    rows.forEach((d) => $("summary", d).addEventListener("click", (e) => {
+      e.preventDefault();
+      const opening = !d.classList.contains("is-open");
+      if (opening) { rows.forEach((o) => { if (o !== d && o.classList.contains("is-open")) slide(o, false); }); Sound.play("select"); }
+      slide(d, opening);
+    }));
   })();
 
   /* ---------- the big update: worlds, journey, hall of trials, credits ---------- */
@@ -1424,7 +1475,7 @@
     if (modal.hidden) return;
     modal.hidden = true; modal.classList.remove("quest", "term-case"); document.body.style.overflow = "";
     delete modal.dataset.proj;
-    if (/^#project\//.test(location.hash)) { try { history.replaceState(null, "", "#projects"); } catch (e) {} }
+    if (!popLayer(modalLayer) && /^#project\//.test(location.hash)) { try { history.replaceState(null, "", "#projects"); } catch (e) {} }
     Sound.play("back"); modalOpener?.focus?.();
   }
   modal.addEventListener("click", (e) => { if (e.target === modal || e.target.closest("[data-close]")) closeModal(); });
@@ -1478,8 +1529,8 @@
      QUALITY OF LIFE
      ===================================================================== */
   (() => {
-    const qopen = (el, focusSel) => { el.hidden = false; document.body.style.overflow = "hidden"; el._opener = document.activeElement; ($(focusSel, el) || $("button", el))?.focus(); Sound.play("open"); };
-    const qclose = (el) => { if (el.hidden) return; el.hidden = true; if (modal.hidden) document.body.style.overflow = ""; el._opener?.focus?.(); Sound.play("back"); };
+    const qopen = (el, focusSel) => { const was = el.hidden; el.hidden = false; document.body.style.overflow = "hidden"; el._opener = document.activeElement; ($(focusSel, el) || $("button", el))?.focus(); Sound.play("open"); if (was) { el._layer = () => qclose(el); pushLayer(el._layer); } };
+    const qclose = (el) => { if (el.hidden) return; el.hidden = true; if (el._layer) { popLayer(el._layer); el._layer = null; } if (modal.hidden) document.body.style.overflow = ""; el._opener?.focus?.(); Sound.play("back"); };
     const pops = $$(".qol-overlay");
     pops.forEach((el) => el.addEventListener("click", (e) => { if (e.target === el || e.target.closest("[data-qclose]")) qclose(el); }));
 

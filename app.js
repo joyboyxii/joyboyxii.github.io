@@ -783,76 +783,16 @@
     Sound.play(open ? "select" : "back");
   });
   const navLinks = $$(".nav-links a");
-  // KH-style transition when jumping to a section from a menu
-  // section jump: bar confirm → fade + glide → star flies to the title → light sweep
-  // Perf: one rAF loop, transform/opacity only, pooled trail sparks, instant scroll steps, cancel on user input.
-  let jumping = false, cancelJump = null;
-  const easeOut = (t) => 1 - Math.pow(1 - t, 3), easeIO = (t) => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-  const fly = (() => {
-    const star = document.createElement("span"); star.className = "fly-star"; star.hidden = true;
-    star.innerHTML = '<svg><use href="#star-soft"/></svg>';
-    const sparks = Array.from({ length: 10 }, () => { const d = document.createElement("i"); d.className = "fly-trail"; return d; });
-    document.body.append(star, ...sparks);
-    return { star, sparks };
-  })();
-  const warpTo = (id, ev) => {
+  // section jump: instant (the old animated glide felt laggy), then a quick light sweep on the section title
+  const warpTo = (id) => {
     const target = document.getElementById(id); if (!target) return;
-    if (cancelJump) cancelJump();
     const title = $(".sec-head h2", target) || target;
     const root = document.documentElement;
     const calm = matchMedia("(prefers-reduced-motion: reduce)").matches || root.classList.contains("calm");
-    const done = () => { try { history.replaceState(null, "", "#" + id); } catch (e) {} };
     $$(".reveal", target).forEach((el) => el.classList.add("in"));
-    if (calm) { root.style.scrollBehavior = "auto"; target.scrollIntoView(); root.style.scrollBehavior = ""; done(); return; }
-    jumping = true;
-    const small = innerWidth < 760;
-    const src = (ev && ev.target && ev.target.closest && ev.target.closest("a, button")) || document.activeElement;
-    const sr = src && src !== document.body ? src.getBoundingClientRect() : null;
-    const sx = ev && ev.clientX ? ev.clientX : sr ? sr.left + 28 : innerWidth / 2;
-    const sy = ev && ev.clientY ? ev.clientY : sr ? sr.top + sr.height / 2 : innerHeight / 2;
-    if (src && src.classList && src.classList.contains("menu-bar")) { src.classList.remove("chosen"); void src.offsetWidth; src.classList.add("chosen"); setTimeout(() => src.classList.remove("chosen"), 500); }
-    root.style.scrollBehavior = "auto";
-    document.body.classList.add("jumping");
-    const fromHero = scrollY < innerHeight * .6;
-    if (fromHero) document.body.classList.add("focus-pull");
-    const y0 = scrollY;
-    const y1 = () => Math.max(0, Math.min(target.getBoundingClientRect().top + scrollY, root.scrollHeight - innerHeight));
-    const yEnd = y1(), dist = Math.abs(yEnd - y0);
-    const dur = Math.min(small ? 620 : 760, Math.max(420, 300 + dist * .12));
-    const tr = title.getBoundingClientRect();
-    const ex = Math.max(16, tr.left - (small ? 16 : 22)), ey = tr.top + scrollY - yEnd + tr.height * .45;
-    const cx = sx + (ex - sx) * .35 + (small ? 60 : 140), cy = Math.min(sy, ey) - (small ? 60 : 110);
-    const { star, sparks } = fly; let si = 0, lastSpark = 0, raf = 0, alive = true;
-    star.hidden = false; star.classList.remove("land");
-    const stop = (landed) => {
-      if (!alive) return; alive = false; cancelAnimationFrame(raf);
-      removeEventListener("wheel", userStop); removeEventListener("touchstart", userStop); removeEventListener("keydown", keyStop);
-      document.body.classList.remove("focus-pull", "jumping"); root.style.scrollBehavior = "";
-      jumping = false; cancelJump = null;
-      if (landed) {
-        star.classList.add("land"); setTimeout(() => { if (!jumping) star.hidden = true; }, 420);
-        title.classList.remove("sweep"); void title.offsetWidth; title.classList.add("sweep");
-        setTimeout(() => title.classList.remove("sweep"), 900);
-        done();
-      } else star.hidden = true;
-    };
-    const userStop = () => stop(false), keyStop = (e) => { if (["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "].includes(e.key)) stop(false); };
-    addEventListener("wheel", userStop, { passive: true }); addEventListener("touchstart", userStop, { passive: true }); addEventListener("keydown", keyStop);
-    cancelJump = () => stop(false);
-    const t0 = performance.now() + 90; // brief beat for the bar confirm
-    const step = (now) => {
-      if (!alive) return;
-      const t = Math.max(0, Math.min(1, (now - t0) / dur)), k = easeIO(t), u = easeOut(t);
-      window.scrollTo(0, y0 + (yEnd - y0) * k);
-      const x = (1 - u) * (1 - u) * sx + 2 * (1 - u) * u * cx + u * u * ex, y = (1 - u) * (1 - u) * sy + 2 * (1 - u) * u * cy + u * u * ey;
-      star.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) rotate(${(u * 180).toFixed(0)}deg)`;
-      if (t > 0 && t < .95 && now - lastSpark > (small ? 55 : 40)) {
-        lastSpark = now; const d = sparks[si++ % sparks.length];
-        d.classList.remove("go"); d.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`; void d.offsetWidth; d.classList.add("go");
-      }
-      if (t < 1) raf = requestAnimationFrame(step); else stop(true);
-    };
-    raf = requestAnimationFrame(step);
+    root.style.scrollBehavior = "auto"; target.scrollIntoView(); root.style.scrollBehavior = "";
+    try { history.replaceState(null, "", "#" + id); } catch (e) {}
+    if (!calm) { title.classList.remove("sweep"); void title.offsetWidth; title.classList.add("sweep"); setTimeout(() => title.classList.remove("sweep"), 900); }
   };
   navLinks.forEach((a) => a.addEventListener("click", (e) => {
     nav.classList.remove("open"); Sound.play("select");

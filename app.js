@@ -1237,6 +1237,22 @@
     show(0, false);
   }
 
+  /* ---------- certifications, condensed: a big count and one colour-edged row per vendor ---------- */
+  (() => {
+    const box = $("#cert-vendors"); if (!box || !certs.length) return;
+    const VEND = { CompTIA: ["ct", "CT", "Networking & security foundations"], CrowdStrike: ["cs", "CS", "Endpoint detection & response"], Microsoft: ["ms", "MS", "Microsoft 365 information protection"], GitHub: ["gh", "GH", "Version control & collaboration"] };
+    const groups = []; certs.forEach((c) => { const k = c.issuer || "Other"; let g = groups.find((x) => x.k === k); if (!g) groups.push(g = { k, list: [] }); g.list.push(c); });
+    const meta = (k) => VEND[k] || ["pt", (k.match(/[A-Z]/g) || ["•"]).slice(0, 2).join(""), "Hands-on training"];
+    const vendors = groups.filter((g) => VEND[g.k]).length || groups.length;
+    box.innerHTML = `<div class="cv-wm" aria-hidden="true">${certs.length}</div>
+      <div class="cv-top"><b>${certs.length}</b><span>credentials across ${vendors} vendor${vendors === 1 ? "" : "s"}</span></div>
+      ${groups.map((g, i) => { const [cls, ab, focus] = meta(g.k); return `<details class="cv-row ${cls}"><summary><span class="cv-lg">${esc(ab)}</span><span class="cv-name">${esc(g.k)}</span><span class="cv-n">×${g.list.length}</span><span class="cv-chev" aria-hidden="true">›</span></summary>
+        <div class="cv-body"><p>${esc(focus)}</p><div class="cv-pills">${g.list.map((c) => `<span class="cv-pill" title="${esc(c.description || "")}">${esc(c.title)}</span>`).join("")}</div></div></details>`; }).join("")}`;
+    // one open at a time keeps the section compact
+    const rows = $$(".cv-row", box);
+    rows.forEach((d) => d.addEventListener("toggle", () => { if (d.open) { rows.forEach((o) => { if (o !== d) o.open = false; }); Sound.play("select"); } }));
+  })();
+
   /* ---------- the big update: worlds, journey, hall of trials, credits ---------- */
   (() => {
     const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -2524,7 +2540,7 @@
       });
     }); };
     document.addEventListener("click", (e) => {
-      if (calm() || e.target.closest("a, button, input, .pcard, .feat-card, .cgrid-card, .profile-card, .role-card, .exp-list, .overlay, .qol-overlay, .modal, .term")) return;
+      if (calm() || e.target.closest("a, button, input, summary, details, .cert-vendors, .pcard, .feat-card, .cgrid-card, .profile-card, .role-card, .exp-list, .overlay, .qol-overlay, .modal, .term")) return;
       const s = scenes.find((x) => x.live && (() => { const r = x.sec.getBoundingClientRect(); return e.clientY >= r.top && e.clientY <= r.bottom; })()); if (!s) return;
       // the ring lives in a fixed layer over the page, so a tap near a section edge never gets clipped
       const ring = document.createElement("i"); ring.className = "sb-ping fixed"; ring.style.left = e.clientX + "px"; ring.style.top = e.clientY + "px";

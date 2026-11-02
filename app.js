@@ -1864,13 +1864,13 @@
       if (!tout.childElementCount) { line(`${profile.name || "Brandon"} · ${profile.className || ""}`, "tl-head"); line('Type "help" to see what you can do. Tip: Tab completes commands.', "tl-dim"); }
       setTimeout(() => tin.focus(), 30); Sound.play("open");
     };
-    const closeTerm = () => { if (tp.hidden) return; tp.hidden = true; document.body.style.overflow = ""; Sound.play("back"); };
+    const closeTerm = () => { if (tp.hidden) return; if (busy) stop = true; tp.hidden = true; document.body.style.overflow = ""; Sound.play("back"); };
     tp.addEventListener("click", (e) => { if (e.target === tp || e.target.closest("[data-qclose]")) closeTerm(); });
     $("#term-btn")?.addEventListener("click", () => { $("#more-panel").hidden = true; openTerm(); });
     $("#term-link")?.addEventListener("click", openTerm);
     const roles = (DATA2.experience || []).slice().reverse();
     const CMDS = {
-      help: () => ["Commands:", "  ctf           🏴 find the 3 hidden flags", "  whoami        who I am", "  about         short bio", "  experience    roles, newest first", "  projects      list projects  ·  open <n>", "  certs         certifications", "  contact       how to reach me", "  resume        open my résumé", "  linkedin      open LinkedIn", "  theme <dark|light>", "  intro         replay the intro", "  ls · cd <section> · clear · exit"].forEach((l) => line(l)),
+      help: () => ["Commands:", "  ctf           🏴 find the 3 hidden flags", "  whoami        who I am", "  about         short bio", "  experience    roles, newest first", "  projects      list projects  ·  open <n>", "  certs         certifications", "  contact       how to reach me", "  resume        open my résumé", "  linkedin      open LinkedIn", "  theme <dark|light>", "  intro         replay the intro", "", "Try these too:", "  neofetch · man brandon · traceroute career · top", "  tail -f /var/log/auth.log · sha256 <text> · phish", "  cat /etc/skills · ping recruiter", "  ls · cd <section> · clear · exit   (Ctrl+C stops a running command)"].forEach((l) => line(l)),
       whoami: () => line(`${profile.name} · ${profile.className} · ${profile.location || ""}`),
       about: () => { line(profile.about || ""); if (profile.personal) line(profile.personal, "tl-dim"); },
       experience: () => roles.forEach((r) => line(`• ${r.role}${r.company ? " @ " + r.company : ""}  (${r.from ? r.from + " → " + (r.to || "present") : r.dateLabel || ""})`)),
@@ -1897,8 +1897,91 @@
     };
     CMDS.cat = (a) => {
       if (/^\.?\/?\.vault$/.test((a || "").trim())) { line("SYNT{te3c_gu3_g3ez1a4y}", "tl-ok"); line("hmm… looks like it's been rotated. 13 times, maybe.", "tl-dim"); return; }
+      if (/skills/.test(a || "")) return CMDS.skills();
       if (/resume/.test(a || "")) return CMDS.resume();
-      line(`cat: ${a || ""}: try "about" or "resume"`, "tl-err");
+      line(`cat: ${a || ""}: try "cat /etc/skills" or "resume"`, "tl-err");
+    };
+    /* ---------- easter-egg commands: a few of them quietly teach a security idea ---------- */
+    let busy = false, stop = false, quiz = null;
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+    const nap = async (ms) => { await wait(ms); if (stop) throw "stopped"; };
+    const flashTerm = () => { const t = tp.querySelector(".term"); if (!t) return; t.classList.remove("t-flash"); void t.offsetWidth; t.classList.add("t-flash"); };
+    const yearsIn = () => (((Date.now() - new Date("2021-12-01")) / 3.156e10)).toFixed(1);
+    CMDS.neofetch = () => {
+      const art = ["██████╗ ██████╗ ", "██╔══██╗██╔══██╗", "██████╔╝██████╔╝", "██╔══██╗██╔══██╗", "██████╔╝██║  ██║", "╚═════╝ ╚═╝  ╚═╝"];
+      const now = roles[0] || {};
+      const info = ["brandon@portfolio", "─────────────────", `Role:     ${profile.className || ""}`, `Org:      ${now.company || ""}`, `Uptime:   ${yearsIn()} years in IT`, `Projects: ${pList.length} shipped`, "Focus:    governance · detection · networks", "Shell:    curiosity 5.x"];
+      const box = document.createElement("div"); box.className = "tl tl-neo";
+      const pre = document.createElement("div"); pre.className = "neo-art"; pre.textContent = art.join("\n");
+      const inf = document.createElement("div"); info.forEach((l, i) => { const d = document.createElement("div"); d.className = i < 2 ? "tl-head" : ""; d.textContent = l; inf.appendChild(d); });
+      const sw = document.createElement("div"); sw.className = "neo-sw"; sw.innerHTML = ["#ff5f57", "#febc2e", "#6ee7a8", "#7fa6ff", "#c9a8ff", "#e8ecff"].map((c) => `<i style="background:${c}"></i>`).join(""); inf.appendChild(sw);
+      box.append(pre, inf); tout.appendChild(box);
+    };
+    CMDS.man = (a) => {
+      if (!/brandon/i.test(a || "")) return line("What manual page do you want? Try: man brandon", "tl-err");
+      ["BRANDON(1)                Hiring Manual                BRANDON(1)", "", "NAME", "       brandon - security analyst, governance builder, homelab tinkerer", "", "SYNOPSIS", "       brandon [--governance] [--detection] [--network] problem", "", "DESCRIPTION", "       Writes the policies, standards and rules, then engineers the", "       controls that enforce them. Runs a honeypot for fun.", "", "OPTIONS", "       --governance   policy, baselines, compliance audits", "       --detection    Wazuh, Kibana, alert triage", "       --network      VLANs, DNS filtering, hardening", "", "BUGS", "       Will rebuild your network rack if left unattended.", "", "SEE ALSO", "       resume(1), contact(1), projects(1)"].forEach((l, i) => line(l, i === 0 ? "tl-dim" : /^[A-Z]{3,}$/.test(l) ? "tl-head" : ""));
+    };
+    CMDS.traceroute = async () => {
+      const hops = (DATA2.experience || []).slice().sort((a, b) => String(a.from || a.date || "").localeCompare(String(b.from || b.date || "")));
+      line(`traceroute to ${(profile.className || "career").toLowerCase().replace(/\s+/g, "-")}, ${hops.length} hops max`);
+      for (let i = 0; i < hops.length; i++) { await nap(380); const h = hops[i]; line(` ${i + 1}  ${h.role}${h.company ? " (" + h.company + ")" : ""}  ${String(h.from || h.date || "").slice(0, 4)}`, i === hops.length - 1 ? "tl-ok" : ""); tout.scrollTop = tout.scrollHeight; }
+      line("destination reached. still routing upward.", "tl-dim");
+    };
+    CMDS.tail = async () => {
+      line("tailing /var/log/auth.log  (demo data, Ctrl+C to stop)", "tl-dim");
+      const L = [["Accepted publickey for brandon from 10.0.20.5", ""], ["Failed password for root from 203.0.113.47", "tl-warn"], ["Failed password for admin from 203.0.113.47", "tl-warn"], ["Failed password for root from 203.0.113.47", "tl-warn"], ["Failed password for test from 203.0.113.47", "tl-warn"], ["Failed password for ubuntu from 203.0.113.47", "tl-warn"], ["ALERT  5 failed logins in 9s from 203.0.113.47 → brute force (MITRE T1110)", "tl-err"], ["ACTION fail2ban banned 203.0.113.47 for 24h", "tl-ok"]];
+      let t = 2 * 3600 + 14 * 60 + 3;
+      for (const [m, c] of L) { await nap(c === "tl-err" ? 700 : 420); t += 2; line(`${new Date(t * 1000).toISOString().slice(11, 19)}  sshd: ${m}`, c); if (c === "tl-err") Sound.play("back"); tout.scrollTop = tout.scrollHeight; }
+      await nap(300); line("What happened: one address guessed common usernames fast, a classic brute-force pattern. The rule caught it and the address was blocked automatically.", "tl-dim");
+    };
+    CMDS.sha256 = async (a) => {
+      if (!a) return line("usage: sha256 <any text>   e.g. sha256 hello", "tl-err");
+      try {
+        const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(a));
+        line([...new Uint8Array(b)].map((x) => x.toString(16).padStart(2, "0")).join(""), "tl-ok");
+        line("A one-way fingerprint: change one letter and the whole hash changes. It's how systems check passwords without storing the password itself.", "tl-dim");
+      } catch (e) { line("hashing needs a secure (https) page", "tl-err"); }
+    };
+    const PHISH = [
+      ["From: IT-Support <helpdesk@addltion-financial.co>", "Subject: Your password expires in 1 hour. Click to keep it", true, "phish: the domain swaps an 'i' for an 'l', and the one-hour deadline adds pressure."],
+      ["From: GitHub <noreply@github.com>", "Subject: [GitHub] A new SSH key was added to your account", false, "legit: the real sender domain, and no link asking for your password. You'd still check your settings directly."],
+      ["From: CEO <ceo.office.mobile@gmail.com>", "Subject: Need 5 gift cards for clients, keep this quiet", true, "phish: an executive on a personal Gmail, an unusual request and a demand for secrecy."]
+    ];
+    const askPhish = () => { const q = PHISH[quiz.i]; line(""); line(`${quiz.i + 1}/3  ${q[0]}`, "tl-v"); line(`     ${q[1]}`); line("phish? (y/n)", "tl-dim"); };
+    const answerPhish = (v) => {
+      if (!/^[yn]/i.test(v)) { if (/^(q|quit|exit)$/i.test(v)) { quiz = null; return line("quiz ended.", "tl-dim"); } return line("answer y or n (or q to quit)", "tl-err"); }
+      const q = PHISH[quiz.i], right = /^y/i.test(v) === q[2]; if (right) quiz.score++;
+      line(`${right ? "✓" : "✗"} ${q[3]}`, right ? "tl-ok" : "tl-err"); Sound.play(right ? "select" : "back");
+      if (++quiz.i < PHISH.length) return askPhish();
+      line(""); line(`score ${quiz.score}/3 · ${quiz.score === 3 ? "you'd pass the security awareness training I write." : "now you know why I run awareness training."}`, "tl-head"); quiz = null;
+    };
+    CMDS.phish = () => { quiz = { i: 0, score: 0 }; line("🎣 PHISH OR LEGIT? answer y (phish) or n (legit)", "tl-head"); askPhish(); };
+    CMDS.top = async () => {
+      const P = [["security-governance", 34], ["wazuh-homelab", 21], ["study:security+", 18], ["honeypot-t-pot", 12], ["coffee", 9], ["minecraft-srv", 4]];
+      const hd = line("", "tl-head"), rows = P.map(() => line(""));
+      for (let k = 0; k < 8; k++) {
+        hd.textContent = `top - ${new Date().toLocaleTimeString()}  load: focused  tasks: ${P.length}`;
+        P.forEach(([n, c], i) => { const v = Math.max(1, Math.min(60, c + Math.round((Math.random() - .5) * 8))); rows[i].textContent = ` ${String(i + 1).padStart(2)}  ${n.padEnd(20)} ${String(v).padStart(3)}%  ${"█".repeat(Math.round(v / 4))}`; rows[i].className = "tl" + (i === 0 ? " tl-v" : ""); });
+        await nap(700);
+      }
+      line("(snapshot ended)", "tl-dim");
+    };
+    CMDS.skills = () => {
+      [["# governance"], ["policy & standards", 9], ["compliance auditing", 8], ["risk management", 7], ["# detection"], ["wazuh / siem", 7], ["kibana / threat intel", 6], ["# networks"], ["vlans & segmentation", 8], ["dns filtering", 8], ["cisco hardening", 7]]
+        .forEach(([n, v]) => v ? line(`${n.padEnd(23)}${"■".repeat(v)}${"□".repeat(10 - v)}`, "tl-v") : line(n, "tl-dim"));
+    };
+    CMDS.ping = async (a) => {
+      const host = (a || "brandon").split(/\s+/)[0].slice(0, 30);
+      line(`PING ${host}: 56 data bytes`);
+      for (let i = 0; i < 4; i++) { await nap(450); line(`64 bytes from ${host}: status=available-for-interviews time=<24h`, "tl-ok"); }
+      line(`--- ${host} ping statistics: 4 sent, 4 replies, 0% loss ---`, "tl-dim");
+    };
+    CMDS.rm = (a) => {
+      if (!/-\w*r/.test(a || "")) return line(`rm: cannot remove '${a || ""}': read-only portfolio`, "tl-err");
+      flashTerm(); Sound.play("back");
+      line("rm: refusing to remove '/': permission denied", "tl-err");
+      line(`incident #${4400 + Math.floor(Math.random() * 99)} logged to SIEM · severity: amusing`, "tl-warn");
+      line("Least privilege: why one bad command can't take everything down.", "tl-dim");
     };
     /* ---------- capture the flag: 3 flags hidden in the source, robots.txt and this terminal ---------- */
     const FLAGS = [[1254236637, "the page source", "Every page has a source. Read it."], [436086557, "robots.txt", "Robots are told where not to look, and their instructions are public."], [591083135, "the terminal", "Not every file here is listed. Some are hidden (think: ls -a)."]];
@@ -1937,16 +2020,20 @@
     const run = (raw) => {
       const v = raw.trim(); line(`brandon@portfolio:~$ ${v}`, "tl-cmd"); if (!v) return;
       hist.push(v); hi = hist.length;
+      if (quiz) { answerPhish(v); tout.scrollTop = tout.scrollHeight; return; }
       const [c, ...rest] = v.split(/\s+/); const fn = CMDS[c.toLowerCase()];
-      if (fn) fn(rest.join(" ")); else line(`command not found: ${c}. Type "help".`, "tl-err");
+      if (!fn) { line(`command not found: ${c}. Type "help".`, "tl-err"); tout.scrollTop = tout.scrollHeight; return; }
+      busy = true; stop = false;
+      Promise.resolve().then(() => fn(rest.join(" "))).catch((e) => { if (e !== "stopped") line("error: " + e, "tl-err"); }).finally(() => { busy = false; stop = false; tout.scrollTop = tout.scrollHeight; });
       tout.scrollTop = tout.scrollHeight;
     };
-    $("#term-form").addEventListener("submit", (e) => { e.preventDefault(); run(tin.value); tin.value = ""; tout.scrollTop = tout.scrollHeight; });
+    $("#term-form").addEventListener("submit", (e) => { e.preventDefault(); if (busy) { line("busy… press Ctrl+C to stop", "tl-dim"); return; } run(tin.value); tin.value = ""; tout.scrollTop = tout.scrollHeight; });
     tin.addEventListener("keydown", (e) => {
       if (e.key === "ArrowUp") { e.preventDefault(); if (hi > 0) tin.value = hist[--hi]; }
       else if (e.key === "ArrowDown") { e.preventDefault(); hi = Math.min(hist.length, hi + 1); tin.value = hist[hi] || ""; }
       else if (e.key === "Tab") { e.preventDefault(); const m = Object.keys(CMDS).filter((k) => k.startsWith(tin.value.trim())); if (m.length === 1) tin.value = m[0] + " "; else if (m.length) line(m.join("  "), "tl-dim"); }
       else if (e.key === "Escape") { e.preventDefault(); closeTerm(); }
+      else if (e.key === "c" && e.ctrlKey && (busy || quiz) && tin.selectionStart === tin.selectionEnd) { e.preventDefault(); if (busy) stop = true; if (quiz) quiz = null; line("^C", "tl-err"); }
       else if (e.key === "l" && e.ctrlKey) { e.preventDefault(); tout.innerHTML = ""; }
     });
     addEventListener("keydown", (e) => {

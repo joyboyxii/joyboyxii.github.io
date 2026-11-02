@@ -3422,3 +3422,12 @@ html:not(.dark) .cv-row summary { color: #141a3d; }
 .cv-pill { padding: 4px 11px; border-radius: 999px; font-size: .8rem; color: #eef1ff; background: rgba(var(--k), .16); border: 1px solid rgba(var(--k), .45); }
 html:not(.dark) .cv-pill { color: #141a3d; }
 @media (max-width: 560px) { .cv-body { padding-left: 14px; } .cv-row summary { gap: 10px; } }
+
+/* terminal easter eggs */
+.tl-warn { color: #ffcf5c; } .tl-v { color: #c9a8ff; }
+.term.t-flash { animation: tFlash .55s ease; }
+@keyframes tFlash { 30% { box-shadow: 0 0 0 2px #ff8a8a, 0 0 60px rgba(255,80,80,.5); } }
+html.calm .term.t-flash { animation: none; }
+.tl-neo { display: flex; flex-wrap: wrap; gap: 6px 22px; align-items: flex-start; margin-top: 4px; }
+.neo-art { color: #c9a8ff; line-height: 1.12; white-space: pre; text-shadow: 0 0 10px rgba(175,120,255,.45); padding-top: 2px; }
+.neo-sw { display: flex; gap: 6px; margin-top: 6px; } .neo-sw i { width: 22px; height: 12px; border-radius: 3px; }

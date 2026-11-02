@@ -788,23 +788,12 @@
   const pushLayer = (closeFn, url) => { try { history.pushState({ layer: 1 }, "", url || location.href); layers.push(closeFn); } catch (e) {} };
   const popLayer = (closeFn) => { const i = layers.lastIndexOf(closeFn); if (i < 0) return false; layers.splice(i, 1); ignorePop++; history.back(); return true; };
   window.__layers = { push: pushLayer, pop: popLayer };
-  const backPill = document.createElement("button");
-  backPill.className = "back-pill"; backPill.type = "button"; backPill.hidden = true;
-  backPill.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Back</span>';
-  document.body.appendChild(backPill);
-  let backTimer = 0, backFrom = null;
-  const hideBack = () => { backPill.classList.remove("show"); clearTimeout(backTimer); backTimer = setTimeout(() => { backPill.hidden = true; }, 250); };
-  const showBack = (label) => { clearTimeout(backTimer); backPill.querySelector("span").textContent = label; backPill.hidden = false; requestAnimationFrame(() => backPill.classList.add("show")); };
-  backPill.addEventListener("click", () => { Sound.play("back"); history.back(); });
   addEventListener("popstate", (e) => {
     if (ignorePop) { ignorePop--; return; }
     if (layers.length) { layers.pop()(true); return; }
     const y = e.state && typeof e.state.y === "number" ? e.state.y : null;
     if (y !== null) { const r = document.documentElement; r.style.scrollBehavior = "auto"; scrollTo(0, y); r.style.scrollBehavior = ""; }
-    hideBack();
   });
-  // hide the Back pill once the visitor scrolls well away from where the jump landed
-  addEventListener("scroll", () => { if (backFrom !== null && !backPill.hidden && Math.abs(scrollY - backFrom) > innerHeight * 1.5) { backFrom = null; hideBack(); } }, { passive: true });
 
   // section jump: instant (the old animated glide felt laggy), then a quick light sweep on the section title
   const warpTo = (id) => {
@@ -813,12 +802,10 @@
     const root = document.documentElement;
     const calm = matchMedia("(prefers-reduced-motion: reduce)").matches || root.classList.contains("calm");
     $$(".reveal", target).forEach((el) => el.classList.add("in"));
-    const fromY = scrollY, fromTop = fromY < innerHeight * .6;
-    // remember where we came from, so Back (pill, phone gesture or browser button) returns there
+    const fromY = scrollY;
+    // remember where we came from, so the phone/browser Back returns there
     try { history.replaceState(Object.assign({}, history.state, { y: fromY }), ""); history.pushState({ jump: id }, "", "#" + id); } catch (e) {}
     root.style.scrollBehavior = "auto"; target.scrollIntoView(); root.style.scrollBehavior = "";
-    backFrom = scrollY;
-    if (Math.abs(scrollY - fromY) > 40) showBack(fromTop ? "Back to title" : "Back"); else hideBack();
     if (!calm) { title.classList.remove("sweep"); void title.offsetWidth; title.classList.add("sweep"); setTimeout(() => title.classList.remove("sweep"), 900); }
   };
   navLinks.forEach((a) => a.addEventListener("click", (e) => {

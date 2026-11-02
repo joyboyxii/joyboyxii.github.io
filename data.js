@@ -30,7 +30,7 @@ window.PORTFOLIO = {
     greeting: "Hey! I'm Brandon 👋",               // speech bubble when hovering over you
     greetingGirl: "Hire him!",                     // speech bubble when hovering over her
     // short intro shown at the top of Experience (edit freely)
-    about: "I'm a Security Analyst who keeps a credit union one step ahead of the people trying to break in. I build security governance, writing the policies, standards and rules that define how we operate, then engineer the controls that enforce them.",
+    about: "I'm a Security Analyst who believes good security starts with curiosity. I like asking \"what if?\" and then making sure the answer is \"not here.\"",
     personal: "Away from the screen, I'm a husband and a dad first.",   // shown under the About text (not in the recruiter summary)
     updated: "2026-10-25",                         // shown in the footer as "Last updated"
     photo: "assets/images/headshot.webp",          // About-me portrait (swap in a sharper original anytime)

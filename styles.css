@@ -3433,3 +3433,25 @@ html.calm .term.t-flash { animation: none; }
 .neo-sw { display: flex; gap: 6px; margin-top: 6px; } .neo-sw i { width: 22px; height: 12px; border-radius: 3px; }
 
 .cv-row { transition: border-color .28s, background .28s; } .cv-chev { transition: transform .28s cubic-bezier(.2,.7,.2,1); }
+
+/* ---- Nov 3 polish ---- */
+/* phones: theme switch lives in the ⋯ menu (Settings), not the header */
+@media (max-width: 760px) { .daynight { display: none !important; } }
+/* phones: no side code rain (it overlapped the content) */
+@media (max-width: 759px) { .code-rain { display: none !important; } }
+/* phones: "Scroll" cue at the bottom of the first screen */
+.scroll-cue { display: none; }
+@media (max-width: 760px) {
+  .scroll-cue { all: unset; position: fixed; left: 50%; bottom: max(14px, env(safe-area-inset-bottom)); translate: -50% 0; z-index: 60; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 14px; cursor: pointer; color: rgba(220,230,255,.85); font: 400 .62rem var(--f-menu); letter-spacing: .3em; text-transform: uppercase; transition: opacity .35s; -webkit-tap-highlight-color: transparent; }
+  .scroll-cue svg { width: 20px; height: 20px; animation: cueBob 1.8s ease-in-out infinite; filter: drop-shadow(0 0 6px rgba(127,166,255,.8)); }
+  .scroll-cue.gone { opacity: 0; pointer-events: none; }
+  html:not(.dark) .scroll-cue { color: #24308a; }
+  html.calm .scroll-cue svg { animation: none; }
+}
+@keyframes cueBob { 50% { transform: translateY(5px); } }
+@media print { .scroll-cue { display: none !important; } }
+/* one heading font: section and project titles use the UI font (the footer keeps its signature serif) */
+:root { --f-head: var(--f-ui); }
+.footer { --f-head: "Cormorant Garamond", Georgia, serif; }
+.sec-head h2 { font-weight: 700; letter-spacing: -.02em; }
+.feat-title, .pc-name { font-weight: 700 !important; letter-spacing: -.015em !important; }

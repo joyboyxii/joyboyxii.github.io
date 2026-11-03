@@ -124,7 +124,7 @@ window.PORTFOLIO = {
       summary: "Kept a regulated financial institution's endpoints, identities and core banking platforms secure and running through one of Florida's largest credit union mergers.",
       highlights: [
         "Supported one of Florida's largest credit union mergers: 12+ departmental restructures, 7 branch integrations and onboarding of 220+ employees with operations uninterrupted",
-        "Responded to endpoint threats end to end: triaged EDR detections, investigated suspicious activity and drove cases to resolution",
+        "Responded to endpoint threats: triaged EDR detections, investigated suspicious activity and saw each case through to resolution",
         "Monitored and investigated security events in the SIEM, correlating telemetry to separate real threats from noise",
         "Remediated critical and zero-day vulnerabilities within 24 hours using CrowdStrike Falcon and ManageEngine Patch Manager, maintaining full SLA compliance",
         "Reviewed vulnerability cases and advisories to determine exposure across our environment and prioritized remediation by risk",
@@ -146,16 +146,16 @@ window.PORTFOLIO = {
       logo: "assets/images/logos/addition.png",
       location: "Greater Orlando, FL",
       from: "2026-10", to: "present",
-      summary: "Defending a regulated financial institution day to day, from hunting threats and patching zero-days to training the people who keep it secure, with our risk metrics held below enterprise averages.",
+      summary: "Helping defend a regulated financial institution day to day, from investigating threats and patching zero-days to helping train the people who keep it secure.",
       highlights: [
-        "Lead threat hunting and incident investigation across SIEM alerts, case reports and CrowdStrike Falcon detections, driving every case from triage to containment and closure",
-        "Own critical and zero-day vulnerability remediation through Automox and ManageEngine, authoring custom scripts that automate patch deployment across the enterprise",
-        "Run adversary simulation with Picus Security to penetration test the environment, exposing control gaps and validating fixes before attackers can exploit them",
-        "Serve as Proofpoint administrator investigating user-reported phishing through Exchange, and run KnowBe4 phishing campaigns that sharpen employee detection",
-        "Monitor managed and unmanaged networks for inactive assets, compromised passwords and machines missing baseline encryption, driving every gap to remediation",
-        "Govern identity in Microsoft Entra ID and harden systems through Group Policy enforcement",
-        "Keep phishing and vulnerability metrics below enterprise averages by leading security awareness training, publishing weekly security briefings and conducting daily threat research",
-        "Author security policies, standards and configuration baselines, then enforce them across endpoints, identity and the network"
+        "Investigate SIEM alerts, case reports and CrowdStrike Falcon detections, taking cases from triage through containment and closure",
+        "Remediate critical and zero-day vulnerabilities through Automox and ManageEngine, writing custom scripts that automate patch deployment across the enterprise",
+        "Use Picus Security adversary simulation to test our defenses, finding control gaps and confirming fixes before attackers can exploit them",
+        "Administer Proofpoint and investigate user-reported phishing through Exchange, and help run KnowBe4 phishing campaigns that sharpen employee detection",
+        "Monitor managed and unmanaged networks for inactive assets, compromised passwords and machines missing baseline encryption, and follow each gap through to a fix",
+        "Manage identities in Microsoft Entra ID and harden systems through Group Policy",
+        "Help keep phishing and vulnerability metrics below enterprise averages through security awareness training, weekly security briefings and daily threat research",
+        "Help write security policies and configuration baselines, and roll them out across endpoints, identity and the network"
       ],
       stats: [{ value: "24h", label: "Zero-day remediation" }, { value: "Below", label: "Enterprise-average risk metrics" }, { value: "Weekly", label: "Security articles published" }],
       skills: ["Threat Hunting", "SIEM", "CrowdStrike Falcon", "Automox", "ManageEngine", "Patch Scripting", "Picus Security", "Proofpoint", "Exchange", "KnowBe4", "Phishing Analysis", "Asset Management", "Credential Hygiene", "Microsoft Entra ID", "Group Policy", "Identity Management", "Security Awareness", "Security Governance"]
@@ -248,7 +248,7 @@ window.PORTFOLIO = {
     {
       title: "Cisco Network Hardening Labs",
       type: "Network Security", icon: "shield", status: "complete", date: "",
-      summary: "Advanced Cisco Packet Tracer labs focused on segmentation, routing and device hardening.",
+      summary: "Cisco Packet Tracer labs focused on segmentation, routing and device hardening.",
       description: [
         "Completed labs covering router hardening, VLANs, inter-VLAN routing, router-on-a-stick deployments, SSH administration, CDP, port security, loopback interfaces and static routes."
       ],

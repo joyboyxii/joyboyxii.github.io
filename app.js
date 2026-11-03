@@ -1858,7 +1858,7 @@
         if (!arg || !p) return line("usage: open <number|name>", "tl-err");
         line(`opening "${p.title}"…`, "tl-ok"); setTimeout(() => { closeTerm(); openProject(p._i); }, 350);
       },
-      certs: () => certs.forEach((c) => line(`${c.status === "earned" ? "✓" : "…"} ${c.title}  (${c.status === "earned" ? "earned" : "currently studying"})`)),
+      certs: () => certs.forEach((c) => line(`${c.status === "earned" ? "✓" : "•"} ${c.title}${c.issuer ? "  · " + c.issuer : ""}`)),
       contact: () => { const em = ((profile.cta || {}).url || "").replace("mailto:", ""); line(`email: ${em}`); linkLine("→ open contact card", () => { closeTerm(); $("#cta")?.click(); }); },
       resume: () => { line("opening résumé…", "tl-ok"); setTimeout(() => { closeTerm(); $("#resume-btn")?.click(); }, 300); },
       linkedin: () => { const u = profile.links && profile.links.linkedin; if (u) { line("opening LinkedIn in a new tab…", "tl-ok"); window.open(u, "_blank", "noopener"); } else line("not set", "tl-err"); },
@@ -2028,6 +2028,19 @@
     }
   })();
 
+  /* ---------- phones: a small "scroll" cue under the title art, so visitors know the menu is below ---------- */
+  (() => {
+    const top = $("#top"); if (!top) return;
+    const cue = document.createElement("button"); cue.type = "button"; cue.className = "scroll-cue"; cue.setAttribute("aria-label", "Scroll to the menu");
+    cue.innerHTML = '<span>Scroll</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    document.body.appendChild(cue);
+    cue.addEventListener("click", () => { const m = $("#title-menu"); if (m) m.scrollIntoView({ behavior: "smooth", block: "center" }); });
+    // only when the menu is fully below the fold (taller phones already show the first tile)
+    const upd = () => { const m = $("#title-menu"); const below = m && m.getBoundingClientRect().top > innerHeight - 24; cue.classList.toggle("gone", scrollY > 40 || !below); };
+    addEventListener("resize", upd);
+    addEventListener("scroll", upd, { passive: true }); upd();
+  })();
+
   /* ---------- subtle code rain in the side margins ---------- */
   (() => {
     const cl = $("#rain-l"), cr = $("#rain-r"); if (!cl || !cr || !cl.getContext) return;
@@ -2057,6 +2070,7 @@
     };
     const draw = (t) => {
       raf = requestAnimationFrame(draw);
+      if (innerWidth < 760) return; // hidden on phones (it crowded the content)
       if (t - last < 50) return; // ~20 fps is plenty for a slow drift
       const dt = Math.min(.1, (t - last) / 1000); last = t;
       const dark = root.classList.contains("dark");

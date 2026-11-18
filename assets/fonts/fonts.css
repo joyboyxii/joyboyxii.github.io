@@ -1,0 +1,7 @@
+/* Self-hosted fonts (SIL Open Font License 1.1; licenses in this folder). Latin subset.
+   Hosting these here means visitors' browsers never contact a third party. */
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 400 700; font-display: swap; src: url("inter.woff") format("woff"); }
+@font-face { font-family: "Michroma"; font-style: normal; font-weight: 400; font-display: swap; src: url("michroma.woff") format("woff"); }
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 400 800; font-display: swap; src: url("opensans.woff") format("woff"); }
+@font-face { font-family: "Open Sans"; font-style: italic; font-weight: 700; font-display: swap; src: url("opensans-italic.woff") format("woff"); }
+@font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 500 700; font-display: swap; src: url("cormorant.woff") format("woff"); }

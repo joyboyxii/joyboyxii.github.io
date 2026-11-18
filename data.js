@@ -14,8 +14,8 @@ window.PORTFOLIO = {
     tagline: "Welcome to my portfolio",
     level: 99,                               // shown level; 99 = max level with EXP capped
     cta: { label: "Contact", url: "mailto:brandonlelouch@gmail.com" },
-    site: "",                                    // your live link once it's hosted (e.g. "https://brandonrestrepo.com"); the "Copy link" button shares this
-    previewLink: "https://claude.ai/artifact/QD62iwfebwG2WryqXNoEU4",   // used by "Copy link" until the site is hosted (share it from the preview's Share menu first)
+    site: "https://joyboyxii.github.io/",                                    // your live link once it's hosted (e.g. "https://brandonrestrepo.com"); the "Copy link" button shares this
+    previewLink: "",   // used by "Copy link" until the site is hosted (share it from the preview's Share menu first)
     resume: "assets/docs/Brandon_Restrepo_Resume.pdf",
     resumePages: ["assets/docs/resume-pages/page-1.webp"],   // the PDF rendered as images, shown in Quick view and the résumé viewer (works everywhere, phones included)            // "Résumé" button (top right)
     links: {                                                       // icon buttons; leave "" to hide

@@ -3455,3 +3455,7 @@ html.calm .term.t-flash { animation: none; }
 .footer { --f-head: "Cormorant Garamond", Georgia, serif; }
 .sec-head h2 { font-weight: 700; letter-spacing: -.02em; }
 .feat-title, .pc-name { font-weight: 700 !important; letter-spacing: -.015em !important; }
+
+/* floating reflective cubes (cubes.js): above the skies and star map, below all content */
+#cubes { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; display: block; }
+@media print { #cubes { display: none; } }
